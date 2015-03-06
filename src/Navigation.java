@@ -11,7 +11,7 @@ import lejos.nxt.UltrasonicSensor;
  *  Even Wang - 260633630
  */
 
-public class Navigation extends Thread {
+public class Navigation {
 
 	private Odometer odometer;
 	private UltrasonicSensor us;
@@ -34,16 +34,10 @@ public class Navigation extends Thread {
 		this.obs = new AvoidObstacle(us, this);
 	}
 
-	public void run() {
-		// travel to the points in lab instructions
-		travelTo(0, 60.96);
-		travelTo(60.96, 0);
-		// stop motors
-		leftMotor.setSpeed(0);
-		rightMotor.setSpeed(0);
-	}
-
 	public void travelTo(double x, double y) {
+		
+		x = x * 30.48;
+		y = y * 30.48;
 		running = true;
 
 		// while x or y different from odometer's measured coordinates (ie. the

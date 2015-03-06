@@ -79,10 +79,6 @@ public class LightLocalizer {
 		double deltaTheta = 90 - (negativeYTheta - 180) + ((lineAngles.get(3) - lineAngles.get(1)) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
 
-		// when done travel to (0,0) and turn to 0 degrees
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
-
 	}
 
 	// helper method to find first line ahead

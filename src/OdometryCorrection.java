@@ -1,4 +1,4 @@
-import lejos.nxt.Button;
+import lejos.nxt.*;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
@@ -14,7 +14,7 @@ public class OdometryCorrection extends Thread {
 	private Odometer odometer;
 	private ColorSensor colorSensor = new ColorSensor(SensorPort.S2);
 
-	private final int LIGHTSENSOR_THRESHOLD = 450;
+	private final int LIGHTSENSOR_THRESHOLD = 30;
 	private final double SENSOR_DISTANCE = 12.4;
 	private final double TILE_LENGTH = 30.48;
 	private final double HALF_TILE = 15.24;
@@ -27,14 +27,16 @@ public class OdometryCorrection extends Thread {
 	// run method (required for Thread)
 	public void run() {
 		long correctionStart, correctionEnd;
+		int previousLight=colorSensor.getNormalizedLightValue();
 
 		while (true) {
 			correctionStart = System.currentTimeMillis();
 
 			// put your correction code here
 			int light = colorSensor.getNormalizedLightValue();
+			
 			// LCD.drawString("Light : " + light, 0, 5);
-			if (light < LIGHTSENSOR_THRESHOLD) {
+			if (previousLight-light > LIGHTSENSOR_THRESHOLD) {
 
 				Sound.beep();
 

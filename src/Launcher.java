@@ -1,31 +1,23 @@
-/*
- *  Group 21
- *  Cecile Robert-Michon 260552816
- *  Even Wang - 260633630
- */
+import lejos.nxt.*;
 
-import lejos.nxt.Motor;
-import lejos.nxt.NXTRegulatedMotor;
+public class Launcher{
 
-public class Launcher extends Thread {
-
-	private static NXTRegulatedMotor leftMotor = Motor.A;
-
-	public Launcher() {
-
+	 public void shootsBall() {
+	    	NXTRegulatedMotor loader = Motor.A;
+	        loader.setSpeed(1000000);//wanted to use largest value possible 
+	        loader.setAcceleration(100000);//wanted to use largest value possible
+	     for(int i=0; i<3; i++){ //shoots ball 3 times
+	         loader.rotate(-360);
+	         try {
+	             Thread.sleep(1500);
+	         } catch (InterruptedException e) {}
+	         loader.stop();
+	     }
+	      
+	     
+	     try {
+	         Thread.sleep(500);
+	     } catch (InterruptedException e) {}
+	     loader.stop();
+	    }
 	}
-
-	public void run() {
-		while (true) {
-			// rotate 360 degrees
-			leftMotor.setSpeed(550);
-			leftMotor.rotate(-360);
-			// wait for 5 seconds to re-arm the launcher
-			try {
-				this.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-}
