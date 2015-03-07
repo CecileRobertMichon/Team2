@@ -3,7 +3,7 @@ import lejos.nxt.*;
 public class Launcher{
 
 	 public void shootsBall() {
-	    	NXTRegulatedMotor loader = Motor.A;
+	    	NXTRegulatedMotor loader = Motor.C;
 	        loader.setSpeed(1000000);//wanted to use largest value possible 
 	        loader.setAcceleration(100000);//wanted to use largest value possible
 	     for(int i=0; i<3; i++){ //shoots ball 3 times

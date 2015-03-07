@@ -7,8 +7,9 @@ public class USFilter extends Thread {
 	private UltrasonicSensor us;
 	private int counter;
 
-	public USFilter() {
-		medianDistance = 0;
+	public USFilter(UltrasonicSensor us) {
+		this.us = us;
+		medianDistance = 800;
 		input = new int[5];
 		for (int i = 0; i < input.length; i++) {
 			input[i] = us.getDistance();
@@ -23,7 +24,7 @@ public class USFilter extends Thread {
 			counter++;
 			counter = counter % 5;
 			bubbleSort(input);
-			medianDistance = getMedianDistance();
+			medianDistance = calculateMedian();
 		}
 	}
 
@@ -47,7 +48,7 @@ public class USFilter extends Thread {
 	}
 	
 	//returns median to the sorted moving array by taking the middle value 
-	  public double getMedian() {
+	  public int calculateMedian() {
 	    int median;
 	    if ((sorted.length % 2) == 1) { 
 	    //array is of odd length, chose middle value

@@ -9,18 +9,16 @@ import java.util.ArrayList;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.Sound;
 
 public class LightLocalizer {
 	private final int MOTOR_STRAIGHT = 150;
-	private final int LIGHTSENSOR_THRESHOLD = 490;
+	private final int LIGHTSENSOR_THRESHOLD = 30;
 	private final double SENSOR_DISTANCE = 12.4;
-	private final double RADIUS = 2.118;
-	private final double WIDTH = 15.7085;
 
 	private Odometer odo;
 	private Navigation nav;
 	private ColorSensor ls;
+	private Demo demo;
 	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	private double light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
@@ -31,6 +29,7 @@ public class LightLocalizer {
 		this.odo = odo;
 		this.ls = ls2;
 		this.nav = nav;
+		this.demo = new Demo();
 
 		// turn on the light
 		ls2.setFloodlight(true);
@@ -48,8 +47,11 @@ public class LightLocalizer {
 		nav.rotate(true);
 		// rotate 360 degrees
 		nav.turnTo(1);
-		leftMotor.rotate(convertAngle(RADIUS, WIDTH, 360), true);
-		rightMotor.rotate(-convertAngle(RADIUS, WIDTH, 360), true);
+		leftMotor.rotate(convertAngle(demo.getRadius(), demo.getWidth(), 360),
+				true);
+		rightMotor.rotate(
+				-convertAngle(demo.getRadius(), demo.getWidth(), 360), true);
+		int previousLightValue= ls.getNormalizedLightValue();
 		while (leftMotor.isMoving()) {
 			// wait to avoid seeing the same line twice
 			try {
@@ -58,7 +60,7 @@ public class LightLocalizer {
 			}
 			// record line angles and count lines crossed
 			light = ls.getNormalizedLightValue();
-			if (light < LIGHTSENSOR_THRESHOLD) {
+			if (previousLightValue - light > LIGHTSENSOR_THRESHOLD) {
 				lineAngles.add(odo.getTheta());
 				counter++;
 				// save the angle of the last y line crossed
@@ -75,18 +77,20 @@ public class LightLocalizer {
 				* Math.cos(Math.toRadians(lineAngles.get(2) - lineAngles.get(0)) / 2));
 		odo.setX(-SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(lineAngles.get(3) - lineAngles.get(1)) / 2));
-		
-		double deltaTheta = 90 - (negativeYTheta - 180) + ((lineAngles.get(3) - lineAngles.get(1)) / 2);
+
+		double deltaTheta = 90 - (negativeYTheta - 180)
+				+ ((lineAngles.get(3) - lineAngles.get(1)) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
 
 	}
 
 	// helper method to find first line ahead
 	private void findLine() {
+		int previousLightValue=ls.getNormalizedLightValue();
 		this.light = ls.getNormalizedLightValue();
 
 		// Go forward until sensor detects line
-		while (light > LIGHTSENSOR_THRESHOLD) {
+		while (previousLightValue - light < LIGHTSENSOR_THRESHOLD) {
 			leftMotor.setSpeed(MOTOR_STRAIGHT);
 			rightMotor.setSpeed(MOTOR_STRAIGHT);
 			rightMotor.forward();

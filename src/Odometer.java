@@ -1,12 +1,5 @@
 import lejos.nxt.Motor;
 
-/*
- * Odometer.java
- *  Group 21
- *  Cecile Robert-Michon 260552816
- *  Even Wang - 260633630
- */
-
 public class Odometer extends Thread {
 	// robot position
 	private double x, y, theta;
@@ -14,12 +7,11 @@ public class Odometer extends Thread {
 	// Tachometer count
 	private int tachoLeft, tachoRight;
 
-	// Radius and distance between left and rigth wheel
-	private double leftRadius, rightRadius, width;
-
 	// odometer update period, in ms
 	private static final long ODOMETER_PERIOD = 25;
 
+	private Demo demo;
+	
 	// lock object for mutual exclusion
 	public Object lock;
 
@@ -28,10 +20,8 @@ public class Odometer extends Thread {
 		x = 0.0;
 		y = 0.0;
 		theta = 0.0;
-		leftRadius = 2.118;
-		rightRadius = 2.118;
-		width = 15.7085;
 		lock = new Object();
+		demo = new Demo();
 	}
 
 	// run method (required for Thread)
@@ -55,11 +45,11 @@ public class Odometer extends Thread {
 			// Calculate left and right arc distance according to formula in lab
 			// tutorial
 			double leftArcDistance = Math
-					.toRadians(deltaTachoLeft * leftRadius);
+					.toRadians(deltaTachoLeft * demo.getRadius());
 			double rightArcDistance = Math.toRadians(deltaTachoRight
-					* rightRadius);
+					* demo.getRadius());
 
-			double deltaTheta = ((leftArcDistance - rightArcDistance) / width);
+			double deltaTheta = ((leftArcDistance - rightArcDistance) / demo.getWidth());
 			double deltaArcLength = (leftArcDistance + rightArcDistance) / 2.0;
 
 			double tempTheta = Math.toDegrees(deltaTheta) + getTheta();

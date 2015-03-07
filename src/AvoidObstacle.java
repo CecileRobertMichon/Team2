@@ -12,18 +12,18 @@ import lejos.nxt.UltrasonicSensor;
  */
 
 public class AvoidObstacle {
-	UltrasonicSensor us;
 	Navigation nav;
 	Odometer odo;
+	USFilter filter;
 	private static final int bandCenter = 18, bandWidth = 3;
 	private static final int motorLow = 30, motorHigh = 300;
 	private final int motorStraight = 200;
-	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.C;
+	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	private int distance;
 	private final int ROTATE_SPEED = 100;
 
-	public AvoidObstacle(UltrasonicSensor us, Navigation nav) {
-		this.us = us;
+	public AvoidObstacle(USFilter filter, Navigation nav) {
+		this.filter = filter;
 		this.nav = nav;
 		this.odo = new Odometer();
 	}
@@ -52,7 +52,7 @@ public class AvoidObstacle {
 
 		while (System.currentTimeMillis() < end_time) {
 
-			this.distance = us.getDistance();
+			this.distance = filter.getMedianDistance();
 
 			// Follow the obstacle using BANG-BANG style
 

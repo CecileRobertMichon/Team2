@@ -10,7 +10,6 @@ import lejos.nxt.UltrasonicSensor;
  *  Even Wang - 260633630
  */
 
-
 public class USLocalizer {
 	public enum LocalizationType {
 		FALLING_EDGE, RISING_EDGE
@@ -22,19 +21,16 @@ public class USLocalizer {
 
 	private int distance;
 	private Odometer odo;
-	private UltrasonicSensor us;
 	private LocalizationType locType;
 	private Navigation nav;
+	private USFilter filter;
 
-	public USLocalizer(Odometer odo, UltrasonicSensor us,
-			LocalizationType locType, Navigation nav) {
+	public USLocalizer(Odometer odo, LocalizationType locType, Navigation nav,
+			USFilter filter) {
 		this.odo = odo;
-		this.us = us;
 		this.locType = locType;
 		this.nav = nav;
-
-		// switch off the ultrasonic sensor
-		us.off();
+		this.filter = filter;
 	}
 
 	public void doLocalization() {
@@ -144,20 +140,10 @@ public class USLocalizer {
 	private int getFilteredData() {
 		int distance;
 
-		// do a ping
-		us.ping();
-		// wait for the ping to complete
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-		}
-
-		// there will be a delay here
-		distance = us.getDistance();
+		distance = filter.getMedianDistance();
 		if (distance > 50) {
 			distance = 50;
 		}
-		// LCD.drawString("dist: " + distance, 0, 4);
 		return distance;
 
 	}

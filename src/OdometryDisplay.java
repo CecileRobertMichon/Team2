@@ -6,14 +6,17 @@
  */
 
 import lejos.nxt.LCD;
+import lejos.nxt.UltrasonicSensor;
 
 public class OdometryDisplay extends Thread {
 	private static final long DISPLAY_PERIOD = 250;
 	private Odometer odometer;
+	private USFilter filter;
 
 	// constructor
-	public OdometryDisplay(Odometer odometer) {
+	public OdometryDisplay(Odometer odometer, USFilter filter) {
 		this.odometer = odometer;
+		this.filter = filter;
 	}
 
 	// run method (required for Thread)
@@ -31,6 +34,7 @@ public class OdometryDisplay extends Thread {
 			LCD.drawString("X:              ", 0, 0);
 			LCD.drawString("Y:              ", 0, 1);
 			LCD.drawString("T:              ", 0, 2);
+			//LCD.drawString("F: " + filter.getMedianDistance(), 0, 2);
 
 			// get the odometry information
 			odometer.getPosition(position);

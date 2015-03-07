@@ -14,24 +14,23 @@ import lejos.nxt.UltrasonicSensor;
 public class Navigation {
 
 	private Odometer odometer;
-	private UltrasonicSensor us;
 	private AvoidObstacle obs;
-	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.C;
+	private USFilter filter;
+	private Demo demo;
+	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	private final double DISTANCE_TOLERANCE = 0.5;
 	private final double ANGLE_TOLERANCE = 0.25;
 	private final int MOTOR_STRAIGHT = 250;
 	private final int MOTOR_ROTATE = 150;
 	private final int MOTOR_SLOW = 100;
-	private final double RADIUS = 2.118;
-	private final double WIDTH = 15.7085;
 	private boolean running = false;
 
 	// constructor
-	public Navigation(Odometer odo) {
+	public Navigation(Odometer odo, USFilter filter) {
 		this.odometer = odo;
-		this.us = new UltrasonicSensor(SensorPort.S2);
-		this.us.continuous();
-		this.obs = new AvoidObstacle(us, this);
+		this.obs = new AvoidObstacle(filter, this);
+		this.demo = new Demo();
+		this.filter = filter;
 	}
 
 	public void travelTo(double x, double y) {
@@ -79,7 +78,7 @@ public class Navigation {
 		leftMotor.setSpeed(MOTOR_STRAIGHT);
 		rightMotor.setSpeed(MOTOR_STRAIGHT);
 
-		int travelDistance = convertDistance(RADIUS, distance);
+		int travelDistance = convertDistance(demo.getRadius(), distance);
 
 		leftMotor.rotate(travelDistance, true);
 		rightMotor.rotate(travelDistance, true);
@@ -87,7 +86,7 @@ public class Navigation {
 		// continuously check for US data to detect obstacle while robot is
 		// going forward
 		while (rightMotor.isMoving()) {
-			wallDist = us.getDistance();
+			wallDist = filter.getMedianDistance();
 			// call method to avoid obstacle if object is detected
 			if (wallDist < 15) {
 				obs.avoid();
@@ -103,7 +102,7 @@ public class Navigation {
 		leftMotor.setSpeed(MOTOR_ROTATE);
 		rightMotor.setSpeed(MOTOR_ROTATE);
 
-		int travelDistance = convertDistance(RADIUS, distance);
+		int travelDistance = convertDistance(demo.getRadius(), distance);
 
 		leftMotor.rotate(-travelDistance, true);
 		rightMotor.rotate(-travelDistance, false);
@@ -145,29 +144,29 @@ public class Navigation {
 			if (errorTheta < -180.0) {
 				// turn right
 				leftMotor
-						.rotate(convertAngle(RADIUS, WIDTH,
+						.rotate(convertAngle(demo.getRadius(), demo.getWidth(),
 								360 - Math.abs(errorTheta)), true);
 				rightMotor
-						.rotate(-convertAngle(RADIUS, WIDTH,
+						.rotate(-convertAngle(demo.getRadius(), demo.getWidth(),
 								360 - Math.abs(errorTheta)), false);
 			} else if (errorTheta < 0.0) {
 				// turn left
 				leftMotor.rotate(
-						-convertAngle(RADIUS, WIDTH, Math.abs(errorTheta)),
+						-convertAngle(demo.getRadius(), demo.getWidth(), Math.abs(errorTheta)),
 						true);
 				rightMotor.rotate(
-						convertAngle(RADIUS, WIDTH, Math.abs(errorTheta)),
+						convertAngle(demo.getRadius(), demo.getWidth(), Math.abs(errorTheta)),
 						false);
 			} else if (errorTheta > 180.0) {
 				// turn left
 				leftMotor.rotate(
-						-convertAngle(RADIUS, WIDTH, 360 - errorTheta), true);
+						-convertAngle(demo.getRadius(), demo.getWidth(), 360 - errorTheta), true);
 				rightMotor.rotate(
-						convertAngle(RADIUS, WIDTH, 360 - errorTheta), false);
+						convertAngle(demo.getRadius(), demo.getWidth(), 360 - errorTheta), false);
 			} else {
 				// turn right
-				leftMotor.rotate(convertAngle(RADIUS, WIDTH, errorTheta), true);
-				rightMotor.rotate(-convertAngle(RADIUS, WIDTH, errorTheta),
+				leftMotor.rotate(convertAngle(demo.getRadius(), demo.getWidth(), errorTheta), true);
+				rightMotor.rotate(-convertAngle(demo.getRadius(), demo.getWidth(), errorTheta),
 						false);
 			}
 

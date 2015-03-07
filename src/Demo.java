@@ -10,6 +10,7 @@
 
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
+import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 
@@ -19,6 +20,8 @@ public class Demo {
 	private final int TARGET_ONE_Y = 0;
 	private final int TARGET_TWO_X = 0;
 	private final int TARGET_TWO_Y = 0;
+	private final double RADIUS = 2.149;
+	private final double WIDTH = 16.63;
 
 	public static void main(String[] args) {
 		
@@ -26,17 +29,29 @@ public class Demo {
 		Odometer odo = new Odometer();
 		OdometryCorrection correc = new OdometryCorrection(odo);
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S2);
+		USFilter filter = new USFilter(us);
 		ColorSensor ls = new ColorSensor(SensorPort.S1);
-		Navigation nav = new Navigation(odo);
-		OdometryDisplay lcd = new OdometryDisplay(odo);
+		Navigation nav = new Navigation(odo, filter);
+		OdometryDisplay lcd = new OdometryDisplay(odo, filter);
 
 		odo.start();
-		correc.start();
+		//correc.start();
 		lcd.start();
+		filter.start();
+		
+		
+		// Calibration Code - used to find exact radius and width values
+		 
+		//Motor.A.setAcceleration(2000); Motor.B.setAcceleration(2000);
+		//Motor.A.setSpeed(100); Motor.B.setSpeed(100);
+		//Motor.A.rotate(1625, true); Motor.B.rotate(1625, false);
+		//Motor.A.rotate(2786, true); Motor.B.rotate(-2786, false);
+		 
+
 
 		// perform the ultrasonic localization
-		USLocalizer usl = new USLocalizer(odo, us, USLocalizer.LocalizationType.FALLING_EDGE, nav);
-		usl.doLocalization();
+		//USLocalizer usl = new USLocalizer(odo, USLocalizer.LocalizationType.FALLING_EDGE, nav, filter);
+		//usl.doLocalization();
 
 		// perform the light sensor localization
 		LightLocalizer lsl = new LightLocalizer(odo, ls, nav);
@@ -46,7 +61,7 @@ public class Demo {
 		nav.travelTo(0, 0);
 		nav.turnTo(0);
 		
-		// travel to the right bottom corner of the shooting area while avoiding obstacles
+		/*// travel to the right bottom corner of the shooting area while avoiding obstacles
 		nav.travelTo(7.2, 7.2);
 		
 		// light localization
@@ -66,8 +81,16 @@ public class Demo {
 		
 
 		// return to (0,0)
-
+*/
 		Button.waitForAnyPress();
 		System.exit(0);
+	}
+	
+	public double getRadius(){
+		return this.RADIUS;
+	}
+	
+	public double getWidth(){
+		return this.WIDTH;
 	}
 }
