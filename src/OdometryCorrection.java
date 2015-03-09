@@ -1,42 +1,33 @@
-import lejos.nxt.*;
-import lejos.nxt.ColorSensor;
-import lejos.nxt.LCD;
-import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
-import lejos.robotics.Color;
 
 /* 
  * OdometryCorrection.java
  */
 
 public class OdometryCorrection extends Thread {
-	private static final long CORRECTION_PERIOD = 10;
-	private Odometer odometer;
-	private ColorSensor colorSensor = new ColorSensor(SensorPort.S2);
 
-	private final int LIGHTSENSOR_THRESHOLD = 30;
-	private final double SENSOR_DISTANCE = 12.4;
-	private final double TILE_LENGTH = 30.48;
-	private final double HALF_TILE = 15.24;
+	private Odometer odometer;
+	private Robot robot;
 
 	// constructor
 	public OdometryCorrection(Odometer odometer) {
 		this.odometer = odometer;
+		this.robot = new Robot();
 	}
 
 	// run method (required for Thread)
 	public void run() {
 		long correctionStart, correctionEnd;
-		int previousLight=colorSensor.getNormalizedLightValue();
+		int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
 
 		while (true) {
 			correctionStart = System.currentTimeMillis();
 
 			// put your correction code here
-			int light = colorSensor.getNormalizedLightValue();
-			
+			int light = robot.COLOR_SENSOR.getNormalizedLightValue();
+
 			// LCD.drawString("Light : " + light, 0, 5);
-			if (previousLight-light > LIGHTSENSOR_THRESHOLD) {
+			if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
 
 				Sound.beep();
 
@@ -53,9 +44,9 @@ public class OdometryCorrection extends Thread {
 
 			// this ensure the odometry correction occurs only once every period
 			correctionEnd = System.currentTimeMillis();
-			if (correctionEnd - correctionStart < CORRECTION_PERIOD) {
+			if (correctionEnd - correctionStart < robot.CORRECTION_PERIOD) {
 				try {
-					Thread.sleep(CORRECTION_PERIOD
+					Thread.sleep(robot.CORRECTION_PERIOD
 							- (correctionEnd - correctionStart));
 				} catch (InterruptedException e) {
 					// there is nothing to be done here because it is not
@@ -81,22 +72,22 @@ public class OdometryCorrection extends Thread {
 
 	private void correctX() {
 		// calculate distance from closest line
-		double offset = SENSOR_DISTANCE
+		double offset = robot.LIGHT_SENSOR_DISTANCE
 				* Math.sin(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
-		double realX = odometer.getX() - (odometer.getX() % TILE_LENGTH)
-				+ HALF_TILE + offset;
+		double realX = odometer.getX() - (odometer.getX() % robot.TILE_LENGTH)
+				+ robot.HALF_TILE + offset;
 		;
 		odometer.setX(realX);
 	}
 
 	private void correctY() {
 		// calculate distance from closest line
-		double offset = SENSOR_DISTANCE
+		double offset = robot.LIGHT_SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
-		double realY = odometer.getY() - (odometer.getY() % TILE_LENGTH)
-				+ HALF_TILE + offset;
+		double realY = odometer.getY() - (odometer.getY() % robot.TILE_LENGTH)
+				+ robot.HALF_TILE + offset;
 		;
 		odometer.setY(realY);
 	}

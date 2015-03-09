@@ -7,10 +7,8 @@ public class Odometer extends Thread {
 	// Tachometer count
 	private int tachoLeft, tachoRight;
 
-	// odometer update period, in ms
-	private static final long ODOMETER_PERIOD = 25;
-
-	private Demo demo;
+	// Robot object for constants
+	private Robot robot;
 	
 	// lock object for mutual exclusion
 	public Object lock;
@@ -21,7 +19,7 @@ public class Odometer extends Thread {
 		y = 0.0;
 		theta = 0.0;
 		lock = new Object();
-		demo = new Demo();
+		robot = new Robot();
 	}
 
 	// run method (required for Thread)
@@ -45,11 +43,11 @@ public class Odometer extends Thread {
 			// Calculate left and right arc distance according to formula in lab
 			// tutorial
 			double leftArcDistance = Math
-					.toRadians(deltaTachoLeft * demo.getRadius());
+					.toRadians(deltaTachoLeft * robot.RADIUS);
 			double rightArcDistance = Math.toRadians(deltaTachoRight
-					* demo.getRadius());
+					* robot.RADIUS);
 
-			double deltaTheta = ((leftArcDistance - rightArcDistance) / demo.getWidth());
+			double deltaTheta = ((leftArcDistance - rightArcDistance) / robot.WIDTH);
 			double deltaArcLength = (leftArcDistance + rightArcDistance) / 2.0;
 
 			double tempTheta = Math.toDegrees(deltaTheta) + getTheta();
@@ -68,9 +66,9 @@ public class Odometer extends Thread {
 
 			// this ensures that the odometer only runs once every period
 			updateEnd = System.currentTimeMillis();
-			if (updateEnd - updateStart < ODOMETER_PERIOD) {
+			if (updateEnd - updateStart < robot.ODOMETER_PERIOD) {
 				try {
-					Thread.sleep(ODOMETER_PERIOD - (updateEnd - updateStart));
+					Thread.sleep(robot.ODOMETER_PERIOD - (updateEnd - updateStart));
 				} catch (InterruptedException e) {
 					// there is nothing to be done here because it is not
 					// expected that the odometer will be interrupted by

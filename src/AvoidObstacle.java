@@ -1,9 +1,4 @@
-import lejos.nxt.LCD;
 import lejos.nxt.Motor;
-import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
-import lejos.nxt.UltrasonicSensor;
 
 /*
  *  Group 21
@@ -15,35 +10,34 @@ public class AvoidObstacle {
 	Navigation nav;
 	Odometer odo;
 	USFilter filter;
-	private static final int bandCenter = 18, bandWidth = 3;
-	private static final int motorLow = 30, motorHigh = 300;
-	private final int motorStraight = 200;
-	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
+	Robot robot;
+
 	private int distance;
-	private final int ROTATE_SPEED = 100;
 
 	public AvoidObstacle(USFilter filter, Navigation nav) {
 		this.filter = filter;
 		this.nav = nav;
 		this.odo = new Odometer();
+		this.robot = new Robot();
 	}
 
 	// Too close
 	public void avoid() {
 
 		// turn 90 degrees clockwise
-		leftMotor.setSpeed(ROTATE_SPEED);
-		rightMotor.setSpeed(ROTATE_SPEED);
+		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
+		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 
-		leftMotor.rotate(convertAngle(2.118, 15.0785, 90.0), true);
-		rightMotor.rotate(-convertAngle(2.118, 15.0785, 90.0), false);
+		robot.LEFT_MOTOR.rotate(robot.convertAngle(2.118, 15.0785, 90.0), true);
+		robot.RIGHT_MOTOR.rotate(-robot.convertAngle(2.118, 15.0785, 90.0),
+				false);
 
 		// rotate sensor to an angle of 90 degrees
 		Motor.B.rotate(-90);
 
 		// go forward
-		leftMotor.forward();
-		rightMotor.forward();
+		robot.LEFT_MOTOR.forward();
+		robot.RIGHT_MOTOR.forward();
 
 		// Follow the obstacle for a 10 seconds
 		long start_time = System.currentTimeMillis();
@@ -57,40 +51,30 @@ public class AvoidObstacle {
 			// Follow the obstacle using BANG-BANG style
 
 			// calculate deviation from wanted distance
-			int delta = distance - bandCenter;
+			int delta = distance - robot.BANDCENTER;
 
 			// Within tolerance
-			if (Math.abs(delta) <= bandWidth) {
+			if (Math.abs(delta) <= robot.BANDWIDTH) {
 				// go straight
-				rightMotor.setSpeed(motorStraight);
+				robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_STRAIGHT);
 			}
 
 			// Too far
-			else if (delta > bandWidth) {
+			else if (delta > robot.BANDWIDTH) {
 				// turn right by accelerating right motor
-				rightMotor.setSpeed(motorHigh);
+				robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_FAST);
 			}
 
 			// Too close
-			else if (delta < bandWidth) {
+			else if (delta < robot.BANDWIDTH) {
 				// turn left by decelerating right motor
-				rightMotor.setSpeed(motorLow);
+				robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_SLOW);
 			}
 
 		}
 		Motor.B.rotate(90);
 		// stop motors
-		rightMotor.setSpeed(0);
-		leftMotor.setSpeed(0);
-	}
-
-	// Helper methods to convert distance and angle in degrees the motors have
-	// to rotate by
-	private static int convertDistance(double radius, double distance) {
-		return (int) ((180.0 * distance) / (Math.PI * radius));
-	}
-
-	private static int convertAngle(double radius, double width, double angle) {
-		return convertDistance(radius, Math.PI * width * angle / 360.0);
+		robot.RIGHT_MOTOR.setSpeed(0);
+		robot.LEFT_MOTOR.setSpeed(0);
 	}
 }

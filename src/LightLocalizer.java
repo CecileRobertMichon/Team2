@@ -7,32 +7,25 @@
 import java.util.ArrayList;
 
 import lejos.nxt.ColorSensor;
-import lejos.nxt.Motor;
-import lejos.nxt.NXTRegulatedMotor;
 
 public class LightLocalizer {
-	private final int MOTOR_STRAIGHT = 150;
-	private final int LIGHTSENSOR_THRESHOLD = 30;
-	private final double SENSOR_DISTANCE = 12.4;
 
 	private Odometer odo;
 	private Navigation nav;
+	private Robot robot;
 	private ColorSensor ls;
-	private Demo demo;
-	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	private double light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
 	private int counter = 0;
 	private double negativeYTheta;
 
-	public LightLocalizer(Odometer odo, ColorSensor ls2, Navigation nav) {
+	public LightLocalizer(Odometer odo, Navigation nav) {
 		this.odo = odo;
-		this.ls = ls2;
+		this.robot = new Robot();
+		this.ls = robot.COLOR_SENSOR;
 		this.nav = nav;
-		this.demo = new Demo();
-
 		// turn on the light
-		ls2.setFloodlight(true);
+		ls.setFloodlight(true);
 	}
 
 	public void doLocalization() {
@@ -47,12 +40,12 @@ public class LightLocalizer {
 		nav.rotate(true);
 		// rotate 360 degrees
 		nav.turnTo(1);
-		leftMotor.rotate(convertAngle(demo.getRadius(), demo.getWidth(), 360),
-				true);
-		rightMotor.rotate(
-				-convertAngle(demo.getRadius(), demo.getWidth(), 360), true);
-		int previousLightValue= ls.getNormalizedLightValue();
-		while (leftMotor.isMoving()) {
+		robot.LEFT_MOTOR.rotate(
+				robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
+		robot.RIGHT_MOTOR.rotate(
+				-robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
+		int previousLightValue = ls.getNormalizedLightValue();
+		while (robot.LEFT_MOTOR.isMoving()) {
 			// wait to avoid seeing the same line twice
 			try {
 				Thread.sleep(50);
@@ -60,7 +53,7 @@ public class LightLocalizer {
 			}
 			// record line angles and count lines crossed
 			light = ls.getNormalizedLightValue();
-			if (previousLightValue - light > LIGHTSENSOR_THRESHOLD) {
+			if (previousLightValue - light > robot.LIGHTSENSOR_THRESHOLD) {
 				lineAngles.add(odo.getTheta());
 				counter++;
 				// save the angle of the last y line crossed
@@ -73,9 +66,9 @@ public class LightLocalizer {
 		nav.stop();
 
 		// set x, y and theta to actual values using tutorial formulas
-		odo.setY(-SENSOR_DISTANCE
+		odo.setY(-robot.LIGHT_SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(lineAngles.get(2) - lineAngles.get(0)) / 2));
-		odo.setX(-SENSOR_DISTANCE
+		odo.setX(-robot.LIGHT_SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(lineAngles.get(3) - lineAngles.get(1)) / 2));
 
 		double deltaTheta = 90 - (negativeYTheta - 180)
@@ -86,29 +79,19 @@ public class LightLocalizer {
 
 	// helper method to find first line ahead
 	private void findLine() {
-		int previousLightValue=ls.getNormalizedLightValue();
+		int previousLightValue = ls.getNormalizedLightValue();
 		this.light = ls.getNormalizedLightValue();
 
 		// Go forward until sensor detects line
-		while (previousLightValue - light < LIGHTSENSOR_THRESHOLD) {
-			leftMotor.setSpeed(MOTOR_STRAIGHT);
-			rightMotor.setSpeed(MOTOR_STRAIGHT);
-			rightMotor.forward();
-			leftMotor.forward();
+		while (previousLightValue - light < robot.LIGHTSENSOR_THRESHOLD) {
+			robot.LEFT_MOTOR.setSpeed(robot.MOTOR_STRAIGHT);
+			robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_STRAIGHT);
+			robot.RIGHT_MOTOR.forward();
+			robot.LEFT_MOTOR.forward();
 			light = ls.getNormalizedLightValue();
 		}
 
 		// found first line, stop robot
 		nav.stop();
-	}
-
-	// Helper methods to convert distance and angle in degrees the motors have
-	// to rotate by
-	public static int convertDistance(double radius, double distance) {
-		return (int) ((180.0 * distance) / (Math.PI * radius));
-	}
-
-	public static int convertAngle(double radius, double width, double angle) {
-		return convertDistance(radius, Math.PI * width * angle / 360.0);
 	}
 }

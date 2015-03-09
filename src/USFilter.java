@@ -5,10 +5,12 @@ public class USFilter extends Thread {
 	private int medianDistance;
 	private int[] input, sorted;
 	private UltrasonicSensor us;
+	private Robot robot;
 	private int counter;
 
-	public USFilter(UltrasonicSensor us) {
-		this.us = us;
+	public USFilter() {
+		this.robot = new Robot();
+		this.us = robot.US;
 		medianDistance = 800;
 		input = new int[5];
 		for (int i = 0; i < input.length; i++) {

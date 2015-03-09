@@ -1,9 +1,3 @@
-import lejos.nxt.LCD;
-import lejos.nxt.Motor;
-import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
-import lejos.nxt.UltrasonicSensor;
 
 /*
  *  Group 21
@@ -16,21 +10,17 @@ public class Navigation {
 	private Odometer odometer;
 	private AvoidObstacle obs;
 	private USFilter filter;
-	private Demo demo;
-	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
+	private Robot robot;
 	private final double DISTANCE_TOLERANCE = 0.5;
 	private final double ANGLE_TOLERANCE = 0.25;
-	private final int MOTOR_STRAIGHT = 250;
-	private final int MOTOR_ROTATE = 150;
-	private final int MOTOR_SLOW = 100;
 	private boolean running = false;
 
 	// constructor
 	public Navigation(Odometer odo, USFilter filter) {
 		this.odometer = odo;
 		this.obs = new AvoidObstacle(filter, this);
-		this.demo = new Demo();
 		this.filter = filter;
+		this.robot = new Robot();
 	}
 
 	public void travelTo(double x, double y) {
@@ -63,8 +53,8 @@ public class Navigation {
 			goForward(distance);
 		}
 		// stop the motors
-		leftMotor.setSpeed(0);
-		rightMotor.setSpeed(0);
+		robot.LEFT_MOTOR.setSpeed(0);
+		robot.RIGHT_MOTOR.setSpeed(0);
 
 		running = false;
 	}
@@ -75,17 +65,17 @@ public class Navigation {
 		int wallDist;
 
 		// drive straight for given distance
-		leftMotor.setSpeed(MOTOR_STRAIGHT);
-		rightMotor.setSpeed(MOTOR_STRAIGHT);
+		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_STRAIGHT);
+		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_STRAIGHT);
 
-		int travelDistance = convertDistance(demo.getRadius(), distance);
+		int travelDistance = robot.convertDistance(robot.RADIUS, distance);
 
-		leftMotor.rotate(travelDistance, true);
-		rightMotor.rotate(travelDistance, true);
+		robot.LEFT_MOTOR.rotate(travelDistance, true);
+		robot.RIGHT_MOTOR.rotate(travelDistance, true);
 
 		// continuously check for US data to detect obstacle while robot is
 		// going forward
-		while (rightMotor.isMoving()) {
+		while (robot.RIGHT_MOTOR.isMoving()) {
 			wallDist = filter.getMedianDistance();
 			// call method to avoid obstacle if object is detected
 			if (wallDist < 15) {
@@ -99,40 +89,40 @@ public class Navigation {
 	public void goBackward(double distance) {
 
 		// drive straight for given distance
-		leftMotor.setSpeed(MOTOR_ROTATE);
-		rightMotor.setSpeed(MOTOR_ROTATE);
+		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
+		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 
-		int travelDistance = convertDistance(demo.getRadius(), distance);
+		int travelDistance = robot.convertDistance(robot.RADIUS, distance);
 
-		leftMotor.rotate(-travelDistance, true);
-		rightMotor.rotate(-travelDistance, false);
+		robot.LEFT_MOTOR.rotate(-travelDistance, true);
+		robot.RIGHT_MOTOR.rotate(-travelDistance, false);
 
 	}
 	
 	// method to rotate clockwise or counterclockwise
 	public void rotate (boolean clockwise){
-		leftMotor.setSpeed(MOTOR_SLOW);
-		rightMotor.setSpeed(MOTOR_SLOW);
+		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_SLOW);
+		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_SLOW);
 		if (clockwise){
-			leftMotor.forward();
-			rightMotor.backward();
+			robot.LEFT_MOTOR.forward();
+			robot.RIGHT_MOTOR.backward();
 		} else {
-			leftMotor.backward();
-			rightMotor.forward();
+			robot.LEFT_MOTOR.backward();
+			robot.RIGHT_MOTOR.forward();
 		}
 	}
 	
 	// stop motors
 	public void stop(){
-		leftMotor.setSpeed(0);
-		rightMotor.setSpeed(0);
+		robot.LEFT_MOTOR.setSpeed(0);
+		robot.RIGHT_MOTOR.setSpeed(0);
 	}
 
 
 	public void turnTo(double theta) {
 		running = true;
-		leftMotor.setSpeed(MOTOR_ROTATE);
-		rightMotor.setSpeed(MOTOR_ROTATE);
+		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
+		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 
 		// relative angle robot has to rotate by
 		double errorTheta = theta - odometer.getTheta();
@@ -143,30 +133,30 @@ public class Navigation {
 
 			if (errorTheta < -180.0) {
 				// turn right
-				leftMotor
-						.rotate(convertAngle(demo.getRadius(), demo.getWidth(),
+				robot.LEFT_MOTOR
+						.rotate(robot.convertAngle(robot.RADIUS, robot.WIDTH,
 								360 - Math.abs(errorTheta)), true);
-				rightMotor
-						.rotate(-convertAngle(demo.getRadius(), demo.getWidth(),
+				robot.RIGHT_MOTOR
+						.rotate(-robot.convertAngle(robot.RADIUS, robot.WIDTH,
 								360 - Math.abs(errorTheta)), false);
 			} else if (errorTheta < 0.0) {
 				// turn left
-				leftMotor.rotate(
-						-convertAngle(demo.getRadius(), demo.getWidth(), Math.abs(errorTheta)),
+				robot.LEFT_MOTOR.rotate(
+						-robot.convertAngle(robot.RADIUS, robot.WIDTH, Math.abs(errorTheta)),
 						true);
-				rightMotor.rotate(
-						convertAngle(demo.getRadius(), demo.getWidth(), Math.abs(errorTheta)),
+				robot.RIGHT_MOTOR.rotate(
+						robot.convertAngle(robot.RADIUS, robot.WIDTH, Math.abs(errorTheta)),
 						false);
 			} else if (errorTheta > 180.0) {
 				// turn left
-				leftMotor.rotate(
-						-convertAngle(demo.getRadius(), demo.getWidth(), 360 - errorTheta), true);
-				rightMotor.rotate(
-						convertAngle(demo.getRadius(), demo.getWidth(), 360 - errorTheta), false);
+				robot.LEFT_MOTOR.rotate(
+						-robot.convertAngle(robot.RADIUS, robot.WIDTH, 360 - errorTheta), true);
+				robot.RIGHT_MOTOR.rotate(
+						robot.convertAngle(robot.RADIUS, robot.WIDTH, 360 - errorTheta), false);
 			} else {
 				// turn right
-				leftMotor.rotate(convertAngle(demo.getRadius(), demo.getWidth(), errorTheta), true);
-				rightMotor.rotate(-convertAngle(demo.getRadius(), demo.getWidth(), errorTheta),
+				robot.LEFT_MOTOR.rotate(robot.convertAngle(robot.RADIUS, robot.WIDTH, errorTheta), true);
+				robot.RIGHT_MOTOR.rotate(-robot.convertAngle(robot.RADIUS, robot.WIDTH, errorTheta),
 						false);
 			}
 
@@ -177,14 +167,5 @@ public class Navigation {
 	public boolean isNavigating() {
 		return running;
 	}
-
-	// Helper methods to convert distance and angle in degrees the motors have
-	// to rotate by
-	public static int convertDistance(double radius, double distance) {
-		return (int) ((180.0 * distance) / (Math.PI * radius));
-	}
-
-	public static int convertAngle(double radius, double width, double angle) {
-		return convertDistance(radius, Math.PI * width * angle / 360.0);
-	}
+	
 }
