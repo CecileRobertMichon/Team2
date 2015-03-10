@@ -3,9 +3,9 @@
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
  *  Derek Yu - 260570997
- *  Ajan Ahmed - 
- *  Georges Assouad -
- *  Chaohan Wang -
+ *  Ajan Ahmed - 260509046
+ *  Georges Assouad - 260567730
+ *  Chaohan Wang - 260516712
  */
 
 import lejos.nxt.Button;
@@ -34,9 +34,9 @@ public class Demo {
 		// Motor.A.rotate(2786, true); Motor.B.rotate(-2786, false);
 
 		// perform the ultrasonic localization
-		USLocalizer usl = new USLocalizer(odo,
-				USLocalizer.LocalizationType.FALLING_EDGE, nav, filter);
-		usl.doLocalization();
+		//USLocalizer usl = new USLocalizer(odo,
+		//		USLocalizer.LocalizationType.FALLING_EDGE, nav, filter);
+		//usl.doLocalization();
 
 		// perform the light sensor localization
 		LightLocalizer lsl = new LightLocalizer(odo, nav);
