@@ -70,10 +70,10 @@ public class LightLocalizer {
 		double thetaX2 = lineAngles.get(2);
 		double thetaY2 = lineAngles.get(3);
 
-		LCD.drawString("1 : " + thetaX1, 0, 1);
-		LCD.drawString("2 : " + thetaY1, 0, 2);
-		LCD.drawString("3 : " + thetaX2, 0, 3);
-		LCD.drawString("4 : " + thetaY2, 0, 4);
+		//LCD.drawString("1 : " + thetaX1, 0, 1);
+		//LCD.drawString("2 : " + thetaY1, 0, 2);
+		//LCD.drawString("3 : " + thetaX2, 0, 3);
+		//LCD.drawString("4 : " + thetaY2, 0, 4);
 
 		if (thetaY2 < 20) {
 			thetaY2 += 360;

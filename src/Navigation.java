@@ -9,27 +9,33 @@ import lejos.nxt.NXTRegulatedMotor;
 public class Navigation {
 
 	private Odometer odometer;
+	private AvoidObstacle obs;
+	private USFilter filter;
 	private Robot robot = new Robot();
-	private NXTRegulatedMotor leftMotor = robot.LEFT_MOTOR, rightMotor = robot.RIGHT_MOTOR;
-	private final double DISTANCE_TOLERANCE = 0.5;
-	private final double ANGLE_TOLERANCE = 0.25;
-	private final int MOTOR_STRAIGHT = robot.MOTOR_STRAIGHT ;
+	private NXTRegulatedMotor leftMotor = robot.LEFT_MOTOR,
+			rightMotor = robot.RIGHT_MOTOR;
+	private final int MOTOR_STRAIGHT = robot.MOTOR_STRAIGHT;
 	private final int MOTOR_ROTATE = robot.MOTOR_ROTATE;
 	private final int MOTOR_SLOW = robot.MOTOR_SLOW;
 	private final double RADIUS = robot.RADIUS;
 	private final double WIDTH = robot.WIDTH;
+	private boolean isLocalizing = false;
 
 	// constructor
 	public Navigation(Odometer odo, USFilter filter) {
 		this.odometer = odo;
+		this.filter = filter;
 	}
 
 	public void travelTo(double x, double y) {
 
+		x = x * 30.48;
+		y = y * 30.48;
+
 		// while x or y different from odometer's measured coordinates (ie. the
 		// robot has not reached its final destination yet)
-		while ((Math.abs(x - odometer.getX()) > DISTANCE_TOLERANCE || Math
-				.abs(y - odometer.getY()) > DISTANCE_TOLERANCE)) {
+		while ((Math.abs(x - odometer.getX()) > robot.DISTANCE_TOLERANCE || Math
+				.abs(y - odometer.getY()) > robot.DISTANCE_TOLERANCE)) {
 
 			// calculate angle to point
 			double minTheta = (Math.atan2(x - odometer.getX(),
@@ -57,6 +63,8 @@ public class Navigation {
 
 	public void goForward(double distance) {
 
+		int wallDist;
+
 		// drive straight for given distance
 		leftMotor.setSpeed(MOTOR_STRAIGHT);
 		rightMotor.setSpeed(MOTOR_STRAIGHT);
@@ -64,10 +72,20 @@ public class Navigation {
 		int travelDistance = robot.convertDistance(RADIUS, distance);
 
 		leftMotor.rotate(travelDistance, true);
-		rightMotor.rotate(travelDistance, false);
+		rightMotor.rotate(travelDistance, true);
+
+		// continuously check for US data to detect obstacle while robot is
+		// going forward
+		while (rightMotor.isMoving() && !isLocalizing) {
+			wallDist = filter.getMedianDistance();
+			// call method to avoid obstacle if object is detected
+			if (wallDist < 15) {
+				obs.avoid();
+			}
+		}
 
 	}
-	
+
 	public void goBackward(double distance) {
 
 		// drive straight for given distance
@@ -80,12 +98,12 @@ public class Navigation {
 		rightMotor.rotate(-travelDistance, false);
 
 	}
-	
+
 	// method to rotate clockwise or counterclockwise
-	public void rotate (boolean clockwise){
+	public void rotate(boolean clockwise) {
 		leftMotor.setSpeed(MOTOR_SLOW);
 		rightMotor.setSpeed(MOTOR_SLOW);
-		if (clockwise){
+		if (clockwise) {
 			leftMotor.forward();
 			rightMotor.backward();
 		} else {
@@ -93,13 +111,12 @@ public class Navigation {
 			rightMotor.forward();
 		}
 	}
-	
+
 	// stop motors
-	public void stop(){
+	public void stop() {
 		leftMotor.setSpeed(0);
 		rightMotor.setSpeed(0);
 	}
-
 
 	public void turnTo(double theta) {
 
@@ -109,41 +126,47 @@ public class Navigation {
 		// relative angle robot has to rotate by
 		double errorTheta = theta - odometer.getTheta();
 
-		while (Math.abs(errorTheta % 360) > ANGLE_TOLERANCE) {
+		while (Math.abs(errorTheta % 360) > robot.ANGLE_TOLERANCE) {
 
 			errorTheta = theta - odometer.getTheta();
 
 			if (errorTheta < -180.0) {
 				// turn right
-				leftMotor
-						.rotate(robot.convertAngle(RADIUS, WIDTH,
+				leftMotor.rotate(
+						robot.convertAngle(RADIUS, WIDTH,
 								360 - Math.abs(errorTheta)), true);
-				rightMotor
-						.rotate(-robot.convertAngle(RADIUS, WIDTH,
+				rightMotor.rotate(
+						-robot.convertAngle(RADIUS, WIDTH,
 								360 - Math.abs(errorTheta)), false);
 			} else if (errorTheta < 0.0) {
 				// turn left
-				leftMotor.rotate(
-						-robot.convertAngle(RADIUS, WIDTH, Math.abs(errorTheta)),
-						true);
-				rightMotor.rotate(
-						robot.convertAngle(RADIUS, WIDTH, Math.abs(errorTheta)),
-						false);
+				leftMotor.rotate(-robot.convertAngle(RADIUS, WIDTH,
+						Math.abs(errorTheta)), true);
+				rightMotor
+						.rotate(robot.convertAngle(RADIUS, WIDTH,
+								Math.abs(errorTheta)), false);
 			} else if (errorTheta > 180.0) {
 				// turn left
 				leftMotor.rotate(
-						-robot.convertAngle(RADIUS, WIDTH, 360 - errorTheta), true);
+						-robot.convertAngle(RADIUS, WIDTH, 360 - errorTheta),
+						true);
 				rightMotor.rotate(
-						robot.convertAngle(RADIUS, WIDTH, 360 - errorTheta), false);
+						robot.convertAngle(RADIUS, WIDTH, 360 - errorTheta),
+						false);
 			} else {
 				// turn right
-				leftMotor.rotate(robot.convertAngle(RADIUS, WIDTH, errorTheta), true);
-				rightMotor.rotate(-robot.convertAngle(RADIUS, WIDTH, errorTheta),
-						false);
+				leftMotor.rotate(robot.convertAngle(RADIUS, WIDTH, errorTheta),
+						true);
+				rightMotor.rotate(
+						-robot.convertAngle(RADIUS, WIDTH, errorTheta), false);
 			}
 
 		}
 
+	}
+	
+	public void setIsLocalizing(boolean localization){
+		this.isLocalizing = localization;
 	}
 
 }

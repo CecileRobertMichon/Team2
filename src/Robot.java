@@ -9,8 +9,8 @@ public class Robot {
 	// Constants used throughout the project
 	
 	// Robot design lengths
-	public final double RADIUS = 2.149;
-	public final double WIDTH = 16.63;
+	public final double RADIUS = 2.09;
+	public final double WIDTH = 16.26;
 	
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
@@ -28,7 +28,7 @@ public class Robot {
 
 	// Light sensor values
 	public final int LIGHTSENSOR_THRESHOLD = 30;
-	public final double LIGHT_SENSOR_DISTANCE = 11.5;
+	public final double LIGHT_SENSOR_DISTANCE = 12.4;
 
 	// Motor and sensor ports
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B, LOADER = Motor.C;
@@ -38,6 +38,8 @@ public class Robot {
 	// Tile constants
 	public final double TILE_LENGTH = 30.48;
 	public final double HALF_TILE = 15.24;
+	public final double DISTANCE_TOLERANCE = 0.5;
+	public final double ANGLE_TOLERANCE = 0.25;
 	
 	// Target positions
 	public final int TARGET_ONE_X = 0;
