@@ -19,7 +19,6 @@ public class LightLocalizer {
 	private int light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
 	private int counter = 0;
-	private double negativeYTheta;
 
 	public LightLocalizer(Odometer odo, Navigation nav) {
 		this.odo = odo;
@@ -56,10 +55,7 @@ public class LightLocalizer {
 				Sound.beep();
 				lineAngles.add(odo.getTheta());
 				counter++;
-				// save the angle of the last y line crossed
-				if (counter == 4) {
-					negativeYTheta = odo.getTheta();
-				}
+				
 				// wait to avoid seeing the same line twice
 				try {
 					Thread.sleep(250);
@@ -91,23 +87,6 @@ public class LightLocalizer {
 
 		double deltaTheta = 90 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
-
-		/*
-		 * double thetaX = lineAngles.get(2)-lineAngles.get(0); // compute
-		 * difference between x-axis angles double thetaY = lineAngles.get(3) -
-		 * lineAngles.get(1); // compute difference between y-axis angles double
-		 * updatedX =
-		 * -robot.LIGHT_SENSOR_DISTANCE*Math.cos(Math.toRadians(thetaY/2));
-		 * //calculate new X angle double updatedY =
-		 * -robot.LIGHT_SENSOR_DISTANCE*Math.cos(Math.toRadians(thetaX/2));
-		 * //calculate new Y angle double deltaTheta = (thetaY/2) + 90 -
-		 * (lineAngles.get(3)-180); //Theta to be changed double theta =
-		 * odo.getTheta(); // get current angle double correctTheta= (theta +
-		 * deltaTheta); // calculate corrected theta // Correcting odometer
-		 * values odo.setPosition(new double [] {updatedX,updatedY,
-		 * correctTheta}, new boolean [] {true, true, true}); // stop robot
-		 * motion robot.LEFT_MOTOR.setSpeed(0); robot.RIGHT_MOTOR.setSpeed(0);
-		 */
 	}
 
 	// helper method to find first line ahead

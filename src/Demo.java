@@ -9,6 +9,7 @@
  */
 
 import lejos.nxt.Button;
+import lejos.nxt.Motor;
 
 public class Demo {
 
@@ -24,13 +25,13 @@ public class Demo {
 
 		odo.start();
 		//lcd.start();
-		//filter.start();
+		filter.start();
 
 		// Calibration Code - used to find exact radius and width values
 
-		// Motor.A.setAcceleration(2000); Motor.B.setAcceleration(2000);
-		// Motor.A.setSpeed(100); Motor.B.setSpeed(100);
-		// Motor.A.rotate(1625, true); Motor.B.rotate(1625, false);
+		 Motor.A.setAcceleration(2000); Motor.B.setAcceleration(2000);
+		 Motor.A.setSpeed(100); Motor.B.setSpeed(100);
+		 Motor.A.rotate(1650, true); Motor.B.rotate(1650, false);
 		// Motor.A.rotate(2786, true); Motor.B.rotate(-2786, false);
 
 		// perform the ultrasonic localization
@@ -43,8 +44,11 @@ public class Demo {
 		//lsl.doLocalization();
 
 		// when done travel to (0,0) and turn to 0 degrees
+		/*nav.travelTo(0, 30);
+		nav.travelTo(30, 30);
 		nav.travelTo(30, 0);
-		//nav.turnTo(0);
+		nav.travelTo(0, 0);
+*/
 
 		// correc.start();
 		/*

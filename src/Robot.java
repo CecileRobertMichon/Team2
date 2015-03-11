@@ -28,7 +28,7 @@ public class Robot {
 
 	// Light sensor values
 	public final int LIGHTSENSOR_THRESHOLD = 30;
-	public final double LIGHT_SENSOR_DISTANCE = 10.5;
+	public final double LIGHT_SENSOR_DISTANCE = 11.5;
 
 	// Motor and sensor ports
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B, LOADER = Motor.C;
