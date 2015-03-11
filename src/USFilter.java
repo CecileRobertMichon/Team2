@@ -11,7 +11,7 @@ public class USFilter extends Thread {
 	public USFilter() {
 		this.robot = new Robot();
 		this.us = robot.US;
-		medianDistance = 800;
+		medianDistance = 0;
 		input = new int[5];
 		for (int i = 0; i < input.length; i++) {
 			input[i] = us.getDistance();

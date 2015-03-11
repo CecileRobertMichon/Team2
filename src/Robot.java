@@ -14,7 +14,7 @@ public class Robot {
 	
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
-	public final int MOTOR_ROTATE = 100;
+	public final int MOTOR_ROTATE = 150;
 	public final int MOTOR_STRAIGHT = 200;
 	public final int MOTOR_FAST = 300;
 	
@@ -28,7 +28,7 @@ public class Robot {
 
 	// Light sensor values
 	public final int LIGHTSENSOR_THRESHOLD = 30;
-	public final double LIGHT_SENSOR_DISTANCE = 12.4;
+	public final double LIGHT_SENSOR_DISTANCE = 10.5;
 
 	// Motor and sensor ports
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B, LOADER = Motor.C;

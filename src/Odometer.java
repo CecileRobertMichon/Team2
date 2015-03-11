@@ -30,8 +30,8 @@ public class Odometer extends Thread {
 			updateStart = System.currentTimeMillis();
 
 			// Get each motor's tachometer count
-			int newTachoLeft = Motor.A.getTachoCount();
-			int newTachoRight = Motor.B.getTachoCount();
+			int newTachoLeft = robot.LEFT_MOTOR.getTachoCount();
+			int newTachoRight = robot.RIGHT_MOTOR.getTachoCount();
 
 			// calculate change in tachometer
 			int deltaTachoLeft = newTachoLeft - tachoLeft;

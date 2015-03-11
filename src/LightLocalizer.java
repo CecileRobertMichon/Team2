@@ -7,6 +7,8 @@
 import java.util.ArrayList;
 
 import lejos.nxt.ColorSensor;
+import lejos.nxt.LCD;
+import lejos.nxt.Sound;
 
 public class LightLocalizer {
 
@@ -14,7 +16,7 @@ public class LightLocalizer {
 	private Navigation nav;
 	private Robot robot;
 	private ColorSensor ls;
-	private double light;
+	private int light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
 	private int counter = 0;
 	private double negativeYTheta;
@@ -34,7 +36,7 @@ public class LightLocalizer {
 		findLine();
 
 		// Go backwards
-		nav.goBackward(12);
+		nav.goBackward(13);
 
 		// start rotating and clock all 4 gridlines
 		nav.rotate(true);
@@ -45,36 +47,67 @@ public class LightLocalizer {
 		robot.RIGHT_MOTOR.rotate(
 				-robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
 		int previousLightValue = ls.getNormalizedLightValue();
+		light = ls.getNormalizedLightValue();
 		while (robot.LEFT_MOTOR.isMoving()) {
-			// wait to avoid seeing the same line twice
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-			}
-			// record line angles and count lines crossed
+
 			light = ls.getNormalizedLightValue();
+			// record line angles and count lines crossed
 			if (previousLightValue - light > robot.LIGHTSENSOR_THRESHOLD) {
+				Sound.beep();
 				lineAngles.add(odo.getTheta());
 				counter++;
 				// save the angle of the last y line crossed
 				if (counter == 4) {
 					negativeYTheta = odo.getTheta();
 				}
+				// wait to avoid seeing the same line twice
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+				}
 			}
-
 		}
 		nav.stop();
 
-		// set x, y and theta to actual values using tutorial formulas
-		odo.setY(-robot.LIGHT_SENSOR_DISTANCE
-				* Math.cos(Math.toRadians(lineAngles.get(2) - lineAngles.get(0)) / 2));
-		odo.setX(-robot.LIGHT_SENSOR_DISTANCE
-				* Math.cos(Math.toRadians(lineAngles.get(3) - lineAngles.get(1)) / 2));
+		double thetaX1 = lineAngles.get(0);
+		double thetaY1 = lineAngles.get(1);
+		double thetaX2 = lineAngles.get(2);
+		double thetaY2 = lineAngles.get(3);
 
-		double deltaTheta = 90 - (negativeYTheta - 180)
-				+ ((lineAngles.get(3) - lineAngles.get(1)) / 2);
+		LCD.drawString("1 : " + thetaX1, 0, 1);
+		LCD.drawString("2 : " + thetaY1, 0, 2);
+		LCD.drawString("3 : " + thetaX2, 0, 3);
+		LCD.drawString("4 : " + thetaY2, 0, 4);
+
+		if (thetaY2 < 20) {
+			thetaY2 += 360;
+		}
+
+		// set x, y and theta to actual values using tutorial formulas
+		odo.setX(-robot.LIGHT_SENSOR_DISTANCE
+				* Math.cos(Math.toRadians(thetaY2 - thetaY1) / 2));
+		odo.setY(-robot.LIGHT_SENSOR_DISTANCE
+				* Math.cos(Math.toRadians(thetaX2 - thetaX1) / 2));
+
+		double deltaTheta = 90 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
 
+		/*
+		 * double thetaX = lineAngles.get(2)-lineAngles.get(0); // compute
+		 * difference between x-axis angles double thetaY = lineAngles.get(3) -
+		 * lineAngles.get(1); // compute difference between y-axis angles double
+		 * updatedX =
+		 * -robot.LIGHT_SENSOR_DISTANCE*Math.cos(Math.toRadians(thetaY/2));
+		 * //calculate new X angle double updatedY =
+		 * -robot.LIGHT_SENSOR_DISTANCE*Math.cos(Math.toRadians(thetaX/2));
+		 * //calculate new Y angle double deltaTheta = (thetaY/2) + 90 -
+		 * (lineAngles.get(3)-180); //Theta to be changed double theta =
+		 * odo.getTheta(); // get current angle double correctTheta= (theta +
+		 * deltaTheta); // calculate corrected theta // Correcting odometer
+		 * values odo.setPosition(new double [] {updatedX,updatedY,
+		 * correctTheta}, new boolean [] {true, true, true}); // stop robot
+		 * motion robot.LEFT_MOTOR.setSpeed(0); robot.RIGHT_MOTOR.setSpeed(0);
+		 */
 	}
 
 	// helper method to find first line ahead

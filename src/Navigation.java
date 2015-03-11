@@ -12,7 +12,7 @@ public class Navigation {
 	private USFilter filter;
 	private Robot robot;
 	private final double DISTANCE_TOLERANCE = 0.5;
-	private final double ANGLE_TOLERANCE = 0.25;
+	private final double ANGLE_TOLERANCE = 1;
 	private boolean running = false;
 
 	// constructor
@@ -25,8 +25,8 @@ public class Navigation {
 
 	public void travelTo(double x, double y) {
 		
-		x = x * 30.48;
-		y = y * 30.48;
+		//x = x * 30.48;
+		//y = y * 30.48;
 		running = true;
 
 		// while x or y different from odometer's measured coordinates (ie. the
@@ -59,7 +59,7 @@ public class Navigation {
 		running = false;
 	}
 
-	private void goForward(double distance) {
+	public void goForward(double distance) {
 
 		running = true;
 		int wallDist;

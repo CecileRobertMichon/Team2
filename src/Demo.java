@@ -23,8 +23,8 @@ public class Demo {
 		OdometryDisplay lcd = new OdometryDisplay(odo, filter);
 
 		odo.start();
-		lcd.start();
-		filter.start();
+		//lcd.start();
+		//filter.start();
 
 		// Calibration Code - used to find exact radius and width values
 
@@ -39,12 +39,12 @@ public class Demo {
 		//usl.doLocalization();
 
 		// perform the light sensor localization
-		LightLocalizer lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
+		//LightLocalizer lsl = new LightLocalizer(odo, nav);
+		//lsl.doLocalization();
 
 		// when done travel to (0,0) and turn to 0 degrees
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
+		nav.travelTo(30, 0);
+		//nav.turnTo(0);
 
 		// correc.start();
 		/*
