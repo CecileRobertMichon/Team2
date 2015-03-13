@@ -81,7 +81,7 @@ public class Navigation {
 		int travelDistance = robot.convertDistance(RADIUS, distance);
 
 		leftMotor.rotate(travelDistance, true);
-		rightMotor.rotate(travelDistance, false);
+		rightMotor.rotate(travelDistance, true);
 
 		// continuously check for US data to detect obstacle while robot is
 		// going forward
@@ -164,16 +164,11 @@ public class Navigation {
 						false);
 			} else {
 				// turn right
-				Sound.beep();
 				leftMotor.rotate(robot.convertAngle(RADIUS, WIDTH, errorTheta),
 						true);
 				rightMotor.rotate(
 						-robot.convertAngle(RADIUS, WIDTH, errorTheta), false);
 			}
-			LCD.drawString(""+ Math.abs(errorTheta % 360), 0, 5);
-			LCD.drawString("" + robot.ANGLE_TOLERANCE, 0, 6);
-			LCD.drawString("" + odometer.getTheta() , 0, 7);
-			//LCD.clear();
 		}
 		
 

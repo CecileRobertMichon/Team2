@@ -9,7 +9,6 @@
  */
 
 import lejos.nxt.Button;
-import lejos.nxt.Motor;
 
 public class Demo {
 
@@ -46,8 +45,8 @@ public class Demo {
 		//usl.doLocalization();
 
 		// perform the light sensor localization
-		//LightLocalizer lsl = new LightLocalizer(odo, nav);
-		//lsl.doLocalization();
+		LightLocalizer lsl = new LightLocalizer(odo, nav);
+		lsl.doLocalization();
 
 		// when done travel to (0,0) and turn to 0 degrees
 		//nav.travelTo(0, 0);
@@ -56,16 +55,18 @@ public class Demo {
 		// start obstacle detection
 		//nav.setIsLocalizing(false);
 		
-		nav.goForward(20);
+		//nav.goForward(20);
+		
+		//correc.start();
 		
 		// Square driver for testing
-		nav.travelTo(0, 2);
+		/*nav.travelTo(0, 2);
 		nav.travelTo(2, 2);
 		nav.travelTo(2, 0);
 		nav.travelTo(0, 0);
+*/
 
 
-		//correc.start();
 		
 		// travel to the right bottom corner of the shooting area while avoiding obstacles 
 		//nav.travelTo(2, 2);

@@ -8,6 +8,7 @@
  *  Chaohan Wang - 260516712
  */
 
+import lejos.nxt.LCD;
 import lejos.nxt.Sound;
 
 public class OdometryCorrection extends Thread {
@@ -38,12 +39,15 @@ public class OdometryCorrection extends Thread {
 				Sound.beep();
 
 				// if horizontal line
-				if (directionNorthSouth(odometer.getTheta())) {
-					correctY();
+				if (isLine(odometer.getY())) {
+					LCD.drawString("Correcting Y", 0, 1);
+					//correctY();
 
 					// if vertical line
-				} else {
-					correctX();
+				}
+				if (isLine(odometer.getX())) {
+					LCD.drawString("Correcting X", 0, 1);
+					//correctX();
 				}
 
 			}
@@ -72,6 +76,15 @@ public class OdometryCorrection extends Thread {
 			return true;
 		} else {
 			// The line crossed is a X line
+			return false;
+		}
+	}
+
+	private boolean isLine(double var) {
+		double remainder = var % robot.TILE_LENGTH;
+		if (remainder < 5 || remainder > robot.TILE_LENGTH - 5) {
+			return true;
+		} else {
 			return false;
 		}
 	}
