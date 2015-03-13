@@ -1,12 +1,4 @@
-/*
- *  Team 2
- *  Cecile Robert-Michon 260552816
- *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
- */
+import lejos.nxt.Motor;
 
 public class Odometer extends Thread {
 	// robot position
@@ -17,7 +9,7 @@ public class Odometer extends Thread {
 
 	// Robot object for constants
 	private Robot robot;
-
+	
 	// lock object for mutual exclusion
 	public Object lock;
 
@@ -50,8 +42,8 @@ public class Odometer extends Thread {
 
 			// Calculate left and right arc distance according to formula in lab
 			// tutorial
-			double leftArcDistance = Math.toRadians(deltaTachoLeft
-					* robot.RADIUS);
+			double leftArcDistance = Math
+					.toRadians(deltaTachoLeft * robot.RADIUS);
 			double rightArcDistance = Math.toRadians(deltaTachoRight
 					* robot.RADIUS);
 
@@ -76,8 +68,7 @@ public class Odometer extends Thread {
 			updateEnd = System.currentTimeMillis();
 			if (updateEnd - updateStart < robot.ODOMETER_PERIOD) {
 				try {
-					Thread.sleep(robot.ODOMETER_PERIOD
-							- (updateEnd - updateStart));
+					Thread.sleep(robot.ODOMETER_PERIOD - (updateEnd - updateStart));
 				} catch (InterruptedException e) {
 					// there is nothing to be done here because it is not
 					// expected that the odometer will be interrupted by
@@ -88,7 +79,7 @@ public class Odometer extends Thread {
 	}
 
 	// accessors
-	public void getPosition(double[] pos) {
+	public void getPosition(double [] pos) {
 		synchronized (lock) {
 			pos[0] = x;
 			pos[1] = y;
@@ -127,14 +118,11 @@ public class Odometer extends Thread {
 	}
 
 	// mutators
-	public void setPosition(double[] pos, boolean[] update) {
+	public void setPosition(double [] pos, boolean [] update) {
 		synchronized (lock) {
-			if (update[0])
-				x = pos[0];
-			if (update[1])
-				y = pos[1];
-			if (update[2])
-				theta = pos[2];
+			if (update[0]) x = pos[0];
+			if (update[1]) y = pos[1];
+			if (update[2]) theta = pos[2];
 		}
 	}
 

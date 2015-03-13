@@ -1,21 +1,16 @@
 /*
- *  Team 2
+ * OdometryDisplay.java
+ *  Group 21
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
  */
 
 import lejos.nxt.LCD;
 
 public class OdometryDisplay extends Thread {
-	
-	private Robot robot = new Robot();
+	private static final long DISPLAY_PERIOD = 250;
 	private Odometer odometer;
 	private USFilter filter;
-	private final long DISPLAY_PERIOD = robot.DISPLAY_PERIOD;
 
 	// constructor
 	public OdometryDisplay(Odometer odometer, USFilter filter) {
@@ -41,7 +36,7 @@ public class OdometryDisplay extends Thread {
 			//LCD.drawString("F:                ", 0, 3);
 			
 			// get the odometry information
-			odometer.getPosition(position);
+			//odometer.getPosition(position);
 
 			// display odometry information
 			for (int i = 0; i < 3; i++) {

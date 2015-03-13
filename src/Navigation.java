@@ -1,36 +1,30 @@
 import lejos.nxt.NXTRegulatedMotor;
 
 /*
- *  Team 2
+ *  Group 21
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
  */
 
 public class Navigation {
 
 	private Odometer odometer;
 	private AvoidObstacle obs;
-	private USFilter filterTravel;
-	private USFilter filterAvoid;
+	private USFilter filter;
 	private Robot robot = new Robot();
 	private NXTRegulatedMotor leftMotor = robot.LEFT_MOTOR,
 			rightMotor = robot.RIGHT_MOTOR;
 	private final int MOTOR_STRAIGHT = robot.MOTOR_STRAIGHT;
 	private final int MOTOR_ROTATE = robot.MOTOR_ROTATE;
+	private final int MOTOR_SLOW = robot.MOTOR_SLOW;
 	private final double RADIUS = robot.RADIUS;
 	private final double WIDTH = robot.WIDTH;
 	private boolean isLocalizing = false;
 
 	// constructor
-	public Navigation(Odometer odo, USFilter filterStraight, USFilter filterLeft) {
+	public Navigation(Odometer odo, USFilter filter) {
 		this.odometer = odo;
-		this.filterTravel = filterStraight;
-		this.filterAvoid = filterLeft;
-		this.obs = new AvoidObstacle(filterAvoid);
+		this.filter = filter;
 	}
 
 	public void travelTo(double x, double y) {
@@ -83,7 +77,7 @@ public class Navigation {
 		// continuously check for US data to detect obstacle while robot is
 		// going forward
 		while (rightMotor.isMoving() && !isLocalizing) {
-			wallDist = filterTravel.getMedianDistance();
+			wallDist = filter.getMedianDistance();
 			// call method to avoid obstacle if object is detected
 			if (wallDist < 15) {
 				obs.avoid();
@@ -95,8 +89,8 @@ public class Navigation {
 	public void goBackward(double distance) {
 
 		// drive straight for given distance
-		leftMotor.setSpeed(MOTOR_STRAIGHT);
-		rightMotor.setSpeed(MOTOR_STRAIGHT);
+		leftMotor.setSpeed(MOTOR_ROTATE);
+		rightMotor.setSpeed(MOTOR_ROTATE);
 
 		int travelDistance = robot.convertDistance(RADIUS, distance);
 
@@ -107,8 +101,8 @@ public class Navigation {
 
 	// method to rotate clockwise or counterclockwise
 	public void rotate(boolean clockwise) {
-		leftMotor.setSpeed(MOTOR_ROTATE);
-		rightMotor.setSpeed(MOTOR_ROTATE);
+		leftMotor.setSpeed(MOTOR_SLOW);
+		rightMotor.setSpeed(MOTOR_SLOW);
 		if (clockwise) {
 			leftMotor.forward();
 			rightMotor.backward();

@@ -1,24 +1,22 @@
 import lejos.nxt.Motor;
 
 /*
- *  Team 2
+ *  Group 21
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
  */
 
 public class AvoidObstacle {
+	Navigation nav;
 	Odometer odo;
 	USFilter filter;
 	Robot robot;
 
 	private int distance;
 
-	public AvoidObstacle(USFilter filter) {
+	public AvoidObstacle(USFilter filter, Navigation nav) {
 		this.filter = filter;
+		this.nav = nav;
 		this.odo = new Odometer();
 		this.robot = new Robot();
 	}
@@ -30,8 +28,8 @@ public class AvoidObstacle {
 		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 
-		robot.LEFT_MOTOR.rotate(robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0), true);
-		robot.RIGHT_MOTOR.rotate(-robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0),
+		robot.LEFT_MOTOR.rotate(robot.convertAngle(2.118, 15.0785, 90.0), true);
+		robot.RIGHT_MOTOR.rotate(-robot.convertAngle(2.118, 15.0785, 90.0),
 				false);
 
 		// rotate sensor to an angle of 90 degrees

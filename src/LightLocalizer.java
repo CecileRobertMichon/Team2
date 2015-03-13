@@ -1,16 +1,13 @@
 /*
- *  Team 2
+ *  Group 21
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
  */
 
 import java.util.ArrayList;
 
 import lejos.nxt.ColorSensor;
+import lejos.nxt.LCD;
 import lejos.nxt.Sound;
 
 public class LightLocalizer {
@@ -21,6 +18,7 @@ public class LightLocalizer {
 	private ColorSensor ls;
 	private int light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
+	private int counter = 0;
 
 	public LightLocalizer(Odometer odo, Navigation nav) {
 		this.odo = odo;
@@ -49,14 +47,15 @@ public class LightLocalizer {
 				-robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
 		int previousLightValue = ls.getNormalizedLightValue();
 		light = ls.getNormalizedLightValue();
-
 		while (robot.LEFT_MOTOR.isMoving()) {
+
 			light = ls.getNormalizedLightValue();
 			// record line angles and count lines crossed
 			if (previousLightValue - light > robot.LIGHTSENSOR_THRESHOLD) {
 				Sound.beep();
 				lineAngles.add(odo.getTheta());
-
+				counter++;
+				
 				// wait to avoid seeing the same line twice
 				try {
 					Thread.sleep(250);
@@ -71,10 +70,10 @@ public class LightLocalizer {
 		double thetaX2 = lineAngles.get(2);
 		double thetaY2 = lineAngles.get(3);
 
-		// LCD.drawString("1 : " + thetaX1, 0, 1);
-		// LCD.drawString("2 : " + thetaY1, 0, 2);
-		// LCD.drawString("3 : " + thetaX2, 0, 3);
-		// LCD.drawString("4 : " + thetaY2, 0, 4);
+		//LCD.drawString("1 : " + thetaX1, 0, 1);
+		//LCD.drawString("2 : " + thetaY1, 0, 2);
+		//LCD.drawString("3 : " + thetaX2, 0, 3);
+		//LCD.drawString("4 : " + thetaY2, 0, 4);
 
 		if (thetaY2 < 20) {
 			thetaY2 += 360;

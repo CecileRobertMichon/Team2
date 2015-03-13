@@ -1,11 +1,7 @@
 /*
- *  Team 2
+ *  Group 21
  *  Cecile Robert-Michon 260552816
  *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
  */
 
 public class USLocalizer {
@@ -13,15 +9,15 @@ public class USLocalizer {
 		FALLING_EDGE, RISING_EDGE
 	};
 
+	public static int ROTATION_SPEED = 100;
+	private final int NOISE = 5;
+	private final int WALL_CENTER = 30;
+
 	private int distance;
 	private Odometer odo;
 	private LocalizationType locType;
 	private Navigation nav;
 	private USFilter filter;
-	private Robot robot = new Robot();
-	
-	private final int NOISE = robot.NOISE;
-	public final int WALL_CENTER = robot.WALL_CENTER;
 
 	public USLocalizer(Odometer odo, LocalizationType locType, Navigation nav,
 			USFilter filter) {

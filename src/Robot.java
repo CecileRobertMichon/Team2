@@ -1,13 +1,3 @@
-/*
- *  Team 2
- *  Cecile Robert-Michon 260552816
- *  Even Wang - 260633630
- *  Derek Yu - 260570997
- *  Ajan Ahmed - 260509046
- *  Georges Assouad - 260567730
- *  Chaohan Wang - 260516712
- */
-
 import lejos.nxt.ColorSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
@@ -31,13 +21,10 @@ public class Robot {
 	// Wall follower constants
 	public final int BANDCENTER = 18;
 	public final int BANDWIDTH = 3;
-	public final int WALL_CENTER = 30;
-	public final int NOISE = 5;
 	
 	// odometer update period, in ms
 	public final long ODOMETER_PERIOD = 25;
 	public final long CORRECTION_PERIOD = 10;
-	public final long DISPLAY_PERIOD = 250;
 
 	// Light sensor values
 	public final int LIGHTSENSOR_THRESHOLD = 30;
@@ -47,7 +34,6 @@ public class Robot {
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B, LOADER = Motor.C;
 	public ColorSensor COLOR_SENSOR = new ColorSensor(SensorPort.S1);
 	public UltrasonicSensor US = new UltrasonicSensor(SensorPort.S2);
-	public UltrasonicSensor US2 = new UltrasonicSensor(SensorPort.S3);
 	
 	// Tile constants
 	public final double TILE_LENGTH = 30.48;
