@@ -1,4 +1,7 @@
+import lejos.nxt.Button;
+import lejos.nxt.LCD;
 import lejos.nxt.NXTRegulatedMotor;
+import lejos.nxt.Sound;
 
 /*
  *  Team 2
@@ -23,7 +26,7 @@ public class Navigation {
 	private final int MOTOR_ROTATE = robot.MOTOR_ROTATE;
 	private final double RADIUS = robot.RADIUS;
 	private final double WIDTH = robot.WIDTH;
-	private boolean isLocalizing = false;
+	private boolean isLocalizing = true;
 
 	// constructor
 	public Navigation(Odometer odo, USFilter filterStraight, USFilter filterLeft) {
@@ -35,8 +38,8 @@ public class Navigation {
 
 	public void travelTo(double x, double y) {
 
-		x = x * 30.48;
-		y = y * 30.48;
+		x = x * robot.TILE_LENGTH;
+		y = y * robot.TILE_LENGTH;
 
 		// while x or y different from odometer's measured coordinates (ie. the
 		// robot has not reached its final destination yet)
@@ -78,14 +81,14 @@ public class Navigation {
 		int travelDistance = robot.convertDistance(RADIUS, distance);
 
 		leftMotor.rotate(travelDistance, true);
-		rightMotor.rotate(travelDistance, true);
+		rightMotor.rotate(travelDistance, false);
 
 		// continuously check for US data to detect obstacle while robot is
 		// going forward
-		while (rightMotor.isMoving() && !isLocalizing) {
+		while (rightMotor.isMoving()) {
 			wallDist = filterTravel.getMedianDistance();
 			// call method to avoid obstacle if object is detected
-			if (wallDist < 15) {
+			if (wallDist < 15 && !isLocalizing) {
 				obs.avoid();
 			}
 		}
@@ -161,13 +164,18 @@ public class Navigation {
 						false);
 			} else {
 				// turn right
+				Sound.beep();
 				leftMotor.rotate(robot.convertAngle(RADIUS, WIDTH, errorTheta),
 						true);
 				rightMotor.rotate(
 						-robot.convertAngle(RADIUS, WIDTH, errorTheta), false);
 			}
-
+			LCD.drawString(""+ Math.abs(errorTheta % 360), 0, 5);
+			LCD.drawString("" + robot.ANGLE_TOLERANCE, 0, 6);
+			LCD.drawString("" + odometer.getTheta() , 0, 7);
+			//LCD.clear();
 		}
+		
 
 	}
 	

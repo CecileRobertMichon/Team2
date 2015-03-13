@@ -53,7 +53,7 @@ public class Robot {
 	public final double TILE_LENGTH = 30.48;
 	public final double HALF_TILE = 15.24;
 	public final double DISTANCE_TOLERANCE = 0.5;
-	public final double ANGLE_TOLERANCE = 0.25;
+	public final double ANGLE_TOLERANCE = 2;
 	
 	// Target positions
 	public final int TARGET_ONE_X = 0;
