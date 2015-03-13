@@ -18,14 +18,17 @@ public class Demo {
 		// setup the odometer, correction, display, and ultrasonic and light
 		// sensors
 		Odometer odo = new Odometer();
+		Robot robot = new Robot();
 		OdometryCorrection correc = new OdometryCorrection(odo);
-		USFilter filter = new USFilter();
-		Navigation nav = new Navigation(odo, filter);
-		OdometryDisplay lcd = new OdometryDisplay(odo, filter);
+		USFilter filterStraight = new USFilter(robot.US);
+		USFilter filterLeft = new USFilter(robot.US2);
+		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
+		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
 
 		odo.start();
 		lcd.start();
-		filter.start();
+		filterStraight.start();
+		filterLeft.start();
 
 		// Calibration Code - used to find exact radius and width values
 
@@ -38,17 +41,17 @@ public class Demo {
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-		//USLocalizer usl = new USLocalizer(odo,
-		//		USLocalizer.LocalizationType.FALLING_EDGE, nav, filter);
-		//usl.doLocalization();
+		USLocalizer usl = new USLocalizer(odo,
+				USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight);
+		usl.doLocalization();
 
 		// perform the light sensor localization
-		LightLocalizer lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
+		//LightLocalizer lsl = new LightLocalizer(odo, nav);
+		//lsl.doLocalization();
 
 		// when done travel to (0,0) and turn to 0 degrees
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
+		//nav.travelTo(0, 0);
+		//nav.turnTo(0);
 		
 		// start obstacle detection
 		nav.setIsLocalizing(false);

@@ -1,3 +1,13 @@
+/*
+ *  Team 2
+ *  Cecile Robert-Michon 260552816
+ *  Even Wang - 260633630
+ *  Derek Yu - 260570997
+ *  Ajan Ahmed - 260509046
+ *  Georges Assouad - 260567730
+ *  Chaohan Wang - 260516712
+ */
+
 import lejos.nxt.UltrasonicSensor;
 
 public class USFilter extends Thread {
@@ -5,12 +15,10 @@ public class USFilter extends Thread {
 	private int medianDistance;
 	private int[] input, sorted;
 	private UltrasonicSensor us;
-	private Robot robot;
 	private int counter;
 
-	public USFilter() {
-		this.robot = new Robot();
-		this.us = robot.US;
+	public USFilter(UltrasonicSensor us) {
+		this.us = us;
 		medianDistance = 0;
 		input = new int[5];
 		for (int i = 0; i < input.length; i++) {
