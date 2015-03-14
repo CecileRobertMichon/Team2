@@ -43,7 +43,7 @@ public class LauncherPositioning {
      int x, y;
      x = odometer.getX();
      y = odometer.getY();
-     int target_distance = sqrt( math.pow((x-x_target),2) + math.pow((y-y_target),2) );
+     int target_distance = sqrt( math.pow((x - x_target),2) + math.pow((y - y_target),2) );
      int discrepancy = target_distance - FIRING_DISTANCE;
      
      if (discrepancy > 0) {
