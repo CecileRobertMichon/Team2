@@ -41,6 +41,7 @@ public class LauncherPositioning {
      travelToFiringPosition(x2, y2);
      lineUp(x2, y2);
      //fire command;
+     travelTo(10*TILE_LENGTH, 10*TILE_LENGTH); //return to normal position
    }
    
    //to move forwards and backwards until target is perfectly in optimal range
