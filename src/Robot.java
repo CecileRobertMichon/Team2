@@ -54,7 +54,10 @@ public class Robot {
  public final double HALF_TILE = 15.24;
  public final double DISTANCE_TOLERANCE = 0.5;
  public final double ANGLE_TOLERANCE = 2;
+ 
+ // Firing constants
  public final double FIRING_DISTANCE = 1.00;
+ public final int SECTION_DIVIDER = 11; 
  
  // Target positions
  public final int TARGET_ONE_X = 0;

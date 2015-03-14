@@ -13,8 +13,6 @@ public class LauncherPositioning {
   
    private Odometer odometer;
    private Robot robot;
-   private double FIRING_DISTANCE = 1.00;
-   private int SECTION_DIVIDER = 11; 
    private int SECTION;
    
    public LauncherPositioning(Odometer odometer) {
