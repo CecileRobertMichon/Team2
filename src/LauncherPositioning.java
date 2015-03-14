@@ -1,6 +1,13 @@
-/**
- * Auto Generated Java Class.
+/*
+ *  Team 2
+ *  Cecile Robert-Michon 260552816
+ *  Even Wang - 260633630
+ *  Derek Yu - 260570997
+ *  Ajan Ahmed - 260509046
+ *  Georges Assouad - 260567730
+ *  Chaohan Wang - 260516712
  */
+
 public class LauncherPositioning {
   //requires (10, 10) in block units is (0, 0) for the launcher
   
