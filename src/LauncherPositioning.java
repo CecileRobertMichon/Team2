@@ -34,7 +34,7 @@ public class LauncherPositioning {
      }
    }
    
-   public void targetAquisition(int x1, int y1, int x2, int y2) {
+   public void targetAcquisition(int x1, int y1, int x2, int y2) {
      travelToFiringPosition(x1, y1);
      lineUp(x1, y1);
      //fire command;
