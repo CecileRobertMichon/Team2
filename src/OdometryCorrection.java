@@ -36,17 +36,17 @@ public class OdometryCorrection extends Thread {
 			// LCD.drawString("Light : " + light, 0, 5);
 			if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
 
-				Sound.beep();
-
 				// if horizontal line
 				if (isLine(odometer.getY(), false)) {
 					LCD.drawString("Correcting Y", 0, 1);
+					Sound.buzz();
 					// correctY();
 
 					// if vertical line
 				}
 				if (isLine(odometer.getX(), true)) {
 					LCD.drawString("Correcting X", 0, 1);
+					Sound.beep();
 					// correctX();
 				}
 

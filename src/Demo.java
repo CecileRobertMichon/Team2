@@ -40,9 +40,9 @@ public class Demo {
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-		//USLocalizer usl = new USLocalizer(odo,
-		//		USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight);
-		//usl.doLocalization();
+		USLocalizer2 usl = new USLocalizer2(odo,
+			USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
+		usl.doLocalization();
 
 		// perform the light sensor localization
 		//LightLocalizer lsl = new LightLocalizer(odo, nav);
@@ -57,15 +57,15 @@ public class Demo {
 		
 		//nav.goForward(20);
 		
-		correc.start();
+		//correc.start();
 		
 		// Square driver for testing
-		nav.travelTo(0, 2);
+		/*nav.travelTo(0, 2);
 		nav.travelTo(2, 2);
 		nav.travelTo(2, 0);
 		nav.travelTo(0, 0);
 
-
+*/
 
 		
 		// travel to the right bottom corner of the shooting area while avoiding obstacles 

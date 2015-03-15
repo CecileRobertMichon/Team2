@@ -86,7 +86,7 @@ public class LightLocalizer {
 		odo.setY(-robot.LIGHT_SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(thetaX2 - thetaX1) / 2));
 
-		double deltaTheta = 90 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
+		double deltaTheta = 89 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
 	}
 

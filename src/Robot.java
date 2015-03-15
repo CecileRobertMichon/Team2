@@ -19,8 +19,8 @@ public class Robot {
 	// Constants used throughout the project
 
 	// Robot design lengths
-	public final double RADIUS = 2.149; // 2.09;
-	public final double WIDTH = 16.63; // 16.26;
+	public final double RADIUS = 2.149;
+	public final double WIDTH = 16.63;
 
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
@@ -31,8 +31,8 @@ public class Robot {
 	// Wall follower constants
 	public final int BANDCENTER = 18;
 	public final int BANDWIDTH = 3;
-	public final int WALL_CENTER = 30;
-	public final int NOISE = 5;
+	public final int WALL_CENTER = 60;
+	public final int NOISE = 10;
 
 	// odometer update period, in ms
 	public final long ODOMETER_PERIOD = 25;

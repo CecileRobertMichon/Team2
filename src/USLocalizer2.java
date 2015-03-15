@@ -19,7 +19,7 @@ public class USLocalizer2 {
 	private Navigation nav;
 	private USFilter filter;
 	private Robot robot = new Robot();
-	
+
 	private final int NOISE = robot.NOISE;
 	public final int WALL_CENTER = robot.WALL_CENTER;
 
@@ -34,70 +34,36 @@ public class USLocalizer2 {
 	public void doLocalization() {
 		double angleA, angleB;
 
-		if (locType == LocalizationType.FALLING_EDGE) {
-			// rotate the robot clockwise until it sees no wall
-			awayFromWall(true);
-			odo.setTheta(0);
+		// rotate the robot clockwise until it sees no wall
+		awayFromWall(true);
+		odo.setTheta(0);
 
-			// keep rotating until the robot sees a wall, then latch the angle
-			findWall(true);
-			angleA = odo.getTheta();
+		// keep rotating until the robot sees a wall, then latch the angle
+		findWall(true);
+		angleA = odo.getTheta();
 
-			// switch direction and wait until it sees no wall
-			awayFromWall(false);
+		// switch direction and wait until it sees no wall
+		awayFromWall(false);
 
-			// keep rotating until the robot sees a wall, then latch the angle
-			findWall(false);
-			angleB = odo.getTheta();
+		// keep rotating until the robot sees a wall, then latch the angle
+		findWall(false);
+		angleB = odo.getTheta();
 
-			// angleA is clockwise from angleB, so assume the average of the
-			// angles to the right of angleB is 45 degrees past 'north'
-			double deltaTheta = calculateHeadingFalling(angleA, angleB);
+		// angleA is clockwise from angleB, so assume the average of the
+		// angles to the right of angleB is 45 degrees past 'north'
+		double deltaTheta = calculateHeadingFalling(angleA, angleB);
 
-			// update the odometer position
-			nav.turnTo(-deltaTheta);
-			odo.setPosition(new double[] { 0.0, 0.0, 0.0 }, new boolean[] {
-					true, true, true });
-			nav.turnTo(-90);
-			double initialX=filter.getMedianDistance()-30.48;
-			nav.turnTo(-180);
-			double initialY=filter.getMedianDistance()-30.48;
-			nav.turnTo(0);
-			odo.setPosition(new double[] { initialX, initialY, 0.0 }, new boolean[] {
-					true, true, true });
-			
-		} else {
-			/*
-			 * The robot should turn until it sees the wall, then look for the
-			 * "rising edges:" the points where it no longer sees the wall. This
-			 * is very similar to the FALLING_EDGE routine, but the robot will
-			 * face toward the wall for most of it.
-			 */
+		// update the odometer position
+		nav.turnTo(-deltaTheta);
+		odo.setPosition(new double[] { odo.getX(), odo.getY(), 0.0 }, new boolean[] { true,
+				true, true });
+		nav.turnTo(-90);
+		double initialX = filter.getMedianDistance() - 30.48;
+		nav.turnTo(-180);
+		double initialY = filter.getMedianDistance() - 30.48;
+		odo.setPosition(new double[] { initialX, initialY, odo.getTheta() },
+				new boolean[] { true, true, true });
 
-			// rotate until robot sees the wall
-			findWall(true);
-			odo.setTheta(0);
-
-			// rotate until it no longer sees the wall and latch angle
-			awayFromWall(true);
-			angleA = odo.getTheta();
-
-			findWall(false);
-
-			// rotate in opposite direction until it sees a wall
-			awayFromWall(false);
-			angleB = odo.getTheta();
-
-			// angleA is clockwise from angleB, so assume the average of the
-			// angles to the right of angleB is 45 degrees past 'north'
-			double deltaTheta = calculateHeadingRising(angleA, angleB);
-
-			// update the odometer position (example to follow:)
-			nav.turnTo(-deltaTheta);
-			odo.setPosition(new double[] { 0.0, 0.0, 0.0 }, new boolean[] {
-					true, true, true });
-
-		}
 	}
 
 	// rotate until it finds a wall
@@ -131,24 +97,12 @@ public class USLocalizer2 {
 		return (angle % 360);
 	}
 
-	private double calculateHeadingRising(double angleA, double angleB) {
-		double angle = (angleA + angleB) / 2.0;
-
-		if (angleB > angleA) {
-			angle = 45.0 - angle;
-		} else {
-			angle = 230.0 - angle;
-		}
-
-		return (angle % 360);
-	}
-
 	private int getFilteredData() {
 		int distance;
 
 		distance = filter.getMedianDistance();
-		if (distance > 50) {
-			distance = 50;
+		if (distance > 80) {
+			distance = 80;
 		}
 		return distance;
 
