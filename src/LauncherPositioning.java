@@ -13,18 +13,20 @@ public class LauncherPositioning {
   
    private Odometer odometer;
    private Robot robot;
+   private Navigation nav;
    private int SECTION;
    
-   public LauncherPositioning(Odometer odometer) {
+   public LauncherPositioning(Odometer odometer, Navigation nav) {
      this.odometer = odometer;
      this.robot = new Robot();
+     this.nav = nav;
      
-     if (TARGET_ONE_X < SECTION_DIVIDER 
-           && TARGET_ONE_Y > SECTION_DIVIDER) {
+     if (robot.TARGET_ONE_X < robot.SECTION_DIVIDER 
+           && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
        SECTION = 1;
      }
-     else if (TARGET_ONE_X > SECTION_DIVIDER 
-                && TARGET_ONE_Y > SECTION_DIVIDER) {
+     else if (robot.TARGET_ONE_X > robot.SECTION_DIVIDER 
+                && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
        SECTION = 2;
      }
      else {
@@ -32,33 +34,33 @@ public class LauncherPositioning {
      }
    }
    
-   public static void targetAquisition(int x1, int y1, int x2, int y2) {
+   public void targetAquisition(int x1, int y1, int x2, int y2) {
      travelToFiringPosition(x1, y1);
      lineUp(x1, y1);
      //fire command;
      travelToFiringPosition(x2, y2);
      lineUp(x2, y2);
      //fire command;
-     travelTo(10*TILE_LENGTH, 10*TILE_LENGTH); //return to normal position
+     nav.travelTo(10*robot.TILE_LENGTH, 10*robot.TILE_LENGTH); //return to normal position
    }
    
    //to move forwards and backwards until target is perfectly in optimal range
                                        
    
-   public static void lineUp(int x_target, int y_target) { 
-     int x, y;
+   public void lineUp(int x_target, int y_target) { 
+     double x, y;
      x = odometer.getX();
      y = odometer.getY();
-     int target_distance = sqrt( math.pow((x - x_target),2) + math.pow((y - y_target),2) );
-     int discrepancy = target_distance - FIRING_DISTANCE;
+     double target_distance = Math.sqrt(Math.pow((x - x_target),2) + Math.pow((y - y_target),2) );
+     double discrepancy = target_distance - robot.FIRING_DISTANCE;
      
      if (discrepancy > 0) {
        //move closer to target
-       Navigation.goBackward(discrepancy);
+       nav.goBackward(discrepancy);
      }
      else {
        //move further away from target
-       Navigation.goForward(discrepancy);
+       nav.goForward(discrepancy);
      }
        
    }
@@ -66,15 +68,15 @@ public class LauncherPositioning {
    
    //given the coordinates of the target, travel to optimal area
    //distances given with respect to original origin
-   public static void travelToFiringPosition(int x, int y) {
+   public void travelToFiringPosition(int x, int y) {
      if (SECTION == 1) {
-       travelTo(9*TILE_LENGTH, 10.5*TILE_LENGTH);
+       nav.travelTo(9*robot.TILE_LENGTH, 10.5*robot.TILE_LENGTH);
      }
      else if (SECTION == 2) {
-       travelTo(10.5*TILE_LENGTH, 10.5*TILE_LENGTH);
+       nav.travelTo(10.5*robot.TILE_LENGTH, 10.5*robot.TILE_LENGTH);
      }
      else {
-       travelTo(10.5*TILE_LENGTH, 9*TILE_LENGTH);
+       nav.travelTo(10.5*robot.TILE_LENGTH, 9*robot.TILE_LENGTH);
      }
    }
 }
