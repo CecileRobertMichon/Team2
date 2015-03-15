@@ -45,26 +45,26 @@ public class Demo {
 		//usl.doLocalization();
 
 		// perform the light sensor localization
-		LightLocalizer lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
+		//LightLocalizer lsl = new LightLocalizer(odo, nav);
+		//lsl.doLocalization();
 
 		// when done travel to (0,0) and turn to 0 degrees
-		//nav.travelTo(0, 0);
-		//nav.turnTo(0);
+		nav.travelTo(0, 0);
+		nav.turnTo(0);
 		
 		// start obstacle detection
 		//nav.setIsLocalizing(false);
 		
 		//nav.goForward(20);
 		
-		//correc.start();
+		correc.start();
 		
 		// Square driver for testing
-		/*nav.travelTo(0, 2);
+		nav.travelTo(0, 2);
 		nav.travelTo(2, 2);
 		nav.travelTo(2, 0);
 		nav.travelTo(0, 0);
-*/
+
 
 
 		

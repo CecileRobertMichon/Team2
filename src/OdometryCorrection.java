@@ -39,15 +39,15 @@ public class OdometryCorrection extends Thread {
 				Sound.beep();
 
 				// if horizontal line
-				if (isLine(odometer.getY())) {
+				if (isLine(odometer.getY(), false)) {
 					LCD.drawString("Correcting Y", 0, 1);
-					//correctY();
+					// correctY();
 
 					// if vertical line
 				}
-				if (isLine(odometer.getX())) {
+				if (isLine(odometer.getX(), true)) {
 					LCD.drawString("Correcting X", 0, 1);
-					//correctX();
+					// correctX();
 				}
 
 			}
@@ -80,7 +80,14 @@ public class OdometryCorrection extends Thread {
 		}
 	}
 
-	private boolean isLine(double var) {
+	private boolean isLine(double var, boolean isX) {
+		if (isX) {
+			var = var - robot.LIGHT_SENSOR_DISTANCE
+					* Math.sin(Math.toRadians(odometer.getTheta()));
+		} else {
+			var = var - robot.LIGHT_SENSOR_DISTANCE
+					* Math.cos(Math.toRadians(odometer.getTheta()));
+		}
 		double remainder = var % robot.TILE_LENGTH;
 		if (remainder < 5 || remainder > robot.TILE_LENGTH - 5) {
 			return true;
