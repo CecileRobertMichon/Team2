@@ -14,7 +14,7 @@ public class LauncherPositioning {
    private Odometer odometer;
    private Robot robot;
    private Navigation nav;
-   private int SECTION;
+   private int section;
    
    public LauncherPositioning(Odometer odometer, Navigation nav) {
      this.odometer = odometer;
@@ -23,14 +23,14 @@ public class LauncherPositioning {
      
      if (robot.TARGET_ONE_X < robot.SECTION_DIVIDER 
            && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
-       SECTION = 1;
+       section = 1;
      }
      else if (robot.TARGET_ONE_X > robot.SECTION_DIVIDER 
                 && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
-       SECTION = 2;
+       section = 2;
      }
      else {
-       SECTION = 3;
+       section = 3;
      }
    }
    
@@ -69,10 +69,10 @@ public class LauncherPositioning {
    //given the coordinates of the target, travel to optimal area
    //distances given with respect to original origin
    public void travelToFiringPosition(int x, int y) {
-     if (SECTION == 1) {
+     if (section == 1) {
        nav.travelTo(9*robot.TILE_LENGTH, 10.5*robot.TILE_LENGTH);
      }
-     else if (SECTION == 2) {
+     else if (section == 2) {
        nav.travelTo(10.5*robot.TILE_LENGTH, 10.5*robot.TILE_LENGTH);
      }
      else {
