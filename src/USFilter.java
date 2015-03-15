@@ -42,7 +42,7 @@ public class USFilter extends Thread {
 		return this.medianDistance;
 	}
 
-	public void bubbleSort(int value[]) {
+	private void bubbleSort(int value[]) {
 		int swap;
 		sorted = value;
 		for (int c = 0; c < (value.length - 1); c++) {
@@ -58,7 +58,7 @@ public class USFilter extends Thread {
 	}
 	
 	//returns median to the sorted moving array by taking the middle value 
-	  public int calculateMedian() {
+	  private int calculateMedian() {
 	    int median;
 	    if ((sorted.length % 2) == 1) { 
 	    //array is of odd length, chose middle value

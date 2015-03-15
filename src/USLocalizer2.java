@@ -59,9 +59,9 @@ public class USLocalizer2 {
 			odo.setPosition(new double[] { 0.0, 0.0, 0.0 }, new boolean[] {
 					true, true, true });
 			nav.turnTo(-90);
-			double initialX=filter.getDistance()-30.48;
+			double initialX=filter.getMedianDistance()-30.48;
 			nav.turnTo(-180);
-			double initialY=filter.getDistance()-30.48;
+			double initialY=filter.getMedianDistance()-30.48;
 			nav.turnTo(0);
 			odo.setPosition(new double[] { initialX, initialY, 0.0 }, new boolean[] {
 					true, true, true });
