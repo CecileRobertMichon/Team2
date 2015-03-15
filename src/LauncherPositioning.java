@@ -47,7 +47,7 @@ public class LauncherPositioning {
    //to move forwards and backwards until target is perfectly in optimal range
                                        
    
-   public void lineUp(int x_target, int y_target) { 
+   private void lineUp(int x_target, int y_target) { 
      double x, y;
      x = odometer.getX();
      y = odometer.getY();
@@ -68,7 +68,7 @@ public class LauncherPositioning {
    
    //given the coordinates of the target, travel to optimal area
    //distances given with respect to original origin
-   public void travelToFiringPosition(int x, int y) {
+   private void travelToFiringPosition(int x, int y) {
      if (section == 1) {
        nav.travelTo(9*robot.TILE_LENGTH, 10.5*robot.TILE_LENGTH);
      }
