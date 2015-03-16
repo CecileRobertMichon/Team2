@@ -15,11 +15,13 @@ public class LauncherPositioning {
  private Robot robot;
  private Navigation nav;
  private int section;
+ private Launcher launcher;
 
  public LauncherPositioning(Odometer odometer, Navigation nav) {
   this.odometer = odometer;
   this.robot = new Robot();
   this.nav = nav;
+  this.launcher = launcher;
 
   if (robot.TARGET_ONE_X < robot.SECTION_DIVIDER
     && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
@@ -33,12 +35,16 @@ public class LauncherPositioning {
  }
 
  public void targetAcquisition(int x1, int y1, int x2, int y2) {
+  
+  //towards first target
   travelToFiringPosition(x1, y1);
   lineUp(x1, y1);
-  // fire command
+  launcher.shootsBall();
+  
+  //towards second target
   travelToFiringPosition(x2, y2);
   lineUp(x2, y2);
-  // fire command
+  launcher.shootsBall();
   // return to normal position
   nav.travelTo(10 * robot.TILE_LENGTH, 10 * robot.TILE_LENGTH);
  }
