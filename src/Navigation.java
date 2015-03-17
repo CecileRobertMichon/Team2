@@ -129,6 +129,9 @@ public class Navigation {
 
 	public void turnTo(double theta) {
 
+		boolean temp = this.isLocalizing;
+		//this.setIsLocalizing(false);
+
 		leftMotor.setSpeed(MOTOR_ROTATE);
 		rightMotor.setSpeed(MOTOR_ROTATE);
 
@@ -170,11 +173,12 @@ public class Navigation {
 						-robot.convertAngle(RADIUS, WIDTH, errorTheta), false);
 			}
 		}
-		
+
+		this.setIsLocalizing(temp);
 
 	}
-	
-	public void setIsLocalizing(boolean localization){
+
+	public void setIsLocalizing(boolean localization) {
 		this.isLocalizing = localization;
 	}
 

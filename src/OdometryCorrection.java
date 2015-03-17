@@ -8,7 +8,6 @@
  *  Chaohan Wang - 260516712
  */
 
-import lejos.nxt.LCD;
 import lejos.nxt.Sound;
 
 public class OdometryCorrection extends Thread {
@@ -36,20 +35,32 @@ public class OdometryCorrection extends Thread {
 			// LCD.drawString("Light : " + light, 0, 5);
 			if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
 
-				// if horizontal line
-				if (isLine(odometer.getY(), false)) {
-					LCD.drawString("Correcting Y", 0, 1);
-					Sound.buzz();
-					// correctY();
-
-					// if vertical line
-				}
-				if (isLine(odometer.getX(), true)) {
-					LCD.drawString("Correcting X", 0, 1);
+				// Y North
+				if (isDirectionNorth()
+						&& isLine(odometer.getY() - robot.LIGHT_SENSOR_DISTANCE
+								* Math.cos(Math.toRadians(odometer.getTheta())))) {
 					Sound.beep();
-					// correctX();
+					correctY();
 				}
-
+				// X East
+				else if (isDirectionEast()
+						&& isLine(odometer.getX() - robot.LIGHT_SENSOR_DISTANCE
+								* Math.sin(Math.toRadians(odometer.getTheta())))) {
+					Sound.buzz();
+					correctX();
+				}
+				// Y South
+				else if (isLine(odometer.getY() + robot.LIGHT_SENSOR_DISTANCE
+						* Math.cos(Math.toRadians(odometer.getTheta())))) {
+					Sound.beep();
+					correctY();
+				}
+				// X West
+				else if (isLine(odometer.getX() + robot.LIGHT_SENSOR_DISTANCE
+								* Math.sin(Math.toRadians(odometer.getTheta())))) {
+					Sound.buzz();
+					correctX();
+				}
 			}
 
 			// this ensure the odometry correction occurs only once every period
@@ -64,32 +75,30 @@ public class OdometryCorrection extends Thread {
 					// interrupted by another thread
 				}
 			}
+			//previousLight = light;
 		}
 	}
 
-	// returns true if the robot is following the y direction, false if
-	// following the x direction
-	private boolean directionNorthSouth(double theta) {
-		if (Math.sin(Math.toRadians(theta)) < 0.5
-				&& Math.sin(Math.toRadians(theta)) > -0.5) {
-			// The line crossed is a Y line
+	private boolean isLine(double var) {
+		if (var % 30.48 < 10 || var % 30.48 > 20) {
 			return true;
 		} else {
-			// The line crossed is a X line
 			return false;
 		}
 	}
 
-	private boolean isLine(double var, boolean isX) {
-		if (isX) {
-			var = var - robot.LIGHT_SENSOR_DISTANCE
-					* Math.sin(Math.toRadians(odometer.getTheta()));
+	private boolean isDirectionNorth() {
+		if (odometer.getTheta() > 270 || odometer.getTheta() < 90) {
+			// The robot is going up
+			return true;
 		} else {
-			var = var - robot.LIGHT_SENSOR_DISTANCE
-					* Math.cos(Math.toRadians(odometer.getTheta()));
+			return false;
 		}
-		double remainder = var % robot.TILE_LENGTH;
-		if (remainder < 5 || remainder > robot.TILE_LENGTH - 5) {
+	}
+
+	private boolean isDirectionEast() {
+		if (odometer.getTheta() < 180) {
+			// The robot is going right
 			return true;
 		} else {
 			return false;
@@ -101,9 +110,9 @@ public class OdometryCorrection extends Thread {
 		double offset = robot.LIGHT_SENSOR_DISTANCE
 				* Math.sin(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
+		// realX = ((int) (odometer.getX() / 30.48)) * 30.48 +
 		double realX = odometer.getX() - (odometer.getX() % robot.TILE_LENGTH)
-				+ robot.HALF_TILE + offset;
-		;
+				+ offset;
 		odometer.setX(realX);
 	}
 
@@ -113,8 +122,7 @@ public class OdometryCorrection extends Thread {
 				* Math.cos(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
 		double realY = odometer.getY() - (odometer.getY() % robot.TILE_LENGTH)
-				+ robot.HALF_TILE + offset;
-		;
+				+ offset;
 		odometer.setY(realY);
 	}
 

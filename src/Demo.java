@@ -9,6 +9,7 @@
  */
 
 import lejos.nxt.Button;
+import lejos.nxt.Sound;
 
 public class Demo {
 
@@ -24,8 +25,8 @@ public class Demo {
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
 		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
 		Launcher launcher = new Launcher();
-		LauncherPositioning position = new LauncherPositioning(odo, nav, launcher);
-
+		LauncherPositioning position = new LauncherPositioning(odo, nav,
+				launcher);
 
 		odo.start();
 		lcd.start();
@@ -43,24 +44,25 @@ public class Demo {
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-		USLocalizer2 usl = new USLocalizer2(odo,
-				USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
-		usl.doLocalization();
-
-		// perform the light sensor localization
-		// LightLocalizer lsl = new LightLocalizer(odo, nav);
-		// lsl.doLocalization();
+		//USLocalizer2 usl = new USLocalizer2(odo,
+		//		USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
+		//usl.doLocalization();
+		//Sound.beep();
 
 		// when done travel to (0,0) and turn to 0 degrees
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
+		//nav.travelTo(0, 0);
+		//nav.turnTo(30);
+		
+		// LightLocalizer lsl = new LightLocalizer(odo, nav);
+		// lsl.doLocalization();
+		
+		//nav.travelTo(0, 0);
+		//nav.turnTo(0);
 
 		// start obstacle detection
-		// nav.setIsLocalizing(false);
+		nav.setIsLocalizing(false);
 
-		// nav.goForward(20);
-
-		// correc.start();
+		correc.start();
 
 		// Square driver for testing
 		/*
@@ -70,9 +72,14 @@ public class Demo {
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
-		// nav.travelTo(2, 2);
+		 nav.travelTo(2, 2);
+		 nav.travelTo(1, 2);
+		 nav.travelTo(1, 1);
+		 nav.travelTo(0, 0);
 
-		// light localization lsl.doLocalization();
+		// perform the light sensor localization
+		// LightLocalizer lsl = new LightLocalizer(odo, nav);
+		// lsl.doLocalization();
 		// odo.setX(7 + odo.getX());
 		// odo.setY(7 + odo.getY());
 		// nav.turnTo(0);
@@ -81,10 +88,10 @@ public class Demo {
 		// shoot half the balls
 		// go to shooting spot relative to target 2
 		// shoot the other half
-		
+
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		//position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-		//		robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+		// position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+		// robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
 
 		// return to (0,0)
 

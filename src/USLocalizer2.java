@@ -90,9 +90,9 @@ public class USLocalizer2 {
 		double angle = (angleA + angleB) / 2.0;
 
 		if (angleA > angleB) {
-			angle = 50.0 - angle;
+			angle = 60.0 - angle;
 		} else {
-			angle = 230.0 - angle;
+			angle = 225.0 - angle;
 		}
 		return (angle % 360);
 	}
@@ -101,8 +101,8 @@ public class USLocalizer2 {
 		int distance;
 
 		distance = filter.getMedianDistance();
-		if (distance > 80) {
-			distance = 80;
+		if (distance > 100) {
+			distance = 100;
 		}
 		return distance;
 

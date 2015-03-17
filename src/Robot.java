@@ -25,13 +25,14 @@ public class Robot {
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
 	public final int MOTOR_ROTATE = 150;
+	public final int MOTOR_LOCALIZE = 250;
 	public final int MOTOR_STRAIGHT = 200;
 	public final int MOTOR_FAST = 300;
 
 	// Wall follower constants
 	public final int BANDCENTER = 18;
 	public final int BANDWIDTH = 3;
-	public final int WALL_CENTER = 60;
+	public final int WALL_CENTER = 75;
 	public final int NOISE = 5;
 
 	// odometer update period, in ms
