@@ -32,7 +32,7 @@ public class Robot {
 	public final int BANDCENTER = 18;
 	public final int BANDWIDTH = 3;
 	public final int WALL_CENTER = 60;
-	public final int NOISE = 10;
+	public final int NOISE = 5;
 
 	// odometer update period, in ms
 	public final long ODOMETER_PERIOD = 25;
@@ -42,6 +42,9 @@ public class Robot {
 	// Light sensor values
 	public final int LIGHTSENSOR_THRESHOLD = 30;
 	public final double LIGHT_SENSOR_DISTANCE = 12.4;
+	
+	//Ultrasonic sensor values
+	public final double US_SENSOR_DISTANCE = 9.8;
 
 	// Motor and sensor ports
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B,
@@ -65,6 +68,9 @@ public class Robot {
 	public final int TARGET_ONE_Y = 0;
 	public final int TARGET_TWO_X = 0;
 	public final int TARGET_TWO_Y = 0;
+	
+	// Number of balls
+	public final int BALL_NUMBER = 2;
 
 	// Helper methods to convert distance and angle in degrees the motors have
 	// to rotate by

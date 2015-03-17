@@ -58,9 +58,9 @@ public class USLocalizer2 {
 		odo.setPosition(new double[] { odo.getX(), odo.getY(), 0.0 }, new boolean[] { true,
 				true, true });
 		nav.turnTo(-90);
-		double initialX = filter.getMedianDistance() - 30.48;
+		double initialX= filter.getMedianDistance() - (robot.TILE_LENGTH - robot.US_SENSOR_DISTANCE );
 		nav.turnTo(-180);
-		double initialY = filter.getMedianDistance() - 30.48;
+		double initialY = filter.getMedianDistance() - (robot.TILE_LENGTH - robot.US_SENSOR_DISTANCE );
 		odo.setPosition(new double[] { initialX, initialY, odo.getTheta() },
 				new boolean[] { true, true, true });
 
