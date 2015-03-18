@@ -11,60 +11,19 @@
 public class LauncherPositioning {
  // requires (10, 10) in block units is (0, 0) for the launcher
 
-<<<<<<< HEAD
  private Odometer odometer;
  private Robot robot;
  private Navigation nav;
  private int section;
  private Launcher launcher;
 
- public LauncherPositioning(Odometer odometer, Navigation nav) {
+ public LauncherPositioning(Odometer odometer, Navigation nav, Launcher launcher) {
   this.odometer = odometer;
   this.robot = new Robot();
   this.nav = nav;
   this.launcher = launcher;
-=======
-	private Odometer odometer;
-	private Robot robot;
-	private Navigation nav;
-	private int section;
-	private Launcher launcher;
-
-	public LauncherPositioning(Odometer odometer, Navigation nav,
-			Launcher launcher) {
-		this.odometer = odometer;
-		this.robot = new Robot();
-		this.launcher = launcher;
-		this.nav = nav;
->>>>>>> origin/master
-
-  if (robot.TARGET_ONE_X < robot.SECTION_DIVIDER
-    && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
-   section = 1;
-  } else if (robot.TARGET_ONE_X > robot.SECTION_DIVIDER
-    && robot.TARGET_ONE_Y > robot.SECTION_DIVIDER) {
-   section = 2;
-  } else {
-   section = 3;
-  }
  }
 
-<<<<<<< HEAD
- public void targetAcquisition(int x1, int y1, int x2, int y2) {
-  
-  //towards first target
-  travelToFiringPosition(x1, y1);
-  lineUp(x1, y1);
-  launcher.shootsBall();
-  
-  //towards second target
-  travelToFiringPosition(x2, y2);
-  lineUp(x2, y2);
-  launcher.shootsBall();
-  // return to normal position
-  nav.travelTo(10 * robot.TILE_LENGTH, 10 * robot.TILE_LENGTH);
- }
-=======
 	public void targetAcquisition(int x1, int y1, int x2, int y2) {
 		travelToFiringPosition(x1, y1);
 		lineUp(x1, y1);
@@ -83,7 +42,6 @@ public class LauncherPositioning {
 		// return to normal position
 		nav.travelTo(10 * robot.TILE_LENGTH, 10 * robot.TILE_LENGTH);
 	}
->>>>>>> origin/master
 
  // to move forwards and backwards until target is perfectly in optimal range
 
