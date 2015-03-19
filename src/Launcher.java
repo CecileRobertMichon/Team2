@@ -12,11 +12,11 @@ import lejos.nxt.*;
 
 public class Launcher{
 
-	 public void shootsBall() {
+	 public void shootBall() {
 	    	NXTRegulatedMotor loader = Motor.C;
 	        loader.setSpeed(1000000);//wanted to use largest value possible 
 	        loader.setAcceleration(100000);//wanted to use largest value possible
-	     for(int i=0; i<3; i++){ //shoots ball 3 times
+	     for(int i=0; i<1; i++){ //shoots 1 ball
 	         loader.rotate(-360);
 	         try {
 	             Thread.sleep(1500);

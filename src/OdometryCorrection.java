@@ -80,7 +80,7 @@ public class OdometryCorrection extends Thread {
 	}
 
 	private boolean isLine(double var) {
-		if (var % 30.48 < 10 || var % 30.48 > 20) {
+		if (var % 30.48 < 2 || var % 30.48 > 28) {
 			return true;
 		} else {
 			return false;
@@ -110,10 +110,12 @@ public class OdometryCorrection extends Thread {
 		double offset = robot.LIGHT_SENSOR_DISTANCE
 				* Math.sin(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
-		// realX = ((int) (odometer.getX() / 30.48)) * 30.48 +
-		double realX = odometer.getX() - (odometer.getX() % robot.TILE_LENGTH)
-				+ offset;
-		odometer.setX(realX);
+		double realX = odometer.getX() - (odometer.getX() % robot.TILE_LENGTH);
+		if(isDirectionEast()){
+			odometer.setX(realX + offset);
+		} else {
+			odometer.setX(realX + robot.TILE_LENGTH - offset);
+		}
 	}
 
 	private void correctY() {
@@ -121,9 +123,12 @@ public class OdometryCorrection extends Thread {
 		double offset = robot.LIGHT_SENSOR_DISTANCE
 				* Math.cos(Math.toRadians(odometer.getTheta()));
 		// Add the line's distance from 0 to the offset
-		double realY = odometer.getY() - (odometer.getY() % robot.TILE_LENGTH)
-				+ offset;
-		odometer.setY(realY);
+		double realY = odometer.getY() - (odometer.getY() % robot.TILE_LENGTH);
+		if(isDirectionNorth()){
+			odometer.setY(realY + offset);
+		} else {
+			odometer.setY(realY + robot.TILE_LENGTH - offset);
+		}
 	}
 
 }

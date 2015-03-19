@@ -130,7 +130,7 @@ public class Navigation {
 	public void turnTo(double theta) {
 
 		boolean temp = this.isLocalizing;
-		//this.setIsLocalizing(false);
+		this.setIsLocalizing(false);
 
 		leftMotor.setSpeed(MOTOR_ROTATE);
 		rightMotor.setSpeed(MOTOR_ROTATE);

@@ -30,14 +30,14 @@ public class LauncherPositioning {
 		// shoot half the balls
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER / 2; i++) {
-			launcher.shootsBall();
+			launcher.shootBall();
 		}
 		travelToFiringPosition(x2, y2);
 		lineUp(x2, y2);
 		// shoot the other half of the balls
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER - (robot.BALL_NUMBER / 2); i++) {
-			launcher.shootsBall();
+			launcher.shootBall();
 		}
 		// return to normal position
 		nav.travelTo(10 * robot.TILE_LENGTH, 10 * robot.TILE_LENGTH);

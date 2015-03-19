@@ -34,8 +34,7 @@ public class AvoidObstacle {
 		robot.RIGHT_MOTOR.rotate(-robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0),
 				false);
 
-		// rotate sensor to an angle of 90 degrees
-		Motor.B.rotate(-90);
+		// use sensor for a 90 degree angle
 
 		// go forward
 		robot.LEFT_MOTOR.forward();
@@ -74,7 +73,6 @@ public class AvoidObstacle {
 			}
 
 		}
-		Motor.B.rotate(90);
 		// stop motors
 		robot.RIGHT_MOTOR.setSpeed(0);
 		robot.LEFT_MOTOR.setSpeed(0);

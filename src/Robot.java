@@ -19,8 +19,8 @@ public class Robot {
 	// Constants used throughout the project
 
 	// Robot design lengths
-	public final double RADIUS = 2.149;
-	public final double WIDTH = 16.63;
+	public final double RADIUS = 2.149; //2.149;
+	public final double WIDTH =  16.41; //16.63;
 
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
