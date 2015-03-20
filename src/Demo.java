@@ -9,6 +9,7 @@
  */
 
 import lejos.nxt.Button;
+import lejos.nxt.Sound;
 
 public class Demo {
 
@@ -34,39 +35,39 @@ public class Demo {
 
 		// Calibration Code - used to find exact radius and width values
 
-		/*robot.LEFT_MOTOR.setAcceleration(2000);
-		robot.RIGHT_MOTOR.setAcceleration(2000);
-		robot.LEFT_MOTOR.setSpeed(100);
-		robot.RIGHT_MOTOR.setSpeed(100);
-		robot.LEFT_MOTOR.rotate(1675, true);
-		robot.RIGHT_MOTOR.rotate(1675, false);
-		robot.LEFT_MOTOR.rotate(2832, true);
-		robot.RIGHT_MOTOR.rotate(-2832, false);
-		*/
+		//robot.LEFT_MOTOR.setAcceleration(2000);
+		//robot.RIGHT_MOTOR.setAcceleration(2000);
+		//robot.LEFT_MOTOR.setSpeed(100);
+		//robot.RIGHT_MOTOR.setSpeed(100);
+		//robot.LEFT_MOTOR.rotate(1675, true);
+		//robot.RIGHT_MOTOR.rotate(1675, false);
+		//robot.LEFT_MOTOR.rotate(2832, true);
+		//robot.RIGHT_MOTOR.rotate(-2832, false);
+		
 
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-		// USLocalizer2 usl = new USLocalizer2(odo,
-		// USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
-		// usl.doLocalization();
-		// Sound.beep();
+			USLocalizer2 usl = new USLocalizer2(odo,
+			USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
+			usl.doLocalization();
+			Sound.beep();
 
 		// when done travel to (0,0) and turn to 0 degrees
-		// nav.travelTo(0, 0);
-		// nav.turnTo(30);
+		 nav.travelTo(0, 0);
+		 nav.turnTo(30);
 
-		// LightLocalizer lsl = new LightLocalizer(odo, nav);
-		// lsl.doLocalization();
+		 LightLocalizer lsl = new LightLocalizer(odo, nav);
+		 lsl.doLocalization();
 
-		// nav.travelTo(0, 0);
-		// nav.turnTo(0);
+		 nav.travelTo(0, 0);
+		 nav.turnTo(0);
 
 		// start obstacle detection
 		//nav.setIsLocalizing(false);
 
-		correc.start();
+		//correc.start();
 
 		// Square driver for testing
 		
@@ -76,11 +77,12 @@ public class Demo {
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
-		nav.travelTo(2, 2);
-		nav.travelTo(2, 1);
+		//nav.travelTo(0, 2);
+		/*nav.travelTo(2, 1);
 		nav.travelTo(1, 2);
 		nav.travelTo(0, 0);
-
+		*/
+		
 		// perform the light sensor localization
 		// LightLocalizer lsl = new LightLocalizer(odo, nav);
 		// lsl.doLocalization();

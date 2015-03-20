@@ -20,7 +20,7 @@ public class Robot {
 
 	// Robot design lengths
 	public final double RADIUS = 2.149; //2.149;
-	public final double WIDTH =  16.41; //16.63;
+	public final double WIDTH =  16.63; //16.41;
 
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;

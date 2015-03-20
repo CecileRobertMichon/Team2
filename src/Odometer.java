@@ -1,3 +1,5 @@
+import lejos.nxt.LCD;
+
 /*
  *  Team 2
  *  Cecile Robert-Michon 260552816

@@ -80,7 +80,7 @@ public class OdometryCorrection extends Thread {
 	}
 
 	private boolean isLine(double var) {
-		if (var % 30.48 < 2 || var % 30.48 > 28) {
+		if (var % 30.48 < 5 || var % 30.48 > 25) {
 			return true;
 		} else {
 			return false;
