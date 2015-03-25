@@ -46,21 +46,21 @@ public class CopyOfOdometryCorrection extends Thread {
 				if (xLS % robot.TILE_LENGTH < robot.HALF_TILE) {
 					Ex = xLS % robot.TILE_LENGTH;
 				} else {
-					Ex = xLS % robot.TILE_LENGTH - robot.TILE_LENGTH;
+					Ex = (xLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
 				}
 				if (yLS % robot.TILE_LENGTH < robot.HALF_TILE) {
 					Ey = yLS % robot.TILE_LENGTH;
 				} else {
-					Ey = yLS % robot.TILE_LENGTH - robot.TILE_LENGTH;
+					Ey = (yLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
 				}
 
-				if ((Math.min(Ex, Ey) / Math.max(Ex, Ey) < 0.8) && Math.sqrt(Ex*Ex + Ey*Ey) > 2.0) {
+				//if ((Math.min(Ex, Ey) / Math.max(Ex, Ey) < 0.8) && Math.sqrt(Ex*Ex + Ey*Ey) > 2.0) {
 					if (Ex < Ey) {
 						odometer.setX(odometer.getX() - Ex);
 					} else {
 						odometer.setY(odometer.getY() - Ey);
 					}
-				}
+				//}
 
 				// this ensure the odometry correction occurs only once every
 				// period
