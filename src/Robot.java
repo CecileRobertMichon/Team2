@@ -26,8 +26,8 @@ public class Robot {
 	public final int MOTOR_SLOW = 30;
 	public final int MOTOR_ROTATE = 250; //150;
 	public final int MOTOR_LOCALIZE = 250;
-	public final int MOTOR_STRAIGHT = 250; //200;
-	public final int MOTOR_FAST = 300;
+	public final int MOTOR_STRAIGHT = 300; //200;
+	public final int MOTOR_FAST = 400;
 
 	// Wall follower constants
 	public final int BANDCENTER = 18;
@@ -59,8 +59,8 @@ public class Robot {
 	// Tile constants
 	public final double TILE_LENGTH = 30.48;
 	public final double HALF_TILE = 15.24;
-	public final double DISTANCE_TOLERANCE = 0.5;
-	public final double ANGLE_TOLERANCE = 0.25;
+	public final double DISTANCE_TOLERANCE = 1;
+	public final double ANGLE_TOLERANCE = 0.5;
 
 	// Firing constants
 	public final double FIRING_DISTANCE = 137.34;

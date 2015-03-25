@@ -19,7 +19,7 @@ public class Demo {
 		// sensors
 		Odometer odo = new Odometer();
 		Robot robot = new Robot();
-		OdometryCorrection correc = new OdometryCorrection(odo);
+		CopyOfOdometryCorrection correct = new CopyOfOdometryCorrection(odo);
 		USFilter filterStraight = new USFilter(robot.US);
 		USFilter filterLeft = new USFilter(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
@@ -49,49 +49,48 @@ public class Demo {
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-			USLocalizer usl = new USLocalizer(odo,
-			USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight, filterLeft);
-			usl.doLocalization();
+		// usl = new USLocalizer(odo,
+		//	USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight, filterLeft);
+		//	usl.doLocalization();
 			
 		// when done travel to (0,0) and turn to 0 degrees
-		 nav.travelTo(0, 0);
-		 nav.turnTo(30);
+		// nav.travelTo(0, 0);
+		// nav.turnTo(30);
 
-		LightLocalizer lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
+		//LightLocalizer lsl = new LightLocalizer(odo, nav);
+	//	lsl.doLocalization();
 
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
-		Sound.beep();
+	//	nav.travelTo(0, 0);
+	//	nav.turnTo(0);
+	//	Sound.beep();
 
 		// start obstacle detection
-		nav.setIsLocalizing(false);
+		//nav.setIsLocalizing(false);
 
-		//correc.start();
+		correct.start();
 
 		// Square driver for testing
 		
-		// nav.travelTo(0, 2); 
-		// nav.travelTo(2, 2); 
-		// nav.travelTo(2, 0);
-		// nav.travelTo(0, 0);
+		nav.travelTo(1, 4); 
+		nav.travelTo(2, 0); 
+		nav.travelTo(0, 0);
 		 
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
-		nav.travelTo(-0.5, 2.5);
-		nav.travelTo(-0.5, 5.5);
-		nav.travelTo(1.5, 5.5);
-		nav.travelTo(1.5, 6.5);
-		nav.travelTo(4.5, 6.5);
-		nav.travelTo(5.75, 5.75);
-		
+	/*	nav.travelTo(-0.6, 2.5);
+		nav.travelTo(-0.5, 5.7);
+		nav.travelTo(2, 5.7);
+		nav.travelTo(2, 6.2);
+		nav.turnTo(20);
+	*/	
 		
 		// perform the light sensor localization
-		lsl.doLocalization();
-		 odo.setX(6 + odo.getX());
-		 odo.setY(6 + odo.getY());
-		 nav.turnTo(0);
+		//lsl.doLocalization();
+		// odo.setX(2*robot.TILE_LENGTH + odo.getX());
+		// odo.setY(6*robot.TILE_LENGTH + odo.getY());
+		// nav.travelTo(2, 6);
+		// nav.turnTo(0);
 
 		// go to shooting spot relative to target 1
 		// shoot half the balls
@@ -99,8 +98,8 @@ public class Demo {
 		// shoot the other half
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		 position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-		 robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+		// position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+		// robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
 
 		// return to (0,0)
 
