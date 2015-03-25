@@ -33,17 +33,17 @@ public class LightLocalizer {
 
 	public void doLocalization() {
 		// drive to location listed in tutorial
-		//nav.turnTo(45);
-		//findLine();
+		// nav.turnTo(45);
+		// findLine();
 
 		// Go backwards
-		//nav.goBackward(13);
+		// nav.goBackward(13);
 
 		// start rotating and clock all 4 gridlines
 		nav.rotate(true);
-		
+
 		// rotate 360 degrees
-		//nav.turnTo(1); comment out for localization
+		// nav.turnTo(1); comment out for localization
 		robot.LEFT_MOTOR.rotate(
 				robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
 		robot.RIGHT_MOTOR.rotate(

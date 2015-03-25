@@ -49,8 +49,8 @@ public class Demo {
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-			USLocalizer2 usl = new USLocalizer2(odo,
-			USLocalizer2.LocalizationType.FALLING_EDGE, nav, filterStraight);
+			USLocalizer usl = new USLocalizer(odo,
+			USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight, filterLeft);
 			usl.doLocalization();
 			Sound.beep();
 
@@ -58,11 +58,11 @@ public class Demo {
 		 nav.travelTo(0, 0);
 		 nav.turnTo(30);
 
-		 LightLocalizer lsl = new LightLocalizer(odo, nav);
-		 lsl.doLocalization();
+			//LightLocalizer lsl = new LightLocalizer(odo, nav);
+			//lsl.doLocalization();
 
-		 nav.travelTo(0, 0);
-		 nav.turnTo(0);
+		// nav.travelTo(0, 0);
+		// nav.turnTo(0);
 
 		// start obstacle detection
 		//nav.setIsLocalizing(false);

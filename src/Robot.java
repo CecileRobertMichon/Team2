@@ -24,9 +24,9 @@ public class Robot {
 
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
-	public final int MOTOR_ROTATE = 150;
+	public final int MOTOR_ROTATE = 200; //150;
 	public final int MOTOR_LOCALIZE = 250;
-	public final int MOTOR_STRAIGHT = 200;
+	public final int MOTOR_STRAIGHT = 250; //200;
 	public final int MOTOR_FAST = 300;
 
 	// Wall follower constants
@@ -45,7 +45,9 @@ public class Robot {
 	public final double LIGHT_SENSOR_DISTANCE = 12.4;
 	
 	//Ultrasonic sensor values
-	public final double US_SENSOR_DISTANCE = 9.8;
+	public final double US_SENSOR_DISTANCE = 9.9;
+	public final double US_LEFT_SENSOR_DISTANCE = 7.7;
+
 
 	// Motor and sensor ports
 	public final NXTRegulatedMotor LEFT_MOTOR = Motor.A, RIGHT_MOTOR = Motor.B,
