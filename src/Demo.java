@@ -60,37 +60,38 @@ public class Demo {
 		LightLocalizer lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 
-		 nav.travelTo(0, 0);
-		 nav.turnTo(0);
-		 Sound.beep();
+		nav.travelTo(0, 0);
+		nav.turnTo(0);
+		Sound.beep();
 
 		// start obstacle detection
 		nav.setIsLocalizing(false);
 
-		correc.start();
+		//correc.start();
 
 		// Square driver for testing
 		
-		 nav.travelTo(0, 2); 
-		 nav.travelTo(2, 2); 
-		 nav.travelTo(2, 0);
-		 nav.travelTo(0, 0);
+		// nav.travelTo(0, 2); 
+		// nav.travelTo(2, 2); 
+		// nav.travelTo(2, 0);
+		// nav.travelTo(0, 0);
 		 
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
-		//nav.travelTo(0, 2);
-		/*nav.travelTo(2, 1);
-		nav.travelTo(1, 2);
-		nav.travelTo(0, 0);
-		*/
+		nav.travelTo(-0.5, 2.5);
+		nav.travelTo(-0.5, 5.5);
+		nav.travelTo(1.5, 5.5);
+		nav.travelTo(1.5, 6.5);
+		nav.travelTo(4.5, 6.5);
+		nav.travelTo(5.75, 5.75);
+		
 		
 		// perform the light sensor localization
-		// LightLocalizer lsl = new LightLocalizer(odo, nav);
-		// lsl.doLocalization();
-		// odo.setX(7 + odo.getX());
-		// odo.setY(7 + odo.getY());
-		// nav.turnTo(0);
+		lsl.doLocalization();
+		 odo.setX(6 + odo.getX());
+		 odo.setY(6 + odo.getY());
+		 nav.turnTo(0);
 
 		// go to shooting spot relative to target 1
 		// shoot half the balls
@@ -98,8 +99,8 @@ public class Demo {
 		// shoot the other half
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		// position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-		// robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+		 position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+		 robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
 
 		// return to (0,0)
 

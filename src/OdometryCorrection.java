@@ -53,13 +53,13 @@ public class OdometryCorrection extends Thread {
 				else if (isLine(odometer.getY() + robot.LIGHT_SENSOR_DISTANCE
 						* Math.cos(Math.toRadians(odometer.getTheta())))) {
 					Sound.beep();
-					correctY();
+					//correctY();
 				}
 				// X West
 				else if (isLine(odometer.getX() + robot.LIGHT_SENSOR_DISTANCE
 								* Math.sin(Math.toRadians(odometer.getTheta())))) {
 					Sound.buzz();
-					correctX();
+					//correctX();
 				}
 			}
 
@@ -80,7 +80,7 @@ public class OdometryCorrection extends Thread {
 	}
 
 	private boolean isLine(double var) {
-		if (var % 30.48 < 5 || var % 30.48 > 25) {
+		if (var % robot.TILE_LENGTH < 3 || var % robot.TILE_LENGTH > 27) {
 			return true;
 		} else {
 			return false;
@@ -88,7 +88,7 @@ public class OdometryCorrection extends Thread {
 	}
 
 	private boolean isDirectionNorth() {
-		if (odometer.getTheta() > 270 || odometer.getTheta() < 90) {
+		if (odometer.getTheta() > 269 || odometer.getTheta() < 89) {
 			// The robot is going up
 			return true;
 		} else {
