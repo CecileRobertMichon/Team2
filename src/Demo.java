@@ -52,27 +52,29 @@ public class Demo {
 			USLocalizer usl = new USLocalizer(odo,
 			USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight, filterLeft);
 			usl.doLocalization();
-			Sound.beep();
-
+			
 		// when done travel to (0,0) and turn to 0 degrees
 		 nav.travelTo(0, 0);
 		 nav.turnTo(30);
 
-			//LightLocalizer lsl = new LightLocalizer(odo, nav);
-			//lsl.doLocalization();
+		LightLocalizer lsl = new LightLocalizer(odo, nav);
+		lsl.doLocalization();
 
-		// nav.travelTo(0, 0);
-		// nav.turnTo(0);
+		 nav.travelTo(0, 0);
+		 nav.turnTo(0);
+		 Sound.beep();
 
 		// start obstacle detection
-		//nav.setIsLocalizing(false);
+		nav.setIsLocalizing(false);
 
-		//correc.start();
+		correc.start();
 
 		// Square driver for testing
 		
-		 // nav.travelTo(0, 2); nav.travelTo(2, 2); nav.travelTo(2, 0);
-		 // nav.travelTo(0, 0);
+		 nav.travelTo(0, 2); 
+		 nav.travelTo(2, 2); 
+		 nav.travelTo(2, 0);
+		 nav.travelTo(0, 0);
 		 
 
 		// travel to the right bottom corner of the shooting area while avoiding
