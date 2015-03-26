@@ -59,7 +59,7 @@ public class Robot {
 	// Tile constants
 	public final double TILE_LENGTH = 30.48;
 	public final double HALF_TILE = 15.24;
-	public final double DISTANCE_TOLERANCE = 1;
+	public final double DISTANCE_TOLERANCE = 0.5;
 	public final double ANGLE_TOLERANCE = 0.5;
 
 	// Firing constants

@@ -19,7 +19,7 @@ public class Demo {
 		// sensors
 		Odometer odo = new Odometer();
 		Robot robot = new Robot();
-		CopyOfOdometryCorrection correct = new CopyOfOdometryCorrection(odo);
+		OdometryCorrection correct = new OdometryCorrection(odo);
 		USFilter filterStraight = new USFilter(robot.US);
 		USFilter filterLeft = new USFilter(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
@@ -71,8 +71,8 @@ public class Demo {
 
 		// Square driver for testing
 		
-		nav.travelTo(1, 4); 
-		nav.travelTo(2, 0); 
+		nav.travelTo(0, 2); 
+		nav.travelTo(2, 2); 
 		nav.travelTo(0, 0);
 		 
 

@@ -12,123 +12,73 @@ import lejos.nxt.Sound;
 
 public class OdometryCorrection extends Thread {
 
-	private Odometer odometer;
-	private Robot robot;
+ private Odometer odometer;
+ private Robot robot;
+ private double xLS, yLS, ex, ey;
 
-	// constructor
-	public OdometryCorrection(Odometer odometer) {
-		this.odometer = odometer;
-		this.robot = new Robot();
-	}
+ // constructor
+ public OdometryCorrection(Odometer odometer) {
+  this.odometer = odometer;
+  this.robot = new Robot();
+ }
 
-	// run method (required for Thread)
-	public void run() {
-		long correctionStart, correctionEnd;
-		int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
+ // run method (required for Thread)
+ public void run() {
+  long correctionStart, correctionEnd;
+  int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
 
-		while (true) {
-			correctionStart = System.currentTimeMillis();
+  while (true) {
+   correctionStart = System.currentTimeMillis();
 
-			// put your correction code here
-			int light = robot.COLOR_SENSOR.getNormalizedLightValue();
+   // put your correction code here
+   int light = robot.COLOR_SENSOR.getNormalizedLightValue();
 
-			// LCD.drawString("Light : " + light, 0, 5);
-			if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
+   // LCD.drawString("Light : " + light, 0, 5);
+   if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
 
-				// Y North
-				if (isDirectionNorth()
-						&& isLine(odometer.getY() - robot.LIGHT_SENSOR_DISTANCE
-								* Math.cos(Math.toRadians(odometer.getTheta())))) {
-					Sound.beep();
-					correctY();
-				}
-				// X East
-				else if (isDirectionEast()
-						&& isLine(odometer.getX() - robot.LIGHT_SENSOR_DISTANCE
-								* Math.sin(Math.toRadians(odometer.getTheta())))) {
-					Sound.buzz();
-					correctX();
-				}
-				// Y South
-				else if (isLine(odometer.getY() + robot.LIGHT_SENSOR_DISTANCE
-						* Math.cos(Math.toRadians(odometer.getTheta())))) {
-					Sound.beep();
-					//correctY();
-				}
-				// X West
-				else if (isLine(odometer.getX() + robot.LIGHT_SENSOR_DISTANCE
-								* Math.sin(Math.toRadians(odometer.getTheta())))) {
-					Sound.buzz();
-					//correctX();
-				}
-			}
+    xLS = odometer.getX()
+      + (-robot.LIGHT_SENSOR_DISTANCE * Math.sin(Math
+        .toRadians(odometer.getTheta())));
+    yLS = odometer.getY()
+      + (-robot.LIGHT_SENSOR_DISTANCE * Math.cos(Math
+        .toRadians(odometer.getTheta())));
 
-			// this ensure the odometry correction occurs only once every period
-			correctionEnd = System.currentTimeMillis();
-			if (correctionEnd - correctionStart < robot.CORRECTION_PERIOD) {
-				try {
-					Thread.sleep(robot.CORRECTION_PERIOD
-							- (correctionEnd - correctionStart));
-				} catch (InterruptedException e) {
-					// there is nothing to be done here because it is not
-					// expected that the odometry correction will be
-					// interrupted by another thread
-				}
-			}
-			//previousLight = light;
-		}
-	}
+    if (xLS % robot.TILE_LENGTH < robot.HALF_TILE) {
+     ex = xLS % robot.TILE_LENGTH;
+    } else {
+     ex = (xLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
+    }
+    if (yLS % robot.TILE_LENGTH < robot.HALF_TILE) {
+     ey = yLS % robot.TILE_LENGTH;
+    } else {
+     ey = (yLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
+    }
 
-	private boolean isLine(double var) {
-		if (var % robot.TILE_LENGTH < 3 || var % robot.TILE_LENGTH > 27) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    //if ((Math.min(Ex, Ey) / Math.max(Ex, Ey) < 0.8) && Math.sqrt(Ex*Ex + Ey*Ey) > 2.0) {
+     if (ex < ey) {
+      odometer.setX(odometer.getX() - ex);
+     } else {
+      odometer.setY(odometer.getY() - ey);
+     }
+     
+    // this ensure the odometry correction occurs only once every
+    // period
 
-	private boolean isDirectionNorth() {
-		if (odometer.getTheta() > 269 || odometer.getTheta() < 89) {
-			// The robot is going up
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean isDirectionEast() {
-		if (odometer.getTheta() < 180) {
-			// The robot is going right
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private void correctX() {
-		// calculate distance from closest line
-		double offset = robot.LIGHT_SENSOR_DISTANCE
-				* Math.sin(Math.toRadians(odometer.getTheta()));
-		// Add the line's distance from 0 to the offset
-		double realX = odometer.getX() - (odometer.getX() % robot.TILE_LENGTH);
-		if(isDirectionEast()){
-			odometer.setX(realX + offset);
-		} else {
-			odometer.setX(realX + robot.TILE_LENGTH - offset);
-		}
-	}
-
-	private void correctY() {
-		// calculate distance from closest line
-		double offset = robot.LIGHT_SENSOR_DISTANCE
-				* Math.cos(Math.toRadians(odometer.getTheta()));
-		// Add the line's distance from 0 to the offset
-		double realY = odometer.getY() - (odometer.getY() % robot.TILE_LENGTH);
-		if(isDirectionNorth()){
-			odometer.setY(realY + offset);
-		} else {
-			odometer.setY(realY + robot.TILE_LENGTH - offset);
-		}
-	}
+    // previousLight = light;
+   }
+      correctionEnd = System.currentTimeMillis();
+    if (correctionEnd - correctionStart < robot.CORRECTION_PERIOD) {
+     try {
+      Thread.sleep(robot.CORRECTION_PERIOD
+        - (correctionEnd - correctionStart));
+     } catch (InterruptedException e) {
+      // there is nothing to be done here because it is not
+      // expected that the odometry correction will be
+      // interrupted by another thread
+     }
+    }
+  
+  }
+ }
 
 }
