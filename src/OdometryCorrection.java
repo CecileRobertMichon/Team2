@@ -54,14 +54,14 @@ public class OdometryCorrection extends Thread {
 					ey = (yLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
 				}
 
-				// if ((Math.min(Ex, Ey) / Math.max(Ex, Ey) < 0.8) &&
-				// Math.sqrt(Ex*Ex + Ey*Ey) > 2.0) {
-				if (ex < ey) {
-					odometer.setX(odometer.getX() - ex);
-				} else {
-					odometer.setY(odometer.getY() - ey);
+				if ((Math.min(ex, ey) / Math.max(ex, ey) < 0.8)
+						&& Math.sqrt(ex * ex + ey * ey) > 2.0) {
+					if (ex < ey) {
+						odometer.setX(odometer.getX() - ex);
+					} else {
+						odometer.setY(odometer.getY() - ey);
+					}
 				}
-
 				// this ensure the odometry correction occurs only once every
 				// period
 

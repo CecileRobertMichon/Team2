@@ -56,19 +56,18 @@ public class USFilter extends Thread {
 			}
 		}
 	}
-	
-	//returns median to the sorted moving array by taking the middle value 
-	  private int calculateMedian() {
-	    int median;
-	    if ((sorted.length % 2) == 1) { 
-	    //array is of odd length, chose middle value
-	      median = sorted[(int) (sorted.length + 1) / 2];
-	    }
-	    else { 
-	    //array is of even length, average out the two middle values
-	      median = (sorted[ (int) (sorted.length / 2) ] + sorted[(int) (sorted.length + 1) / 2]) / 2;
-	    }
-	    return median;
-	  }
+
+	// returns median to the sorted moving array by taking the middle value
+	private int calculateMedian() {
+		int median;
+		if ((sorted.length % 2) == 1) {
+			// array is of odd length, chose middle value
+			median = sorted[(int) (sorted.length + 1) / 2];
+		} else {
+			// array is of even length, average out the two middle values
+			median = (sorted[(int) (sorted.length / 2)] + sorted[(int) (sorted.length + 1) / 2]) / 2;
+		}
+		return median;
+	}
 
 }

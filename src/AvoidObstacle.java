@@ -30,9 +30,10 @@ public class AvoidObstacle {
 		robot.LEFT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 		robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 
-		robot.LEFT_MOTOR.rotate(robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0), true);
-		robot.RIGHT_MOTOR.rotate(-robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0),
-				false);
+		robot.LEFT_MOTOR.rotate(
+				robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0), true);
+		robot.RIGHT_MOTOR.rotate(
+				-robot.convertAngle(robot.RADIUS, robot.WIDTH, 90.0), false);
 
 		// use sensor for a 90 degree angle
 

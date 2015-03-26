@@ -35,62 +35,62 @@ public class Demo {
 
 		// Calibration Code - used to find exact radius and width values
 
-		//robot.LEFT_MOTOR.setAcceleration(2000);
-		//robot.RIGHT_MOTOR.setAcceleration(2000);
-		//robot.LEFT_MOTOR.setSpeed(100);
-		//robot.RIGHT_MOTOR.setSpeed(100);
-		//robot.LEFT_MOTOR.rotate(1675, true);
-		//robot.RIGHT_MOTOR.rotate(1675, false);
-		//robot.LEFT_MOTOR.rotate(2832, true);
-		//robot.RIGHT_MOTOR.rotate(-2832, false);
-		
+		// robot.LEFT_MOTOR.setAcceleration(2000);
+		// robot.RIGHT_MOTOR.setAcceleration(2000);
+		// robot.LEFT_MOTOR.setSpeed(100);
+		// robot.RIGHT_MOTOR.setSpeed(100);
+		// robot.LEFT_MOTOR.rotate(1675, true);
+		// robot.RIGHT_MOTOR.rotate(1675, false);
+		// robot.LEFT_MOTOR.rotate(2832, true);
+		// robot.RIGHT_MOTOR.rotate(-2832, false);
 
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
-			USLocalizer usl = new USLocalizer(odo,USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight, filterLeft);
-			usl.doLocalization();
-			
+		USLocalizer usl = new USLocalizer(odo,
+				USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight,
+				filterLeft);
+		usl.doLocalization();
+
 		// when done travel to (0,0) and turn to 0 degrees
-			nav.travelTo(0, 0);
-			nav.turnTo(30);
+		nav.travelTo(0, 0);
+		nav.turnTo(30);
 
-			LightLocalizer lsl = new LightLocalizer(odo, nav);
-			lsl.doLocalization();
+		LightLocalizer lsl = new LightLocalizer(odo, nav);
+		lsl.doLocalization();
 
-			nav.travelTo(0, 0);
-			nav.turnTo(0);
-			Sound.beep();
+		nav.travelTo(0, 0);
+		nav.turnTo(0);
+		Sound.beep();
 
-		//start obstacle detection
-		nav.setIsLocalizing(false);
+		// start obstacle detection
+		//nav.setIsLocalizing(false);
 
 		correct.start();
 
 		// Square driver for testing
-		
-		nav.travelTo(0, 2); 
-		nav.travelTo(2, 2); 
+
+	/*	nav.travelTo(0, 2);
+		nav.travelTo(2, 2);
 		nav.travelTo(0, 0);
-		 
+*/
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
-		nav.travelTo(-0.5, 2);
-		nav.travelTo(-0.5, 5.5);
-		nav.travelTo(1.5, 5.5);
-		nav.travelTo(1.5, 6.5);
-		nav.travelTo(1.5, 6.5);
-		nav.travelTo(4.5, 6.5);
-		nav.travelTo(6,6);
+		nav.travelTo(-0.5, 0);
+		nav.travelTo(-0.45, 5.7);
+		nav.travelTo(1.5, 5.7);
+		nav.travelTo(1.5, 6.6);
+		nav.travelTo(1.5, 6.6);
+		nav.travelTo(4.5, 6.7);
+		nav.travelTo(6.05, 6.05);
 		nav.turnTo(20);
-	
-		
+
 		// perform the light sensor localization
 		lsl.doLocalization();
-		odo.setX(6*robot.TILE_LENGTH + odo.getX());
-		odo.setY(6*robot.TILE_LENGTH + odo.getY());
+		odo.setX(6 * robot.TILE_LENGTH + odo.getX());
+		odo.setY(6 * robot.TILE_LENGTH + odo.getY());
 		nav.travelTo(6, 6);
 		nav.turnTo(0);
 
@@ -101,11 +101,10 @@ public class Demo {
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
 		nav.travelTo(5.9, 5.9);
-		nav.turnTo(45);
+		nav.turnTo(270);
 		launcher.shootBall();
-		//launcher.shootBall();
-		//launcher.shootBall();
-
+		// launcher.shootBall();
+		// launcher.shootBall();
 
 		// return to (0,0)
 
