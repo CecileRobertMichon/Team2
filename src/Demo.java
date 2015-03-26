@@ -21,7 +21,7 @@ public class Demo {
 		Robot robot = new Robot();
 		OdometryCorrection correct = new OdometryCorrection(odo);
 		USFilter filterStraight = new USFilter(robot.US);
-		USFilter filterLeft = new USFilter(robot.US2);
+		USFilterLeft filterLeft = new USFilterLeft(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
 		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
 		Launcher launcher = new Launcher();

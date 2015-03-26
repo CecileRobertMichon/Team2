@@ -18,14 +18,14 @@ public class USLocalizer {
 	private LocalizationType locType;
 	private Navigation nav;
 	private USFilter filter;
-	private USFilter filterLeft;
+	private USFilterLeft filterLeft;
 	private Robot robot = new Robot();
 
 	private final int NOISE = robot.NOISE;
 	public final int WALL_CENTER = robot.WALL_CENTER;
 
 	public USLocalizer(Odometer odo, LocalizationType locType, Navigation nav,
-			USFilter filter, USFilter filterLeft) {
+			USFilter filter, USFilterLeft filterLeft) {
 		this.odo = odo;
 		this.locType = locType;
 		this.nav = nav;
@@ -57,11 +57,13 @@ public class USLocalizer {
 
 		// update the odometer position
 		nav.turnTo(-deltaTheta);
-		odo.setPosition(new double[] { odo.getX(), odo.getY(), 0.0 }, new boolean[] { true,
-				true, true });
+		odo.setPosition(new double[] { odo.getX(), odo.getY(), 0.0 },
+				new boolean[] { true, true, true });
 		nav.turnTo(-90);
-		double initialX= filter.getMedianDistance() - (robot.TILE_LENGTH - robot.US_SENSOR_DISTANCE );
-		double initialY = filterLeft.getMedianDistance() - (robot.TILE_LENGTH - robot.US_LEFT_SENSOR_DISTANCE );
+		double initialX = filter.getMedianDistance()
+				- (robot.TILE_LENGTH - robot.US_SENSOR_DISTANCE);
+		double initialY = filterLeft.getMedianDistance()
+				- (robot.TILE_LENGTH - robot.US_LEFT_SENSOR_DISTANCE);
 		odo.setPosition(new double[] { initialX, initialY, odo.getTheta() },
 				new boolean[] { true, true, true });
 

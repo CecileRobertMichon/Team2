@@ -18,7 +18,7 @@ public class Navigation {
 	private Odometer odometer;
 	private AvoidObstacle obs;
 	private USFilter filterTravel;
-	private USFilter filterAvoid;
+	private USFilterLeft filterAvoid;
 	private Robot robot = new Robot();
 	private NXTRegulatedMotor leftMotor = robot.LEFT_MOTOR,
 			rightMotor = robot.RIGHT_MOTOR;
@@ -29,7 +29,7 @@ public class Navigation {
 	private boolean isLocalizing = true;
 
 	// constructor
-	public Navigation(Odometer odo, USFilter filterStraight, USFilter filterLeft) {
+	public Navigation(Odometer odo, USFilter filterStraight, USFilterLeft filterLeft) {
 		this.odometer = odo;
 		this.filterTravel = filterStraight;
 		this.filterAvoid = filterLeft;

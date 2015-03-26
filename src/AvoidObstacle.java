@@ -12,12 +12,12 @@ import lejos.nxt.Motor;
 
 public class AvoidObstacle {
 	Odometer odo;
-	USFilter filter;
+	USFilterLeft filter;
 	Robot robot;
 
 	private int distance;
 
-	public AvoidObstacle(USFilter filter) {
+	public AvoidObstacle(USFilterLeft filter) {
 		this.filter = filter;
 		this.odo = new Odometer();
 		this.robot = new Robot();
