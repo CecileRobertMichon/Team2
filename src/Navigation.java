@@ -29,7 +29,8 @@ public class Navigation {
 	private boolean isLocalizing = true;
 
 	// constructor
-	public Navigation(Odometer odo, USFilter filterStraight, USFilterLeft filterLeft) {
+	public Navigation(Odometer odo, USFilter filterStraight,
+			USFilterLeft filterLeft) {
 		this.odometer = odo;
 		this.filterTravel = filterStraight;
 		this.filterAvoid = filterLeft;
@@ -88,7 +89,7 @@ public class Navigation {
 		while (rightMotor.isMoving()) {
 			wallDist = filterTravel.getMedianDistance();
 			// call method to avoid obstacle if object is detected
-			if (wallDist < 10 && !isLocalizing) {
+			if (wallDist < 15 && !isLocalizing) {
 				obs.avoid();
 			}
 		}
