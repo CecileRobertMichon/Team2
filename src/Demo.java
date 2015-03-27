@@ -45,7 +45,7 @@ public class Demo {
 		// robot.RIGHT_MOTOR.rotate(-2832, false);
 
 		// set navigation to localization mode - no obstacle detection
-		nav.setIsLocalizing(true);
+		 nav.setIsLocalizing(true);
 
 		// perform the ultrasonic localization
 		USLocalizer usl = new USLocalizer(odo,
@@ -71,28 +71,26 @@ public class Demo {
 
 		// Square driver for testing
 
-	/*	nav.travelTo(0, 2);
-		nav.travelTo(2, 2);
-		nav.travelTo(0, 0);
-*/
-
+		/*
+		 * nav.travelTo(0, 2); nav.travelTo(2, 2); nav.travelTo(0, 0);
+		 */
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
 		nav.travelTo(-0.5, 0);
-		nav.travelTo(-0.45, 5.7);
-		nav.travelTo(1.5, 5.7);
-		nav.travelTo(1.5, 6.6);
-		nav.travelTo(1.5, 6.6);
-		nav.travelTo(4.5, 6.7);
-		nav.travelTo(6.05, 6.05);
+		nav.travelTo(-0.5, 5.65);
+		nav.travelTo(1.6, 5.65);
+		nav.travelTo(1.6, 6.6);
+		nav.travelTo(4.5, 6.6);
+		nav.travelTo(6, 6);
 		nav.turnTo(20);
 
-		// perform the light sensor localization
+		// // perform the light sensor localization
 		lsl.doLocalization();
 		odo.setX(6 * robot.TILE_LENGTH + odo.getX());
 		odo.setY(6 * robot.TILE_LENGTH + odo.getY());
 		nav.travelTo(6, 6);
 		nav.turnTo(0);
+		Sound.beep();
 
 		// go to shooting spot relative to target 1
 		// shoot half the balls
@@ -100,12 +98,8 @@ public class Demo {
 		// shoot the other half
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		nav.travelTo(5.9, 5.9);
-		nav.turnTo(270);
-		launcher.shootBall();
-		// launcher.shootBall();
-		// launcher.shootBall();
-
+		position.targetAcquisition(9, 9, 9, 9);
+		
 		// return to (0,0)
 
 		Button.waitForAnyPress();

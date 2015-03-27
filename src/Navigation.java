@@ -89,7 +89,7 @@ public class Navigation {
 		while (rightMotor.isMoving()) {
 			wallDist = filterTravel.getMedianDistance();
 			// call method to avoid obstacle if object is detected
-			if (wallDist < 15 && !isLocalizing) {
+			if (wallDist < 10 && !isLocalizing) {
 				obs.avoid();
 			}
 		}

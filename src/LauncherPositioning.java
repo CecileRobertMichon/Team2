@@ -27,22 +27,30 @@ public class LauncherPositioning {
 
 	public void targetAcquisition(int x1, int y1, int x2, int y2) {
 		travelToFiringPosition(x1, y1);
+		double minTheta = (Math.atan2(x1 - odometer.getX(),
+				y1 - odometer.getY()))
+				* (180.0 / Math.PI);
+		nav.turnTo(minTheta);
 		lineUp(x1, y1);
 		// shoot half the balls
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER / 2; i++) {
 			launcher.shootBall();
 		}
-		travelToFiringPosition(x2, y2);
+		/*travelToFiringPosition(x2, y2);
+		minTheta = (Math.atan2(x2 - odometer.getX(),
+				y2 - odometer.getY()))
+				* (180.0 / Math.PI);
+		nav.turnTo(minTheta);
 		lineUp(x2, y2);
 		// shoot the other half of the balls
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER - (robot.BALL_NUMBER / 2); i++) {
 			launcher.shootBall();
-		}
+		}*/
 		// return to normal position
-		nav.travelTo((robot.SECTION_DIVIDER - 1) * robot.TILE_LENGTH,
-				(robot.SECTION_DIVIDER - 1) * robot.TILE_LENGTH);
+		nav.travelTo((robot.SECTION_DIVIDER - 1),
+				(robot.SECTION_DIVIDER - 1));
 	}
 
 	// to move forwards and backwards until target is perfectly in optimal range
@@ -69,14 +77,14 @@ public class LauncherPositioning {
 	// distances given with respect to original origin
 	private void travelToFiringPosition(int x, int y) {
 		if (section == 1) {
-			nav.travelTo((robot.SECTION_DIVIDER - 2) * robot.TILE_LENGTH,
-					(robot.SECTION_DIVIDER - 0.5) * robot.TILE_LENGTH);
+			nav.travelTo((robot.SECTION_DIVIDER - 2),
+					(robot.SECTION_DIVIDER - 0.5));
 		} else if (section == 2) {
-			nav.travelTo((robot.SECTION_DIVIDER - 0.5) * robot.TILE_LENGTH,
-					(robot.SECTION_DIVIDER - 0.5) * robot.TILE_LENGTH);
+			nav.travelTo((robot.SECTION_DIVIDER - 0.5),
+					(robot.SECTION_DIVIDER - 0.5));
 		} else {
-			nav.travelTo((robot.SECTION_DIVIDER - 0.5) * robot.TILE_LENGTH,
-					(robot.SECTION_DIVIDER - 2) * robot.TILE_LENGTH);
+			nav.travelTo((robot.SECTION_DIVIDER - 0.5),
+					(robot.SECTION_DIVIDER - 2));
 		}
 	}
 }
