@@ -65,7 +65,7 @@ public class Demo {
 		Sound.beep();
 
 		// start obstacle detection
-		//nav.setIsLocalizing(false);
+		// nav.setIsLocalizing(false);
 
 		correct.start();
 
@@ -78,9 +78,11 @@ public class Demo {
 		// obstacles
 		nav.travelTo(-0.5, 0);
 		nav.travelTo(-0.5, 5.65);
-		nav.travelTo(1.6, 5.65);
-		nav.travelTo(1.6, 6.6);
-		nav.travelTo(4.5, 6.6);
+		nav.travelTo(1.55, 5.65);
+		nav.travelTo(1.55, 6.65);
+		nav.travelTo(4.5, 6.65);
+		nav.travelTo(4.5, 6);
+		
 		nav.travelTo(6, 6);
 		nav.turnTo(20);
 
@@ -98,7 +100,9 @@ public class Demo {
 		// shoot the other half
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		position.targetAcquisition(9, 9, 9, 9);
+		nav.travelTo(5.675, 5.675);
+		nav.turnTo(45);
+		launcher.shootBall();
 		
 		// return to (0,0)
 
