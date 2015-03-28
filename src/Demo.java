@@ -78,12 +78,12 @@ public class Demo {
 		// obstacles
 		nav.travelTo(-0.5, 0);
 		nav.travelTo(-0.5, 5.65);
-		nav.travelTo(1.55, 5.65);
-		nav.travelTo(1.55, 6.65);
+		nav.travelTo(1.56, 5.65);
+		nav.travelTo(1.56, 6.65);
 		nav.travelTo(4.5, 6.65);
 		nav.travelTo(4.5, 6);
 		
-		nav.travelTo(6, 6);
+		nav.travelTo(6, 6.15);
 		nav.turnTo(20);
 
 		// // perform the light sensor localization
@@ -101,7 +101,12 @@ public class Demo {
 
 		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
 		nav.travelTo(5.675, 5.675);
-		nav.turnTo(45);
+		nav.turnTo(47);
+		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
 		launcher.shootBall();
 		
 		// return to (0,0)
