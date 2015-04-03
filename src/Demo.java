@@ -21,7 +21,7 @@ public class Demo {
 		Robot robot = new Robot();
 		OdometryCorrection correct = new OdometryCorrection(odo);
 		USFilter filterStraight = new USFilter(robot.US);
-		USFilterLeft filterLeft = new USFilterLeft(robot.US2);
+		USFilter filterLeft = new USFilter(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
 		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
 		Launcher launcher = new Launcher();
@@ -45,8 +45,8 @@ public class Demo {
 		// robot.RIGHT_MOTOR.rotate(-2832, false);
 
 		// set navigation to localization mode - no obstacle detection
-		 nav.setIsLocalizing(true);
-
+//		 nav.setIsLocalizing(true);
+//
 		// perform the ultrasonic localization
 		USLocalizer usl = new USLocalizer(odo,
 				USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight,
@@ -68,46 +68,50 @@ public class Demo {
 		// nav.setIsLocalizing(false);
 
 		correct.start();
-
-		// Square driver for testing
-
-		/*
-		 * nav.travelTo(0, 2); nav.travelTo(2, 2); nav.travelTo(0, 0);
-		 */
-		// travel to the right bottom corner of the shooting area while avoiding
-		// obstacles
-		nav.travelTo(-0.5, 0);
-		nav.travelTo(-0.5, 5.65);
-		nav.travelTo(1.56, 5.65);
-		nav.travelTo(1.56, 6.65);
-		nav.travelTo(4.5, 6.65);
-		nav.travelTo(4.5, 6);
+//
+//		// Square driver for testing
+//
 		
-		nav.travelTo(6, 6.15);
-		nav.turnTo(20);
-
-		// // perform the light sensor localization
-		lsl.doLocalization();
-		odo.setX(6 * robot.TILE_LENGTH + odo.getX());
-		odo.setY(6 * robot.TILE_LENGTH + odo.getY());
-		nav.travelTo(6, 6);
-		nav.turnTo(0);
-		Sound.beep();
-
-		// go to shooting spot relative to target 1
-		// shoot half the balls
-		// go to shooting spot relative to target 2
-		// shoot the other half
-
-		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
-		nav.travelTo(5.675, 5.675);
-		nav.turnTo(47);
-		launcher.shootBall();
-		launcher.shootBall();
-		launcher.shootBall();
-		launcher.shootBall();
-		launcher.shootBall();
-		launcher.shootBall();
+		// nav.travelTo(0, 2); 
+		 nav.travelTo(2, 2); 
+		 nav.travelTo(2, 0);
+		 nav.travelTo(0, 0);
+		 nav.turnTo(0);
+		 
+//		// travel to the right bottom corner of the shooting area while avoiding
+//		// obstacles
+//		nav.travelTo(-0.5, 0);
+//		nav.travelTo(-0.5, 5.65);
+//		nav.travelTo(1.56, 5.65);
+//		nav.travelTo(1.56, 6.65);
+//		nav.travelTo(4.5, 6.65);
+//		nav.travelTo(4.5, 6);
+//		
+//		nav.travelTo(6, 6.15);
+//		nav.turnTo(20);
+//
+//		// // perform the light sensor localization
+//		lsl.doLocalization();
+//		odo.setX(6 * robot.TILE_LENGTH + odo.getX());
+//		odo.setY(6 * robot.TILE_LENGTH + odo.getY());
+//		nav.travelTo(6, 6);
+//		nav.turnTo(0);
+//		Sound.beep();
+//
+//		// go to shooting spot relative to target 1
+//		// shoot half the balls
+//		// go to shooting spot relative to target 2
+//		// shoot the other half
+//
+//		/* **** UNCOMMENT THIS FOR LAUNCHER TEST **** */
+//		nav.travelTo(5.675, 5.675);
+//		nav.turnTo(47);
+//		launcher.shootBall();
+//		launcher.shootBall();
+//		launcher.shootBall();
+//		launcher.shootBall();
+//		launcher.shootBall();
+//		launcher.shootBall();
 		
 		// return to (0,0)
 

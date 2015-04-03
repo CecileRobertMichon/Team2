@@ -18,14 +18,14 @@ public class USLocalizer {
 	private LocalizationType locType;
 	private Navigation nav;
 	private USFilter filter;
-	private USFilterLeft filterLeft;
+	private USFilter filterLeft;
 	private Robot robot = new Robot();
 
 	private final int NOISE = robot.NOISE;
 	public final int WALL_CENTER = robot.WALL_CENTER;
 
 	public USLocalizer(Odometer odo, LocalizationType locType, Navigation nav,
-			USFilter filter, USFilterLeft filterLeft) {
+			USFilter filter, USFilter filterLeft) {
 		this.odo = odo;
 		this.locType = locType;
 		this.nav = nav;

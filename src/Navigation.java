@@ -18,7 +18,7 @@ public class Navigation {
 	private Odometer odometer;
 	private AvoidObstacle obs;
 	private USFilter filterTravel;
-	private USFilterLeft filterAvoid;
+	private USFilter filterAvoid;
 	private Robot robot = new Robot();
 	private NXTRegulatedMotor leftMotor = robot.LEFT_MOTOR,
 			rightMotor = robot.RIGHT_MOTOR;
@@ -30,7 +30,7 @@ public class Navigation {
 
 	// constructor
 	public Navigation(Odometer odo, USFilter filterStraight,
-			USFilterLeft filterLeft) {
+			USFilter filterLeft) {
 		this.odometer = odo;
 		this.filterTravel = filterStraight;
 		this.filterAvoid = filterLeft;
