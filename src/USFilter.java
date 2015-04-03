@@ -20,6 +20,7 @@ public class USFilter extends Thread {
 	public USFilter(UltrasonicSensor us) {
 		this.us = us;
 		medianDistance = 0;
+		// get 5 distance values
 		input = new int[5];
 		for (int i = 0; i < input.length; i++) {
 			input[i] = us.getDistance();
@@ -30,6 +31,7 @@ public class USFilter extends Thread {
 
 	public void run() {
 		while (true) {
+			// update the distance values continuously
 			input[counter] = us.getDistance();
 			counter++;
 			counter = counter % 5;
@@ -42,6 +44,7 @@ public class USFilter extends Thread {
 		return this.medianDistance;
 	}
 
+	// bubble sort the input array into new array
 	private void bubbleSort(int value[]) {
 		int swap;
 		sorted = value;

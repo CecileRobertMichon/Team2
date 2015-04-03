@@ -8,8 +8,6 @@
  *  Chaohan Wang - 260516712
  */
 
-import lejos.nxt.Sound;
-
 public class OdometryCorrection extends Thread {
 
 	private Odometer odometer;
@@ -33,9 +31,10 @@ public class OdometryCorrection extends Thread {
 			// put your correction code here
 			int light = robot.COLOR_SENSOR.getNormalizedLightValue();
 
-			// LCD.drawString("Light : " + light, 0, 5);
+			// detect if crossed line
 			if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
 
+				// calculate light sensor expected position
 				xLS = odometer.getX()
 						+ (-robot.LIGHT_SENSOR_DISTANCE * Math.sin(Math
 								.toRadians(odometer.getTheta())));
@@ -43,6 +42,7 @@ public class OdometryCorrection extends Thread {
 						+ (-robot.LIGHT_SENSOR_DISTANCE * Math.cos(Math
 								.toRadians(odometer.getTheta())));
 
+				// calculate light sensor position x and y error
 				if (xLS % robot.TILE_LENGTH < robot.HALF_TILE) {
 					ex = xLS % robot.TILE_LENGTH;
 				} else {
@@ -54,6 +54,7 @@ public class OdometryCorrection extends Thread {
 					ey = (yLS % robot.TILE_LENGTH) - robot.TILE_LENGTH;
 				}
 
+				// correct the smallest error
 				if ((Math.min(ex, ey) / Math.max(ex, ey) < 0.8)
 						&& Math.sqrt(ex * ex + ey * ey) > 2.0) {
 					if (ex < ey) {
@@ -62,10 +63,10 @@ public class OdometryCorrection extends Thread {
 						odometer.setY(odometer.getY() - ey);
 					}
 				}
-				// this ensure the odometry correction occurs only once every
-				// period
-
 			}
+
+			// this ensure the odometry correction occurs only once every
+			// period
 			correctionEnd = System.currentTimeMillis();
 			if (correctionEnd - correctionStart < robot.CORRECTION_PERIOD) {
 				try {

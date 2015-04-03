@@ -1,7 +1,4 @@
-import lejos.nxt.Button;
-import lejos.nxt.LCD;
 import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.Sound;
 
 /*
  *  Team 2
@@ -66,9 +63,7 @@ public class Navigation {
 			goForward(distance);
 		}
 		// stop the motors
-		leftMotor.setSpeed(0);
-		rightMotor.setSpeed(0);
-
+		this.stop();
 	}
 
 	public void goForward(double distance) {
@@ -130,6 +125,7 @@ public class Navigation {
 
 	public void turnTo(double theta) {
 
+		// avoid doing obsta
 		boolean temp = this.isLocalizing;
 		this.setIsLocalizing(false);
 

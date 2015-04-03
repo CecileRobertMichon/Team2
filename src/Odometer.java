@@ -1,4 +1,3 @@
-import lejos.nxt.LCD;
 
 /*
  *  Team 2

@@ -37,7 +37,7 @@ public class LauncherPositioning {
 		for (int i = 0; i < robot.BALL_NUMBER / 2; i++) {
 			launcher.shootBall();
 		}
-		/*travelToFiringPosition(x2, y2);
+		travelToFiringPosition(x2, y2);
 		minTheta = (Math.atan2(x2 - odometer.getX(),
 				y2 - odometer.getY()))
 				* (180.0 / Math.PI);
@@ -47,7 +47,7 @@ public class LauncherPositioning {
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER - (robot.BALL_NUMBER / 2); i++) {
 			launcher.shootBall();
-		}*/
+		}
 		// return to normal position
 		nav.travelTo((robot.SECTION_DIVIDER - 1),
 				(robot.SECTION_DIVIDER - 1));

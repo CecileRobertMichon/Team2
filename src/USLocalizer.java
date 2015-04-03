@@ -9,13 +9,9 @@
  */
 
 public class USLocalizer {
-	public enum LocalizationType {
-		FALLING_EDGE, RISING_EDGE
-	};
 
 	private int distance;
 	private Odometer odo;
-	private LocalizationType locType;
 	private Navigation nav;
 	private USFilter filter;
 	private USFilter filterLeft;
@@ -24,10 +20,9 @@ public class USLocalizer {
 	private final int NOISE = robot.NOISE;
 	public final int WALL_CENTER = robot.WALL_CENTER;
 
-	public USLocalizer(Odometer odo, LocalizationType locType, Navigation nav,
+	public USLocalizer(Odometer odo, Navigation nav,
 			USFilter filter, USFilter filterLeft) {
 		this.odo = odo;
-		this.locType = locType;
 		this.nav = nav;
 		this.filter = filter;
 		this.filterLeft = filterLeft;

@@ -32,18 +32,11 @@ public class LightLocalizer {
 	}
 
 	public void doLocalization() {
-		// drive to location listed in tutorial
-		// nav.turnTo(45);
-		// findLine();
-
-		// Go backwards
-		// nav.goBackward(13);
 
 		// start rotating and clock all 4 gridlines
 		nav.rotate(true);
 
 		// rotate 360 degrees
-		// nav.turnTo(1); comment out for localization
 		robot.LEFT_MOTOR.rotate(
 				robot.convertAngle(robot.RADIUS, robot.WIDTH, 360), true);
 		robot.RIGHT_MOTOR.rotate(
@@ -72,11 +65,6 @@ public class LightLocalizer {
 		double thetaX2 = lineAngles.get(2);
 		double thetaY2 = lineAngles.get(3);
 
-		// LCD.drawString("1 : " + thetaX1, 0, 1);
-		// LCD.drawString("2 : " + thetaY1, 0, 2);
-		// LCD.drawString("3 : " + thetaX2, 0, 3);
-		// LCD.drawString("4 : " + thetaY2, 0, 4);
-
 		if (thetaY2 < 20) {
 			thetaY2 += 360;
 		}
@@ -89,23 +77,5 @@ public class LightLocalizer {
 
 		double deltaTheta = 89 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
 		odo.setTheta(odo.getTheta() + deltaTheta);
-	}
-
-	// helper method to find first line ahead
-	private void findLine() {
-		int previousLightValue = ls.getNormalizedLightValue();
-		this.light = ls.getNormalizedLightValue();
-
-		// Go forward until sensor detects line
-		while (previousLightValue - light < robot.LIGHTSENSOR_THRESHOLD) {
-			robot.LEFT_MOTOR.setSpeed(robot.MOTOR_LOCALIZE);
-			robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_LOCALIZE);
-			robot.RIGHT_MOTOR.forward();
-			robot.LEFT_MOTOR.forward();
-			light = ls.getNormalizedLightValue();
-		}
-
-		// found first line, stop robot
-		nav.stop();
 	}
 }

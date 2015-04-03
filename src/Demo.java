@@ -48,8 +48,7 @@ public class Demo {
 //		 nav.setIsLocalizing(true);
 //
 		// perform the ultrasonic localization
-		USLocalizer usl = new USLocalizer(odo,
-				USLocalizer.LocalizationType.FALLING_EDGE, nav, filterStraight,
+		USLocalizer usl = new USLocalizer(odo, nav, filterStraight,
 				filterLeft);
 		usl.doLocalization();
 

@@ -1,4 +1,3 @@
-import lejos.nxt.Motor;
 
 /*
  *  Team 2
