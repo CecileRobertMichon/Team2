@@ -11,7 +11,7 @@
 import lejos.nxt.Button;
 import lejos.nxt.Sound;
 
-public class Demo {
+public class Testing {
 
 	public static void main(String[] args) {
 
@@ -47,7 +47,8 @@ public class Demo {
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
 
-		// perform the ultrasonic localization
+		launcher.shootBall();
+		
 		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);
 		usl.doLocalization();
 
@@ -61,52 +62,39 @@ public class Demo {
 		nav.travelTo(0, 0);
 		nav.turnTo(0);
 		Sound.beep();
+		
+		correct.start();
+
+		nav.travelTo(0, 2);
+		nav.travelTo(0, 0);
+
+		//usl.doLocalization();
+
+		nav.travelTo(0, 0);
+		nav.turnTo(30);
+		lsl = new LightLocalizer(odo, nav);
+		lsl.doLocalization();
+	
+		nav.travelTo(0, 0);
+		nav.turnTo(0);
+		Sound.beep();
 
 		// start obstacle detection
 		// nav.setIsLocalizing(false);
 
-		correct.start();
 
-		// travel to the right bottom corner of the shooting area while avoiding
-		// obstacles
-		nav.travelTo(-0.5, 0);
 
-		// *** add path around obstacles here ***
 
-		nav.travelTo(3.5, 10.5);
-		nav.travelTo(7.5, 10.5);
-		nav.travelTo(7.5, 8);
-		nav.travelTo(8, 8);
-
-		nav.turnTo(20);
-
-		// perform the light sensor localization
-		lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
-		odo.setX(8 * robot.TILE_LENGTH + odo.getX());
-		odo.setY(8 * robot.TILE_LENGTH + odo.getY());
-		nav.travelTo(8, 8);
-		nav.turnTo(0);
+		
 		Sound.beep();
 
 		// go to shooting spot relative to target 1
 		// shoot half the balls
 		// go to shooting spot relative to target 2
 		// shoot the other half
-		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-				robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+//		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+//				robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
 
-		// return to shooting area corner
-		nav.travelTo(8, 8);
-		nav.turnTo(20);
-		// perform the light sensor localization
-		lsl = new LightLocalizer(odo, nav);
-		lsl.doLocalization();
-		odo.setX(8 * robot.TILE_LENGTH + odo.getX());
-		odo.setY(8 * robot.TILE_LENGTH + odo.getY());
-		nav.travelTo(8, 8);
-		nav.turnTo(0);
-		Sound.beep();
 
 		// return to (0,0)
 

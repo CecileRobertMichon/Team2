@@ -11,6 +11,7 @@
 import java.util.ArrayList;
 
 import lejos.nxt.ColorSensor;
+import lejos.nxt.LCD;
 import lejos.nxt.Sound;
 
 public class LightLocalizer {
@@ -64,6 +65,7 @@ public class LightLocalizer {
 		double thetaY1 = lineAngles.get(1);
 		double thetaX2 = lineAngles.get(2);
 		double thetaY2 = lineAngles.get(3);
+
 
 		if (thetaY2 < 20) {
 			thetaY2 += 360;

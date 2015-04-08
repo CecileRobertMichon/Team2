@@ -63,13 +63,15 @@ public class Robot {
 
 	// Firing constants
 	public final double FIRING_DISTANCE = 138;
-	public final int SECTION_DIVIDER = 7; // final demo: 11;
+	
+	// Shooting area
+	public final int CORNER = 2; //8;
 
-	// Target positions
-	public final int TARGET_ONE_X = 9;
-	public final int TARGET_ONE_Y = 9;
-	public final int TARGET_TWO_X = 9;
-	public final int TARGET_TWO_Y = 9;
+	// Target positions integer (ie. 1 = 30.48)
+	public final int TARGET_ONE_X = 2;
+	public final int TARGET_ONE_Y = 8;
+	public final int TARGET_TWO_X = -2;
+	public final int TARGET_TWO_Y = 5;
 
 	// Number of balls
 	public final int BALL_NUMBER = 2;

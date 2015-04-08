@@ -25,29 +25,37 @@ public class LauncherPositioning {
 	}
 
 	// Assumed robot is at position (8,8) when method is called
-	public void targetAcquisition(int x1, int y1, int x2, int y2) {
+	public void targetAcquisition(double x1, double y1, double x2, double y2) {
 
+		double x = x1 * robot.TILE_LENGTH;
+		double y = y1 * robot.TILE_LENGTH;
+		
 		// calculate angle to target
-		double minTheta = (Math.atan2(x1 - odometer.getX(),
-				y1 - odometer.getY()))
+		double minTheta = (Math.atan2(x - odometer.getX(),
+				y - odometer.getY()))
 				* (180.0 / Math.PI);
 		// Make sure theta is positive
 		if (minTheta < 0) {
 			minTheta += 360;
 		}
 		nav.turnTo(minTheta);
-		lineUp(x1, y1);
+		lineUp(x, y);
 		// shoot half the balls
 		for (int i = 0; i < robot.BALL_NUMBER / 2; i++) {
 			launcher.shootBall();
 		}
-		minTheta = (Math.atan2(x2 - odometer.getX(), y2 - odometer.getY()))
+		
+		nav.travelTo(robot.CORNER, robot.CORNER);
+		nav.turnTo(0);
+		x = x2 * robot.TILE_LENGTH;
+		y = y2 * robot.TILE_LENGTH;
+		minTheta = (Math.atan2(x - odometer.getX(), y - odometer.getY()))
 				* (180.0 / Math.PI);
 		if (minTheta < 0) {
 			minTheta += 360;
 		}
 		nav.turnTo(minTheta);
-		lineUp(x2, y2);
+		lineUp(x, y);
 		// shoot the other half of the balls
 		// fire command
 		for (int i = 0; i < robot.BALL_NUMBER - (robot.BALL_NUMBER / 2); i++) {
@@ -56,7 +64,7 @@ public class LauncherPositioning {
 	}
 
 	// to move forwards and backwards until target is perfectly in optimal range
-	private void lineUp(int xTarget, int yTarget) {
+	private void lineUp(double xTarget, double yTarget) {
 		double x, y;
 		x = odometer.getX();
 		y = odometer.getY();
