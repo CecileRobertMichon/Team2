@@ -25,9 +25,8 @@ public class Robot {
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
 	public final int MOTOR_ROTATE = 250; // 150;
-	public final int MOTOR_LOCALIZE = 250;
-	public final int MOTOR_STRAIGHT = 300; // 200;
-	public final int MOTOR_FAST = 400;
+	public final int MOTOR_STRAIGHT = 350; //300; // 200;
+	public final int MOTOR_FAST = 420; //400;
 
 	// Wall follower constants
 	public final int BANDCENTER = 18;
