@@ -24,9 +24,9 @@ public class Robot {
 
 	// Motor Speeds
 	public final int MOTOR_SLOW = 30;
-	public final int MOTOR_ROTATE = 200; //250; // 150;
-	public final int MOTOR_STRAIGHT = 300; // 350;
-	public final int MOTOR_FAST = 400; //420; 
+	public final int MOTOR_ROTATE = 250; // 150;
+	public final int MOTOR_STRAIGHT = 350; //300
+	public final int MOTOR_FAST = 420; //400; 
 
 	// Wall follower constants
 	public final int BANDCENTER = 18;
@@ -63,20 +63,20 @@ public class Robot {
 	// Firing constants
 	public final double FIRING_DISTANCE = 138;
 	
-	// Shooting area
+	// Shooting area bottom left corner
 	public final int CORNER = 8;
 
 	// Target positions integer (ie. 1 = 30.48)
-	public final int TARGET_ONE_X = 2;
-	public final int TARGET_ONE_Y = 8;
-	public final int TARGET_TWO_X = -2;
-	public final int TARGET_TWO_Y = 5;
+	public final int TARGET_ONE_X = 13;
+	public final int TARGET_ONE_Y = 13;
+	public final int TARGET_TWO_X = 14;
+	public final int TARGET_TWO_Y = 12;
 
 	// Map
 	public final int MAP_NUMBER = 1;
 	
 	// Number of balls
-	public final int BALL_NUMBER = 2;
+	public final int BALL_NUMBER = 3;
 
 	// Helper methods to convert distance and angle in degrees the motors have
 	// to rotate by
