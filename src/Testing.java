@@ -62,26 +62,31 @@ public class Testing {
 		Sound.beep();
 		
 		correct.start();
+		
+		nav.travelTo(2.5, 0);
+		nav.travelTo(2.5, 10);
+		nav.travelTo(2, 10);
 
-		nav.travelTo(0, 2);
-		nav.travelTo(2, 2);
+//		nav.travelTo(0, 2);
+//		nav.travelTo(2, 2);
 		nav.turnTo(20);
 
 		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 		odo.setX(2 * robot.TILE_LENGTH + odo.getX());
-		odo.setY(2 * robot.TILE_LENGTH + odo.getY());
-		nav.travelTo(2, 2);
+		odo.setY(10 * robot.TILE_LENGTH + odo.getY());
+		nav.travelTo(2, 10);
 		nav.turnTo(0);
 		Sound.beep();
 
-		// go to shooting spot relative to target 1
-		// shoot half the balls
-		// go to shooting spot relative to target 2
-		// shoot the other half
-		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-			robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
-
+//
+//		// go to shooting spot relative to target 1
+//		// shoot half the balls
+//		// go to shooting spot relative to target 2
+//		// shoot the other half
+//		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+//			robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+//
 
 		// return to (0,0)
 

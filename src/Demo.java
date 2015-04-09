@@ -134,6 +134,7 @@ public class Demo {
 		nav.turnTo(20);
 
 		// perform the light sensor localization
+		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 		odo.setX(8 * robot.TILE_LENGTH + odo.getX());
 		odo.setY(8 * robot.TILE_LENGTH + odo.getY());
