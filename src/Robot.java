@@ -64,7 +64,7 @@ public class Robot {
 	public final double FIRING_DISTANCE = 138;
 	
 	// Shooting area
-	public final int CORNER = 2; //8;
+	public final int CORNER = 8;
 
 	// Target positions integer (ie. 1 = 30.48)
 	public final int TARGET_ONE_X = 2;
@@ -72,6 +72,9 @@ public class Robot {
 	public final int TARGET_TWO_X = -2;
 	public final int TARGET_TWO_Y = 5;
 
+	// Map
+	public final int MAP_NUMBER = 1;
+	
 	// Number of balls
 	public final int BALL_NUMBER = 2;
 

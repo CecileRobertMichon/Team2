@@ -46,8 +46,6 @@ public class Testing {
 
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
-
-		launcher.shootBall();
 		
 		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);
 		usl.doLocalization();
@@ -66,34 +64,23 @@ public class Testing {
 		correct.start();
 
 		nav.travelTo(0, 2);
-		nav.travelTo(0, 0);
+		nav.travelTo(2, 2);
+		nav.turnTo(20);
 
-		//usl.doLocalization();
-
-		nav.travelTo(0, 0);
-		nav.turnTo(30);
 		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
-	
-		nav.travelTo(0, 0);
+		odo.setX(2 * robot.TILE_LENGTH + odo.getX());
+		odo.setY(2 * robot.TILE_LENGTH + odo.getY());
+		nav.travelTo(2, 2);
 		nav.turnTo(0);
-		Sound.beep();
-
-		// start obstacle detection
-		// nav.setIsLocalizing(false);
-
-
-
-
-		
 		Sound.beep();
 
 		// go to shooting spot relative to target 1
 		// shoot half the balls
 		// go to shooting spot relative to target 2
 		// shoot the other half
-//		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
-//				robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
+		position.targetAcquisition(robot.TARGET_ONE_X, robot.TARGET_ONE_Y,
+			robot.TARGET_TWO_X, robot.TARGET_TWO_Y);
 
 
 		// return to (0,0)
