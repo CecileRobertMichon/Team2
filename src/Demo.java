@@ -111,9 +111,9 @@ public class Demo {
 		} else {
 
 			nav.travelTo(1.5, 0);
-			nav.travelTo(1.5, 5);
-			nav.travelTo(2.55, 5);
-			nav.travelTo(2.55, 8);
+			nav.travelTo(1.55, 5);
+			nav.travelTo(2.48, 5);
+			nav.travelTo(2.48, 8);
 			nav.travelTo(2, 8.2);
 
 			// optional light localization
@@ -127,13 +127,13 @@ public class Demo {
 			 Sound.beep();
 
 			nav.travelTo(2, 7.5);
-			nav.travelTo(-0.6, 7.5);
-			nav.travelTo(-0.6, 9.6);
+			nav.travelTo(-0.64, 7.5);
+			nav.travelTo(-0.64, 9.6);
 			nav.travelTo(0.35, 9.6);
 			nav.travelTo(0.35, 10.63);
-			nav.travelTo(4.7, 10.62);
+			nav.travelTo(4.7, 10.63);
 
-			nav.travelTo(8, 10.62);
+			nav.travelTo(8, 10.635);
 			nav.travelTo(8, 8.2);
 
 		}
@@ -227,12 +227,12 @@ public class Demo {
 			nav.travelTo(8, 10.5);
 			nav.travelTo(5.5, 10.5);
 
-			nav.travelTo(0.3, 10.5);
-			nav.travelTo(0.3, 9.5);
-			nav.travelTo(-0.6, 9.5);
-			nav.travelTo(-0.6, 7.5);
+			nav.travelTo(0.25, 10.5);
+			nav.travelTo(0.25, 9.5);
+			nav.travelTo(-0.74, 9.5);
+			nav.travelTo(-0.74, 7.5);
 			nav.travelTo(2, 7.5);
-			nav.travelTo(2, 8);
+			nav.travelTo(1.9, 8);
 
 			// optional light localization
 			 nav.turnTo(30);
