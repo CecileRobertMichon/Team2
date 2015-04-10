@@ -44,7 +44,7 @@ public class OdometryCorrection extends Thread {
 
 				// detect if crossed line
 				if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
-					Sound.buzz();
+					Sound.beep();
 					// calculate light sensor expected position
 					xLS = odometer.getX()
 							+ (-robot.LIGHT_SENSOR_DISTANCE * Math.sin(Math

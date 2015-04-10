@@ -47,29 +47,29 @@ public class Testing {
 		
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
+//		
+//		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);
+//		usl.doLocalization();
+//
+//		// when done travel to (0,0) and turn to 0 degrees
+//		nav.travelTo(0, 0);
+//		nav.turnTo(30);
+
 		
-		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);
-		usl.doLocalization();
+//		LightLocalizer lsl = new LightLocalizer(odo, nav, robot);
+//
+//
+//		lsl.doLocalization();
 
-		// when done travel to (0,0) and turn to 0 degrees
-		nav.travelTo(0, 0);
-		nav.turnTo(30);
+//		nav.travelTo(0, 0);
+//		nav.turnTo(0);
+//		Sound.beep();
 
+		correct.start();
 		
-		LightLocalizer lsl = new LightLocalizer(odo, nav, robot);
-
-
-		lsl.doLocalization();
-
-		nav.travelTo(0, 0);
-		nav.turnTo(0);
-		Sound.beep();
-
-	//	correct.start();
-		
-		nav.travelTo(0, 2);
-		nav.travelTo(2, 2);
-		nav.travelTo(2, 0);
+		nav.travelTo(0, 1.5);
+		nav.travelTo(1.5, 1.5);
+		nav.travelTo(1.5, 0);
 		nav.travelTo(0, 0);
 
 

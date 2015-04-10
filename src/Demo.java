@@ -10,7 +10,6 @@
 
 import lejos.nxt.Button;
 import lejos.nxt.Sound;
-import lejos.robotics.Color;
 
 public class Demo {
 
@@ -53,7 +52,7 @@ public class Demo {
 		nav.turnTo(0);
 		Sound.beep();
 
-	//	correct.start();
+		correct.start();
 
 		// travel to the right bottom corner of the shooting area while avoiding
 		// obstacles
