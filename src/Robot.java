@@ -31,7 +31,7 @@ public class Robot {
 	// Wall follower constants
 	public final int BANDCENTER = 18;
 	public final int BANDWIDTH = 3;
-	public final int WALL_CENTER = 75;
+	public final int WALL_CENTER = 65;
 	public final int NOISE = 5;
 
 	// odometer update period, in ms
@@ -70,10 +70,10 @@ public class Robot {
 	public final int TARGET_ONE_X = 13;
 	public final int TARGET_ONE_Y = 13;
 	public final int TARGET_TWO_X = 14;
-	public final int TARGET_TWO_Y = 12;
+	public final int TARGET_TWO_Y = 8;
 
 	// Map
-	public final int MAP_NUMBER = 1;
+	public final int MAP_NUMBER = 3;
 	
 	// Number of balls
 	public final int BALL_NUMBER = 3;

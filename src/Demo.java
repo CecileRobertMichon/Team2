@@ -59,12 +59,12 @@ public class Demo {
 		if (robot.MAP_NUMBER == 1) {
 
 			nav.travelTo(0, 2);
-			nav.travelTo(4.5, 2);
-			nav.travelTo(4.5, -0.5);
-			nav.travelTo(7.5, -0.5);
-			nav.travelTo(7.5, 0.5);
-			nav.travelTo(9, 0.5);
-			nav.travelTo(9, 2);
+			nav.travelTo(4.65, 2);
+			nav.travelTo(4.65, -0.5);
+			nav.travelTo(7.75, -0.5);
+			nav.travelTo(7.75, 0.5);
+			nav.travelTo(9.4, 0.5);
+			nav.travelTo(9.4, 2);
 
 			// optional light localization
 			nav.turnTo(20);
@@ -78,22 +78,19 @@ public class Demo {
 
 			nav.travelTo(9, 2.5);
 			nav.travelTo(10.5, 2.5);
-			nav.travelTo(10.5, 4.7);
-
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
+			nav.travelTo(10.6, 4.7);
 			
-			nav.travelTo(10.5, 8);
+			nav.travelTo(10.6, 8);
+			nav.travelTo(8, 8.1);
 
 		} else if (robot.MAP_NUMBER == 2) {
 
-			nav.travelTo(2.5, 0);
-			nav.travelTo(2.5, 6);
-			nav.travelTo(2, 6);
+			nav.travelTo(2.6, 0);
+			nav.travelTo(2.6, 6);
+			nav.travelTo(2.1, 6.1);
 
 			// optional light localization
-			nav.turnTo(20);
+			nav.turnTo(30);
 			lsl = new LightLocalizer(odo, nav);
 			lsl.doLocalization();
 			odo.setX(2 * robot.TILE_LENGTH + odo.getX());
@@ -103,27 +100,24 @@ public class Demo {
 			Sound.beep();
 
 			nav.travelTo(1.5, 6);
-			nav.travelTo(1.5, 8.5);
-			nav.travelTo(-0.5, 8.5);
-			nav.travelTo(-0.5, 10.5);
-			nav.travelTo(4.7, 10.5);
+			nav.travelTo(1.6, 8.7);
+			nav.travelTo(-0.45, 8.73);
+			nav.travelTo(-0.45, 10.6);
+			nav.travelTo(4.7, 10.6);
 
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
-
-			nav.travelTo(8, 10.5);
+			nav.travelTo(8, 10.55);
+			nav.travelTo(8.1, 8.1);
 
 		} else {
 
 			nav.travelTo(1.5, 0);
 			nav.travelTo(1.5, 5);
-			nav.travelTo(2.5, 5);
-			nav.travelTo(2.5, 8);
-			nav.travelTo(2, 8);
+			nav.travelTo(2.55, 5);
+			nav.travelTo(2.55, 8);
+			nav.travelTo(2, 8.2);
 
 			// optional light localization
-			 nav.turnTo(20);
+			 nav.turnTo(30);
 			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
@@ -133,22 +127,18 @@ public class Demo {
 			 Sound.beep();
 
 			nav.travelTo(2, 7.5);
-			nav.travelTo(-0.5, 7.5);
-			nav.travelTo(-0.5, 9.5);
-			nav.travelTo(0.5, 9.5);
-			nav.travelTo(0.5, 10.5);
-			nav.travelTo(4.7, 10.5);
+			nav.travelTo(-0.6, 7.5);
+			nav.travelTo(-0.6, 9.6);
+			nav.travelTo(0.35, 9.6);
+			nav.travelTo(0.35, 10.63);
+			nav.travelTo(4.7, 10.62);
 
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
-
-			nav.travelTo(8, 10.5);
+			nav.travelTo(8, 10.62);
+			nav.travelTo(8, 8.2);
 
 		}
 
-		nav.travelTo(8, 8);
-		nav.turnTo(20);
+		nav.turnTo(30);
 
 		// perform the light sensor localization
 		lsl = new LightLocalizer(odo, nav);
@@ -168,7 +158,7 @@ public class Demo {
 
 		// return to shooting area corner
 		nav.travelTo(8, 8);
-		nav.turnTo(20);
+		nav.turnTo(30);
 		// perform the light sensor localization
 		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
@@ -185,10 +175,6 @@ public class Demo {
 			nav.travelTo(10.5, 8);
 			nav.travelTo(10.5, 5.3);
 
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
-
 			nav.travelTo(10.5, 2.5);
 			nav.travelTo(9, 2.5);
 			nav.travelTo(9, 2);
@@ -200,7 +186,7 @@ public class Demo {
 			 odo.setX(9 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(2 * robot.TILE_LENGTH + odo.getY());
 			 nav.travelTo(9, 2);
-			 nav.turnTo(0);
+			 nav.turnTo(180);
 			 Sound.beep();
 
 			nav.travelTo(9, 0.5);
@@ -213,18 +199,14 @@ public class Demo {
 
 		} else if (robot.MAP_NUMBER == 2) {
 
-			nav.travelTo(8, 10.5);
-			nav.travelTo(5.3, 10.5);
+			nav.travelTo(8, 10.55);
+			nav.travelTo(5.3, 10.55);
 
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
-
-			nav.travelTo(-0.5, 10.5);
-			nav.travelTo(-0.5, 8.5);
-			nav.travelTo(1.5, 8.5);
-			nav.travelTo(1.5, 6);
-			nav.travelTo(2, 6);
+			nav.travelTo(-0.65, 10.55);
+			nav.travelTo(-0.65, 8.45);
+			nav.travelTo(1.4, 8.45);
+			nav.travelTo(1.4, 6);
+			nav.travelTo(2.1, 5.9);
 
 			// optional light localization
 			 nav.turnTo(20);
@@ -233,49 +215,45 @@ public class Demo {
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(6 * robot.TILE_LENGTH + odo.getY());
 			 nav.travelTo(2, 6);
-			 nav.turnTo(0);
+			 nav.turnTo(180);
 			 Sound.beep();
 
 			nav.travelTo(2.5, 6);
-			nav.travelTo(2.5, 0);
-			nav.travelTo(0, 0);
+			nav.travelTo(2.4, 0);
+			nav.travelTo(-0.1, 0);
 
 		} else {
 
 			nav.travelTo(8, 10.5);
 			nav.travelTo(5.5, 10.5);
-			
-			// correct the angle
-			correct.findLine();
-			correct.correctAngle();
 
-			nav.travelTo(0.5, 10.5);
-			nav.travelTo(0.5, 9.5);
-			nav.travelTo(-0.5, 9.5);
-			nav.travelTo(-0.5, 7.5);
+			nav.travelTo(0.3, 10.5);
+			nav.travelTo(0.3, 9.5);
+			nav.travelTo(-0.6, 9.5);
+			nav.travelTo(-0.6, 7.5);
 			nav.travelTo(2, 7.5);
 			nav.travelTo(2, 8);
 
 			// optional light localization
-			 nav.turnTo(20);
+			 nav.turnTo(30);
 			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(8 * robot.TILE_LENGTH + odo.getY());
 			 nav.travelTo(2, 8);
-			 nav.turnTo(0);
+			 nav.turnTo(180);
 			 Sound.beep();
 
 			nav.travelTo(2.5, 8);
 			nav.travelTo(2.5, 5);
 			nav.travelTo(1.5, 5);
 			nav.travelTo(1.5, 0);
-			nav.travelTo(0, 0);
+			nav.travelTo(0, -0.15);
 
 		}
 
 		// localize at (0,0)
-		nav.turnTo(20);
+		nav.turnTo(30);
 
 		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
