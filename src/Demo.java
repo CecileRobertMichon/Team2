@@ -23,7 +23,7 @@ public class Demo {
 		USFilter filterLeft = new USFilter(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
 		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
-		OdometryCorrection correct = new OdometryCorrection(odo, nav, robot);
+		OdometryCorrection correct = new OdometryCorrection(odo, nav);
 		Launcher launcher = new Launcher();
 		LauncherPositioning position = new LauncherPositioning(odo, nav,
 				launcher);
@@ -44,8 +44,7 @@ public class Demo {
 		nav.travelTo(0, 0);
 		nav.turnTo(30);
 
-
-		LightLocalizer lsl = new LightLocalizer(odo, nav, robot);
+		LightLocalizer lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 
 		nav.travelTo(0, 0);
@@ -69,7 +68,7 @@ public class Demo {
 
 			// optional light localization
 			nav.turnTo(20);
-			lsl = new LightLocalizer(odo, nav, robot);
+			lsl = new LightLocalizer(odo, nav);
 			lsl.doLocalization();
 			odo.setX(9 * robot.TILE_LENGTH + odo.getX());
 			odo.setY(2 * robot.TILE_LENGTH + odo.getY());
@@ -95,7 +94,7 @@ public class Demo {
 
 			// optional light localization
 			nav.turnTo(20);
-			lsl = new LightLocalizer(odo, nav, robot);
+			lsl = new LightLocalizer(odo, nav);
 			lsl.doLocalization();
 			odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			odo.setY(6 * robot.TILE_LENGTH + odo.getY());
@@ -125,7 +124,7 @@ public class Demo {
 
 			// optional light localization
 			 nav.turnTo(20);
-			 lsl = new LightLocalizer(odo, nav, robot);
+			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(8 * robot.TILE_LENGTH + odo.getY());
@@ -152,7 +151,7 @@ public class Demo {
 		nav.turnTo(20);
 
 		// perform the light sensor localization
-		lsl = new LightLocalizer(odo, nav, robot);
+		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 		odo.setX(8 * robot.TILE_LENGTH + odo.getX());
 		odo.setY(8 * robot.TILE_LENGTH + odo.getY());
@@ -171,7 +170,7 @@ public class Demo {
 		nav.travelTo(8, 8);
 		nav.turnTo(20);
 		// perform the light sensor localization
-		lsl = new LightLocalizer(odo, nav, robot);
+		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 		odo.setX(8 * robot.TILE_LENGTH + odo.getX());
 		odo.setY(8 * robot.TILE_LENGTH + odo.getY());
@@ -196,7 +195,7 @@ public class Demo {
 
 			// optional light localization
 			 nav.turnTo(20);
-			 lsl = new LightLocalizer(odo, nav, robot);
+			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(9 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(2 * robot.TILE_LENGTH + odo.getY());
@@ -229,7 +228,7 @@ public class Demo {
 
 			// optional light localization
 			 nav.turnTo(20);
-			 lsl = new LightLocalizer(odo, nav, robot);
+			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(6 * robot.TILE_LENGTH + odo.getY());
@@ -259,7 +258,7 @@ public class Demo {
 
 			// optional light localization
 			 nav.turnTo(20);
-			 lsl = new LightLocalizer(odo, nav, robot);
+			 lsl = new LightLocalizer(odo, nav);
 			 lsl.doLocalization();
 			 odo.setX(2 * robot.TILE_LENGTH + odo.getX());
 			 odo.setY(8 * robot.TILE_LENGTH + odo.getY());
@@ -278,7 +277,7 @@ public class Demo {
 		// localize at (0,0)
 		nav.turnTo(20);
 
-		lsl = new LightLocalizer(odo, nav, robot);
+		lsl = new LightLocalizer(odo, nav);
 		lsl.doLocalization();
 		nav.travelTo(0, 0);
 		nav.turnTo(0);

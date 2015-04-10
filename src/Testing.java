@@ -10,7 +10,6 @@
 
 import lejos.nxt.Button;
 import lejos.nxt.Sound;
-import lejos.robotics.Color;
 
 public class Testing {
 
@@ -23,7 +22,7 @@ public class Testing {
 		USFilter filterStraight = new USFilter(robot.US);
 		USFilter filterLeft = new USFilter(robot.US2);
 		Navigation nav = new Navigation(odo, filterStraight, filterLeft);
-		OdometryCorrection correct = new OdometryCorrection(odo, nav, robot);
+		OdometryCorrection correct = new OdometryCorrection(odo, nav);
 		OdometryDisplay lcd = new OdometryDisplay(odo, filterStraight);
 		Launcher launcher = new Launcher();
 		LauncherPositioning position = new LauncherPositioning(odo, nav,
@@ -47,33 +46,27 @@ public class Testing {
 		
 		// set navigation to localization mode - no obstacle detection
 		nav.setIsLocalizing(true);
-//		
+		
+		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
+
+//
 //		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);
 //		usl.doLocalization();
 //
 //		// when done travel to (0,0) and turn to 0 degrees
 //		nav.travelTo(0, 0);
 //		nav.turnTo(30);
-
-		
-//		LightLocalizer lsl = new LightLocalizer(odo, nav, robot);
 //
-//
+//		LightLocalizer lsl = new LightLocalizer(odo, nav);
 //		lsl.doLocalization();
-
+//
 //		nav.travelTo(0, 0);
 //		nav.turnTo(0);
 //		Sound.beep();
 
-		correct.start();
-		
-		nav.travelTo(0, 1.5);
-		nav.travelTo(1.5, 1.5);
-		nav.travelTo(1.5, 0);
-		nav.travelTo(0, 0);
-
-
-
+//		correct.start();
 //
 //		nav.travelTo(0.5, 0);
 //		nav.travelTo(0.5, 1.7);
