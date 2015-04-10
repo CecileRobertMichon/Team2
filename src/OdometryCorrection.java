@@ -1,5 +1,6 @@
 import lejos.nxt.ColorSensor;
 import lejos.nxt.Sound;
+import lejos.robotics.Color;
 
 /*
  *  Team 2
@@ -15,33 +16,35 @@ public class OdometryCorrection extends Thread {
 
 	private Odometer odometer;
 	private Robot robot;
+	private ColorSensor ls;
 	private Navigation nav;
 	private boolean isCorrectingAngle;
 	private double xLS, yLS, ex, ey;
 
 	// constructor
-	public OdometryCorrection(Odometer odometer, Navigation nav) {
+	public OdometryCorrection(Odometer odometer, Navigation nav, Robot robot) {
 		this.odometer = odometer;
-		this.robot = new Robot();
+		this.robot = robot;
 		this.nav = nav;
 		this.isCorrectingAngle = false;
+		this.ls = robot.COLOR_SENSOR;
 	}
 
 	// run method (required for Thread)
 	public void run() {
 		long correctionStart, correctionEnd;
-		int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
+		int previousLight = ls.getNormalizedLightValue();
 
 		while (true) {
 			if (!isCorrectingAngle) {
 				correctionStart = System.currentTimeMillis();
 
 				// put your correction code here
-				int light = robot.COLOR_SENSOR.getNormalizedLightValue();
+				int light = ls.getNormalizedLightValue();
 
 				// detect if crossed line
 				if (previousLight - light > robot.LIGHTSENSOR_THRESHOLD) {
-					Sound.beep();
+					Sound.buzz();
 					// calculate light sensor expected position
 					xLS = odometer.getX()
 							+ (-robot.LIGHT_SENSOR_DISTANCE * Math.sin(Math
@@ -93,11 +96,11 @@ public class OdometryCorrection extends Thread {
 	public void correctAngle() {
 		this.isCorrectingAngle = true;
 		nav.goBackward(robot.LIGHT_SENSOR_DISTANCE);
-		int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
-		int light = robot.COLOR_SENSOR.getNormalizedLightValue();
+		int previousLight = ls.getNormalizedLightValue();
+		int light = ls.getNormalizedLightValue();
 		while (previousLight - light < robot.LIGHTSENSOR_THRESHOLD) {
 			nav.rotate(true);
-			light = robot.COLOR_SENSOR.getNormalizedLightValue();
+			light = ls.getNormalizedLightValue();
 		}
 		nav.stop();
 		if (odometer.getTheta() > 340 || odometer.getTheta() < 20) {
@@ -118,8 +121,8 @@ public class OdometryCorrection extends Thread {
 
 	public void findLine() {
 		this.isCorrectingAngle = true;
-		int light = robot.COLOR_SENSOR.getNormalizedLightValue();
-		int previousLight = robot.COLOR_SENSOR.getNormalizedLightValue();
+		int light = ls.getNormalizedLightValue();
+		int previousLight = ls.getNormalizedLightValue();
 
 		// Go forward until sensor detects line
 		while (previousLight - light < robot.LIGHTSENSOR_THRESHOLD) {
@@ -127,7 +130,7 @@ public class OdometryCorrection extends Thread {
 			robot.RIGHT_MOTOR.setSpeed(robot.MOTOR_ROTATE);
 			robot.RIGHT_MOTOR.forward();
 			robot.LEFT_MOTOR.forward();
-			light = robot.COLOR_SENSOR.getNormalizedLightValue();
+			light = ls.getNormalizedLightValue();
 		}
 
 		// found first line, stop robot

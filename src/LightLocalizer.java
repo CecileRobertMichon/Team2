@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.LCD;
 import lejos.nxt.Sound;
+import lejos.robotics.Color;
 
 public class LightLocalizer {
 
@@ -23,13 +24,12 @@ public class LightLocalizer {
 	private int light;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
 
-	public LightLocalizer(Odometer odo, Navigation nav) {
+	public LightLocalizer(Odometer odo, Navigation nav, Robot robot) {
 		this.odo = odo;
-		this.robot = new Robot();
+		this.robot = robot;
 		this.ls = robot.COLOR_SENSOR;
 		this.nav = nav;
-		// turn on the light
-		ls.setFloodlight(true);
+		//ls.setFloodlight(Color.RED);
 	}
 
 	public void doLocalization() {
