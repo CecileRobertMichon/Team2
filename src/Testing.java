@@ -50,6 +50,9 @@ public class Testing {
 		launcher.shootBall();
 		launcher.shootBall();
 		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
+		launcher.shootBall();
 
 //
 //		USLocalizer usl = new USLocalizer(odo, nav, filterStraight, filterLeft);

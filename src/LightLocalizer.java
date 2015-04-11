@@ -21,6 +21,7 @@ public class LightLocalizer {
 	private Robot robot;
 	private ColorSensor ls;
 	private int light;
+	private int lineCounter;
 	private ArrayList<Double> lineAngles = new ArrayList<Double>();
 
 	public LightLocalizer(Odometer odo, Navigation nav) {
@@ -28,6 +29,7 @@ public class LightLocalizer {
 		this.robot = new Robot();
 		this.ls = robot.COLOR_SENSOR;
 		this.nav = nav;
+		this.lineCounter = 0;
 		// turn on the light
 		ls.setFloodlight(true);
 	}
@@ -50,6 +52,7 @@ public class LightLocalizer {
 			// record line angles and count lines crossed
 			if (previousLightValue - light > robot.LIGHTSENSOR_THRESHOLD) {
 				Sound.beep();
+				lineCounter++;
 				lineAngles.add(odo.getTheta());
 
 				// wait to avoid seeing the same line twice
@@ -61,23 +64,25 @@ public class LightLocalizer {
 		}
 		nav.stop();
 
-		double thetaX1 = lineAngles.get(0);
-		double thetaY1 = lineAngles.get(1);
-		double thetaX2 = lineAngles.get(2);
-		double thetaY2 = lineAngles.get(3);
+		if (lineCounter == 4) {
+			double thetaX1 = lineAngles.get(0);
+			double thetaY1 = lineAngles.get(1);
+			double thetaX2 = lineAngles.get(2);
+			double thetaY2 = lineAngles.get(3);
 
+			if (thetaY2 < 20) {
+				thetaY2 += 360;
+			}
 
-		if (thetaY2 < 20) {
-			thetaY2 += 360;
+			// set x, y and theta to actual values using tutorial formulas
+			odo.setX(-robot.LIGHT_SENSOR_DISTANCE
+					* Math.cos(Math.toRadians(thetaY2 - thetaY1) / 2));
+			odo.setY(-robot.LIGHT_SENSOR_DISTANCE
+					* Math.cos(Math.toRadians(thetaX2 - thetaX1) / 2));
+
+			double deltaTheta = 89 - (thetaY2 - 180)
+					+ ((thetaY2 - thetaY1) / 2);
+			odo.setTheta(odo.getTheta() + deltaTheta);
 		}
-
-		// set x, y and theta to actual values using tutorial formulas
-		odo.setX(-robot.LIGHT_SENSOR_DISTANCE
-				* Math.cos(Math.toRadians(thetaY2 - thetaY1) / 2));
-		odo.setY(-robot.LIGHT_SENSOR_DISTANCE
-				* Math.cos(Math.toRadians(thetaX2 - thetaX1) / 2));
-
-		double deltaTheta = 89 - (thetaY2 - 180) + ((thetaY2 - thetaY1) / 2);
-		odo.setTheta(odo.getTheta() + deltaTheta);
 	}
 }

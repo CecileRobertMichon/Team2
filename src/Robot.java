@@ -67,16 +67,16 @@ public class Robot {
 	public final int CORNER = 8;
 
 	// Target positions integer (ie. 1 = 30.48)
-	public final int TARGET_ONE_X = 13;
-	public final int TARGET_ONE_Y = 13;
-	public final int TARGET_TWO_X = 14;
-	public final int TARGET_TWO_Y = 8;
+	public final int TARGET_ONE_X = 14;
+	public final int TARGET_ONE_Y = 9;
+	public final int TARGET_TWO_X = 11;
+	public final int TARGET_TWO_Y = 13;
 
 	// Map
-	public final int MAP_NUMBER = 3;
+	public final int MAP_NUMBER = 2;
 	
 	// Number of balls
-	public final int BALL_NUMBER = 3;
+	public final int BALL_NUMBER = 6;
 
 	// Helper methods to convert distance and angle in degrees the motors have
 	// to rotate by

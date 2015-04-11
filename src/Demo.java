@@ -80,8 +80,8 @@ public class Demo {
 			nav.travelTo(10.5, 2.5);
 			nav.travelTo(10.6, 4.7);
 			
-			nav.travelTo(10.6, 8);
-			nav.travelTo(8, 8.1);
+			nav.travelTo(10.5, 8);
+			nav.travelTo(8, 8.05);
 
 		} else if (robot.MAP_NUMBER == 2) {
 
@@ -127,8 +127,8 @@ public class Demo {
 			 Sound.beep();
 
 			nav.travelTo(2, 7.5);
-			nav.travelTo(-0.64, 7.5);
-			nav.travelTo(-0.64, 9.6);
+			nav.travelTo(-0.63, 7.5);
+			nav.travelTo(-0.63, 9.6);
 			nav.travelTo(0.35, 9.6);
 			nav.travelTo(0.35, 10.63);
 			nav.travelTo(4.7, 10.63);
